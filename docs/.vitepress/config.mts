@@ -6,7 +6,10 @@ export default defineConfig({
     title: "PipePipe Wiki",
     base: "/Docs-PipePipe/",
 
+    head: [["link", { rel: "icon", href: "/Docs-PipePipe/pipepipe.png" }]],
+
     themeConfig: {
+        logo: "/pipepipe.png",
         search: {
             provider: "local",
         },
