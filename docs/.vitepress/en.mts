@@ -21,8 +21,20 @@ export const en = defineConfig({
                             link: "/user-guide/introduction",
                         },
                         {
+                            text: "Installation",
+                            link: "/user-guide/installation",
+                        },
+                        {
                             text: "Core Features",
                             link: "/user-guide/core-features",
+                        },
+                        {
+                            text: "Playback Gestures",
+                            link: "/user-guide/playback-gestures",
+                        },
+                        {
+                            text: "Backup and Restore",
+                            link: "/user-guide/backup-and-restore",
                         },
                     ],
                 },

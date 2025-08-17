@@ -25,8 +25,20 @@ export const fr = defineConfig({
                             link: "/fr/user-guide/introduction",
                         },
                         {
+                            text: "Installation",
+                            link: "/fr/user-guide/installation",
+                        },
+                        {
                             text: "Fonctionnalités Clés",
                             link: "/fr/user-guide/core-features",
+                        },
+                        {
+                            text: "Gestes de Lecture",
+                            link: "/fr/user-guide/playback-gestures",
+                        },
+                        {
+                            text: "Sauvegarde et Restauration",
+                            link: "/fr/user-guide/backup-and-restore",
                         },
                     ],
                 },
@@ -76,7 +88,7 @@ export const fr = defineConfig({
 
         footer: {
             message: "Publié sous la licence GNU AGPL v3.",
-            copyright: "Copyright © 2025-present Priveetee",
+            copyright: "Copyright © 2025-present PipePipe",
         },
 
         editLink: {
