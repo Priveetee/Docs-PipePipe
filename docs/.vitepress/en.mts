@@ -50,6 +50,10 @@ export const en = defineConfig({
                             text: "Player Settings",
                             link: "/user-guide/settings-player",
                         },
+                        {
+                            text: "Behavior Settings",
+                            link: "/user-guide/settings-behavior",
+                        },
                     ],
                 },
             ],
@@ -77,7 +81,7 @@ export const en = defineConfig({
 
         footer: {
             message: "Released under the GNU AGPL v3 License.",
-            copyright: "Copyright © 2025-present Priveetee",
+            copyright: "Copyright © 2025-present Tux",
         },
 
         editLink: {

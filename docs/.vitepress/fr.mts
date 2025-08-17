@@ -54,6 +54,10 @@ export const fr = defineConfig({
                             text: "Paramètres du Lecteur",
                             link: "/fr/user-guide/settings-player",
                         },
+                        {
+                            text: "Paramètres de Comportement",
+                            link: "/fr/user-guide/settings-behavior",
+                        },
                     ],
                 },
             ],
@@ -78,7 +82,7 @@ export const fr = defineConfig({
                         buttonAriaLabel: "Rechercher",
                     },
                     modal: {
-                        noResultsText: "Aucun résultat pour",
+                        results_not_found: "Aucun résultat pour",
                         resetButtonTitle: "Réinitialiser la recherche",
                         footer: {
                             selectText: "pour sélectionner",
@@ -101,7 +105,7 @@ export const fr = defineConfig({
 
         footer: {
             message: "Publié sous la licence GNU AGPL v3.",
-            copyright: "Copyright © 2025-present Priveetee",
+            copyright: "Copyright © 2025-present Tux",
         },
 
         editLink: {
