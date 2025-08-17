@@ -40,9 +40,18 @@ export const en = defineConfig({
             ],
         },
 
+        lastUpdated: {
+            text: "Last Updated",
+        },
+
+        docFooter: {
+            prev: "Previous page",
+            next: "Next page",
+        },
+
         footer: {
             message: "Released under the GNU AGPL v3 License.",
-            copyright: "Copyright © 2025-present Tux",
+            copyright: "Copyright © 2025-present Priveetee",
         },
 
         editLink: {

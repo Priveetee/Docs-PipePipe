@@ -44,9 +44,39 @@ export const fr = defineConfig({
             ],
         },
 
+        search: {
+            provider: "local",
+            options: {
+                translations: {
+                    button: {
+                        buttonText: "Rechercher",
+                        buttonAriaLabel: "Rechercher",
+                    },
+                    modal: {
+                        noResultsText: "Aucun résultat pour",
+                        resetButtonTitle: "Réinitialiser la recherche",
+                        footer: {
+                            selectText: "pour sélectionner",
+                            navigateText: "pour naviguer",
+                            closeText: "pour fermer",
+                        },
+                    },
+                },
+            },
+        },
+
+        lastUpdated: {
+            text: "Dernière mise à jour",
+        },
+
+        docFooter: {
+            prev: "Page précédente",
+            next: "Page suivante",
+        },
+
         footer: {
             message: "Publié sous la licence GNU AGPL v3.",
-            copyright: "Copyright © 2025-present Tux",
+            copyright: "Copyright © 2025-present Priveetee",
         },
 
         editLink: {
