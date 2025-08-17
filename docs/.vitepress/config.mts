@@ -4,6 +4,7 @@ import { fr } from "./fr.mts";
 
 export default defineConfig({
     title: "PipePipe Wiki",
+    base: "/Docs-PipePipe/",
 
     themeConfig: {
         socialLinks: [
