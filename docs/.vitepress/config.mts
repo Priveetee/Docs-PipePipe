@@ -7,6 +7,9 @@ export default defineConfig({
     base: "/Docs-PipePipe/",
 
     themeConfig: {
+        search: {
+            provider: "local",
+        },
         socialLinks: [
             {
                 icon: "github",
