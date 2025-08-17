@@ -18,7 +18,7 @@ export const fr = defineConfig({
         sidebar: {
             "/fr/user-guide/": [
                 {
-                    text: "Guide de l'Utilisateur",
+                    text: "Pour Commencer",
                     items: [
                         {
                             text: "Introduction",
@@ -28,6 +28,11 @@ export const fr = defineConfig({
                             text: "Installation",
                             link: "/fr/user-guide/installation",
                         },
+                    ],
+                },
+                {
+                    text: "Concepts Clés",
+                    items: [
                         {
                             text: "Fonctionnalités Clés",
                             link: "/fr/user-guide/core-features",
@@ -39,6 +44,15 @@ export const fr = defineConfig({
                         {
                             text: "Sauvegarde et Restauration",
                             link: "/fr/user-guide/backup-and-restore",
+                        },
+                    ],
+                },
+                {
+                    text: "Paramètres",
+                    items: [
+                        {
+                            text: "Paramètres du Lecteur",
+                            link: "/fr/user-guide/settings-player",
                         },
                     ],
                 },
@@ -57,7 +71,6 @@ export const fr = defineConfig({
         },
 
         search: {
-            provider: "local",
             options: {
                 translations: {
                     button: {
@@ -88,7 +101,7 @@ export const fr = defineConfig({
 
         footer: {
             message: "Publié sous la licence GNU AGPL v3.",
-            copyright: "Copyright © 2025-present PipePipe",
+            copyright: "Copyright © 2025-present Priveetee",
         },
 
         editLink: {

@@ -14,7 +14,7 @@ export const en = defineConfig({
         sidebar: {
             "/user-guide/": [
                 {
-                    text: "User Guide",
+                    text: "Getting Started",
                     items: [
                         {
                             text: "Introduction",
@@ -24,6 +24,11 @@ export const en = defineConfig({
                             text: "Installation",
                             link: "/user-guide/installation",
                         },
+                    ],
+                },
+                {
+                    text: "Core Concepts",
+                    items: [
                         {
                             text: "Core Features",
                             link: "/user-guide/core-features",
@@ -35,6 +40,15 @@ export const en = defineConfig({
                         {
                             text: "Backup and Restore",
                             link: "/user-guide/backup-and-restore",
+                        },
+                    ],
+                },
+                {
+                    text: "Settings",
+                    items: [
+                        {
+                            text: "Player Settings",
+                            link: "/user-guide/settings-player",
                         },
                     ],
                 },
