@@ -7,19 +7,34 @@ export const en = defineConfig({
     themeConfig: {
         nav: [
             { text: "Home", link: "/" },
-            { text: "Guide", link: "/guide/getting-started" },
+            { text: "User Guide", link: "/user-guide/introduction" },
+            { text: "Developer Guide", link: "/developer-guide/introduction" },
         ],
 
         sidebar: {
-            "/guide/": [
+            "/user-guide/": [
                 {
                     text: "User Guide",
                     items: [
                         {
-                            text: "Getting Started",
-                            link: "/guide/getting-started",
+                            text: "Introduction",
+                            link: "/user-guide/introduction",
                         },
-                        { text: "Core Features", link: "/guide/core-features" },
+                        {
+                            text: "Core Features",
+                            link: "/user-guide/core-features",
+                        },
+                    ],
+                },
+            ],
+            "/developer-guide/": [
+                {
+                    text: "Developer Guide",
+                    items: [
+                        {
+                            text: "Introduction",
+                            link: "/developer-guide/introduction",
+                        },
                     ],
                 },
             ],
@@ -27,7 +42,7 @@ export const en = defineConfig({
 
         footer: {
             message: "Released under the GNU AGPL v3 License.",
-            copyright: "Copyright © 2025-present Priveetee",
+            copyright: "Copyright © 2025-present Tux",
         },
 
         editLink: {
