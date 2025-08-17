@@ -8,7 +8,7 @@ hero:
     actions:
         - theme: brand
           text: Get Started
-          link: /guide/getting-started
+          link: /user-guide/introduction.md
         - theme: alt
           text: View on GitHub
           link: https://github.com/InfinityLoop1308/PipePipe
