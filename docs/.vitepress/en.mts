@@ -81,7 +81,7 @@ export const en = defineConfig({
 
         footer: {
             message: "Released under the GNU AGPL v3 License.",
-            copyright: "Copyright © 2025-present Tux",
+            copyright: "Copyright © 2025-present Priveetee",
         },
 
         editLink: {
