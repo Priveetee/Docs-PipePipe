@@ -2,7 +2,7 @@ import { defineConfig } from "vitepress";
 
 export const en = defineConfig({
     lang: "en-US",
-    description: "The unofficial, user-driven guide to PipePipe.",
+    description: "The official guide to PipePipe.",
 
     themeConfig: {
         nav: [
@@ -53,6 +53,15 @@ export const en = defineConfig({
                         {
                             text: "Behavior Settings",
                             link: "/user-guide/settings-behavior",
+                        },
+                    ],
+                },
+                {
+                    text: "Troubleshooting",
+                    items: [
+                        {
+                            text: "Common Issues",
+                            link: "/user-guide/common-issues",
                         },
                     ],
                 },

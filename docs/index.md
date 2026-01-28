@@ -3,7 +3,7 @@ layout: home
 
 hero:
     name: "PipePipe Wiki"
-    text: "The Unofficial User Guide."
+    text: "The Official User Guide."
     tagline: Built by a user, for the users. Learn to master every aspect of the application.
     actions:
         - theme: brand
@@ -20,4 +20,5 @@ features:
       details: Discover tips, tricks, and hidden features to optimize your experience.
     - title: Troubleshooting
       details: Find solutions for the most common issues faced by the community.
+      link: /user-guide/common-issues
 ---
