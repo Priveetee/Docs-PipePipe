@@ -42,3 +42,12 @@ Since PipePipe is not available on the Google Play Store, Android Auto hides it 
 3.  Tap the three dots (menu) in the top right corner and select **Developer settings**.
 4.  Scroll down and check the box for **Unknown sources**.
 5.  Restart Android Auto (or disconnect and reconnect your phone to your car).
+
+## Interface and Player
+
+### Minimized player bar or "Enqueue" option is missing
+Sometimes, when starting a video directly in background or popup mode, the player bar at the bottom doesn't appear, making it impossible to manage your queue.
+
+**Solution:**
+*   This was a major bug fixed in **version 4.7.2**. 
+*   If you are still seeing this, it confirms you are on an outdated version. Please update to at least **4.7.8** using the methods described in the [Installation Guide](/user-guide/installation).

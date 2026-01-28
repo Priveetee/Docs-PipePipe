@@ -42,3 +42,12 @@ Comme PipePipe n'est pas disponible sur le Google Play Store, Android Auto le ma
 3.  Appuyez sur les trois points (menu) en haut à droite et sélectionnez **Paramètres développeur**.
 4.  Faites défiler vers le bas et cochez la case **Sources inconnues**.
 5.  Redémarrez Android Auto (ou déconnectez et reconnectez votre téléphone à votre voiture).
+
+## Interface et Lecteur
+
+### La barre de lecture ou l'option "Ajouter à la file d'attente" est absente
+Parfois, lors du lancement d'une vidéo directement en arrière-plan ou en mode popup, la barre de lecture en bas de l'écran n'apparaît pas, rendant impossible la gestion de la file d'attente.
+
+**Solution :**
+*   C'était un bug majeur corrigé dans la **version 4.7.2**.
+*   Si vous voyez encore ce problème, cela confirme que vous utilisez une version obsolète. Veuillez mettre à jour vers au moins la version **4.7.8** en utilisant les méthodes décrites dans le [Guide d'Installation](/fr/user-guide/installation).
