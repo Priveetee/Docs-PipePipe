@@ -30,3 +30,15 @@ To avoid being blocked for a week every time YouTube makes a change, the communi
 
 ### Application fails to install
 Make sure your device meets the [System Requirements](/user-guide/installation#system-requirements).
+
+## Android Auto
+
+### PipePipe does not appear in Android Auto
+Since PipePipe is not available on the Google Play Store, Android Auto hides it by default for security reasons.
+
+**Solution:**
+1.  Open **Android Auto** settings on your phone.
+2.  Scroll to the bottom and tap the **Version** section 10 times until a popup says "Developer mode enabled".
+3.  Tap the three dots (menu) in the top right corner and select **Developer settings**.
+4.  Scroll down and check the box for **Unknown sources**.
+5.  Restart Android Auto (or disconnect and reconnect your phone to your car).

@@ -30,3 +30,15 @@ Pour éviter d'être bloqué pendant une semaine à chaque fois que YouTube chan
 
 ### L'application refuse de s'installer
 Assurez-vous que votre appareil respecte la [Configuration Requise](/fr/user-guide/installation#configuration-requise).
+
+## Android Auto
+
+### PipePipe n'apparaît pas dans Android Auto
+Comme PipePipe n'est pas disponible sur le Google Play Store, Android Auto le masque par défaut pour des raisons de sécurité.
+
+**Solution :**
+1.  Ouvrez les paramètres d'**Android Auto** sur votre téléphone.
+2.  Faites défiler jusqu'en bas et appuyez 10 fois sur la section **Version** jusqu'à ce qu'un message affiche "Mode développeur activé".
+3.  Appuyez sur les trois points (menu) en haut à droite et sélectionnez **Paramètres développeur**.
+4.  Faites défiler vers le bas et cochez la case **Sources inconnues**.
+5.  Redémarrez Android Auto (ou déconnectez et reconnectez votre téléphone à votre voiture).
