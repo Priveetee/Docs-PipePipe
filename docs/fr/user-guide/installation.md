@@ -51,6 +51,17 @@ Si vous ne voulez pas utiliser de gestionnaire, vous pouvez récupérer le fichi
 
 ---
 
+## Sécurité et Vérification
+
+### Certificat de signature APK (SHA-256)
+Si vous utilisez des outils comme **Obtainium** ou **AppVerifier** pour garantir l'intégrité de votre téléchargement, vous pouvez vérifier l'APK à l'aide de l'empreinte officielle du certificat de signature :
+
+`dec73429ce2563275f5ed19825e44652b32b363a46f38bdff9ad6dcde4842d88`
+
+::: info Pourquoi vérifier ?
+La vérification garantit que l'APK que vous avez installé a bien été compilé par le développeur officiel de PipePipe et qu'il n'a pas été modifié.
+:::
+
 ## Configuration Requise
 
 Pour faire fonctionner PipePipe, votre appareil doit répondre aux exigences minimales suivantes :

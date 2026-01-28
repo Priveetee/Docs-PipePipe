@@ -51,6 +51,19 @@ If you don't want to use any manager, you can grab the APK file directly.
 
 ---
 
+## Security and Verification
+
+### APK Signing Certificate (SHA-256)
+If you use tools like **Obtainium** or **AppVerifier** to ensure the integrity of your download, you can verify the APK against the official signing certificate fingerprint:
+
+`dec73429ce2563275f5ed19825e44652b32b363a46f38bdff9ad6dcde4842d88`
+
+::: info Why verify?
+Verification ensures that the APK you installed was indeed built by the official PipePipe developer and has not been tampered with.
+:::
+
+---
+
 ## System Requirements
 
 To run PipePipe, your device must meet the following minimum requirements:
