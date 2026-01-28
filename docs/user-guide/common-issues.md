@@ -51,3 +51,12 @@ Sometimes, when starting a video directly in background or popup mode, the playe
 **Solution:**
 *   This was a major bug fixed in **version 4.7.2**. 
 *   If you are still seeing this, it confirms you are on an outdated version. Please update to at least **4.7.8** using the methods described in the [Installation Guide](/user-guide/installation).
+
+### Video buffering followed by a crash
+If your video suddenly starts buffering and the app eventually crashes (common on Xiaomi/MIUI devices), it is likely a hardware synchronization issue.
+
+**Solution:**
+1.  Go to **Settings > Advanced > ExoPlayer Settings**.
+2.  Enable the option **Always use ExoPlayer video output surface setting workaround**.
+3.  Restart the application.
+4.  If it still happens, a full device reboot is recommended.

@@ -51,3 +51,12 @@ Parfois, lors du lancement d'une vidéo directement en arrière-plan ou en mode 
 **Solution :**
 *   C'était un bug majeur corrigé dans la **version 4.7.2**.
 *   Si vous voyez encore ce problème, cela confirme que vous utilisez une version obsolète. Veuillez mettre à jour vers au moins la version **4.7.8** en utilisant les méthodes décrites dans le [Guide d'Installation](/fr/user-guide/installation).
+
+### Chargement infini (buffering) suivi d'un crash
+Si votre vidéo s'arrête soudainement pour charger et que l'application finit par planter (courant sur les appareils Xiaomi/MIUI), il s'agit probablement d'un problème de synchronisation matérielle.
+
+**Solution :**
+1.  Allez dans **Paramètres > Avancé > Paramètres ExoPlayer**.
+2.  Activez l'option **Always use ExoPlayer video output surface setting workaround**.
+3.  Redémarrez l'application.
+4.  Si le problème persiste, un redémarrage complet de l'appareil est recommandé.
