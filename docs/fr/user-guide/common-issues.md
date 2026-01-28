@@ -27,3 +27,6 @@ Le développeur a déjà publié un correctif dans la **version 4.7.8**. Cependa
 
 ### Comment éviter cela à l'avenir
 Pour éviter d'être bloqué pendant une semaine à chaque fois que YouTube change quelque chose, la communauté recommande d'utiliser **Obtainium**. Cet outil surveille directement le dépôt GitHub et propose les mises à jour à la seconde où elles sont publiées, contournant ainsi totalement le délai de F-Droid.
+
+### L'application refuse de s'installer
+Assurez-vous que votre appareil respecte la [Configuration Requise](/fr/user-guide/installation#configuration-requise).

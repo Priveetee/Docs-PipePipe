@@ -48,3 +48,14 @@ Si vous ne voulez pas utiliser de gestionnaire, vous pouvez récupérer le fichi
 *   **arm64-v8a :** Pour la plupart des smartphones modernes.
 *   **universal :** Fonctionne partout mais le fichier est plus lourd.
 :::
+
+---
+
+## Configuration Requise
+
+Pour faire fonctionner PipePipe, votre appareil doit répondre aux exigences minimales suivantes :
+
+*   **Version Android :** Android 5.0 (Lollipop) ou supérieure.
+*   **Architecture :** arm64-v8a, armeabi-v7a, ou x86_64.
+
+Si vous utilisez un appareil extrêmement ancien (Android 4.4 ou inférieur), PipePipe ne fonctionnera pas.

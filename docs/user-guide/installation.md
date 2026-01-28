@@ -48,3 +48,14 @@ If you don't want to use any manager, you can grab the APK file directly.
 *   **arm64-v8a:** For most modern smartphones.
 *   **universal:** Works on everything but the file is larger.
 :::
+
+---
+
+## System Requirements
+
+To run PipePipe, your device must meet the following minimum requirements:
+
+*   **Android Version:** Android 5.0 (Lollipop) or higher.
+*   **Architecture:** arm64-v8a, armeabi-v7a, or x86_64.
+
+If you are using a legacy device (Android 4.4 or lower), PipePipe will not work.

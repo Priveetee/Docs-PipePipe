@@ -27,3 +27,6 @@ The developer has already released a fix in **version 4.7.8**. However, many use
 
 ### How to prevent this in the future
 To avoid being blocked for a week every time YouTube makes a change, the community recommends using **Obtainium**. This tool tracks the GitHub repository directly and provides updates the minute the developer hits "Publish," bypassing the F-Droid delay entirely.
+
+### Application fails to install
+Make sure your device meets the [System Requirements](/user-guide/installation#system-requirements).
