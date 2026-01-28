@@ -1,37 +1,37 @@
 # Installation
 
-PipePipe n'est pas disponible sur le Google Play Store. Vous pouvez l'installer à partir de l'une des sources officielles et sûres suivantes.
+PipePipe n'est pas disponible sur le Google Play Store. Pour garantir une expérience fluide et recevoir les mises à jour, choisissez l'une des méthodes ci-dessous.
 
-::: warning Délai de mise à jour F-Droid
-Bien que F-Droid soit une méthode pratique, veuillez noter qu'il y a généralement un **délai de 7 jours** avant que les nouvelles mises à jour n'y apparaissent. Si vous rencontrez des problèmes de lecture (comme l'erreur "La page doit être rechargée"), vous devriez mettre à jour l'application immédiatement via GitHub.
+::: danger F-Droid : Attention au délai de 7 jours
+F-Droid est souvent lent à publier les mises à jour. Il faut généralement **7 jours** pour qu'une nouvelle version y apparaisse.
+
+**Si vous rencontrez des bugs ou des erreurs de lecture vidéo, n'attendez pas F-Droid.** Mettez à jour immédiatement via Obtainium ou l'APK GitHub.
 :::
 
-## Méthodes recommandées
+## Mises à jour automatiques (Recommandé)
 
-### Obtainium (Meilleure expérience)
-Obtainium vous permet d'installer et de mettre à jour des applications directement depuis leurs publications GitHub. C'est le meilleur moyen d'obtenir les mises à jour de PipePipe dès qu'elles sont publiées par le développeur.
+### F-Droid & IzzyOnDroid
+Ce sont des catalogues d'applications open-source. Une fois installés, ils vous informeront dès qu'une mise à jour est disponible.
 
-1. Installez [Obtainium](https://github.com/ImranR98/Obtainium/releases).
-2. Ajoutez l'URL du dépôt PipePipe : `https://github.com/InfinityLoop1308/PipePipe`.
-3. Obtainium vous informera désormais des mises à jour et les installera directement depuis la source.
+*   [Disponible sur F-Droid](https://f-droid.org/packages/InfinityLoop1309.NewPipeEnhanced/)
+*   [Disponible sur IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/InfinityLoop1309.NewPipeEnhanced) (Souvent plus rapide que F-Droid)
 
-### F-Droid
-F-Droid est un catalogue d'applications open-source. Il propose des mises à jour automatiques mais avec le délai mentionné plus haut.
+### Obtainium
+Obtainium est le meilleur outil pour PipePipe. Il surveille directement le dépôt GitHub et installe les mises à jour à la seconde où elles sont publiées.
 
-[Disponible sur F-Droid](https://f-droid.org/packages/InfinityLoop1309.NewPipeEnhanced/)
+1.  Installez [Obtainium](https://github.com/ImranR98/Obtainium/releases).
+2.  Ajoutez cette URL : `https://github.com/InfinityLoop1308/PipePipe`.
 
-## Installation manuelle
+---
+
+## Installation Manuelle
 
 ### GitHub Releases
-Vous pouvez toujours télécharger le dernier fichier `.apk` directement depuis la page officielle des publications GitHub du projet. C'est ici que se trouvent les correctifs les plus urgents.
+Si vous voulez la dernière version immédiatement sans gestionnaire, téléchargez directement le fichier APK.
 
-[Télécharger sur GitHub](https://github.com/InfinityLoop1308/PipePipe/releases)
+[Télécharger le dernier APK](https://github.com/InfinityLoop1308/PipePipe/releases)
 
-::: tip Quel fichier choisir ?
-La plupart des appareils modernes utilisent l'architecture `arm64-v8a`. Si vous avez un doute, l'APK `universal` fonctionnera sur n'importe quel appareil, mais le fichier sera plus volumineux.
+::: tip Guide des architectures
+*   **arm64-v8a :** Pour la plupart des smartphones modernes.
+*   **universal :** Fonctionne partout mais le fichier est plus lourd.
 :::
-
-### IzzyOnDroid
-IzzyOnDroid est un dépôt F-Droid alternatif qui se synchronise souvent plus rapidement que le dépôt F-Droid officiel.
-
-[Disponible sur IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/InfinityLoop1309.NewPipeEnhanced)
