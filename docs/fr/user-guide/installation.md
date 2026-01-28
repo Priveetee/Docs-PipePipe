@@ -58,4 +58,4 @@ Pour faire fonctionner PipePipe, votre appareil doit répondre aux exigences min
 *   **Version Android :** Android 5.0 (Lollipop) ou supérieure.
 *   **Architecture :** arm64-v8a, armeabi-v7a, ou x86_64.
 
-Si vous utilisez un appareil extrêmement ancien (Android 4.4 ou inférieur), PipePipe ne fonctionnera pas.
+Si vous utilisez un appareil extrêmement ancien (Android 4.4 ou inférieur), PipePipe ne fonctionnera pas. Dans ce cas, nous vous conseillons d'essayer [NewPipe-Legacy-Revo](https://github.com/ShareASmile/NewPipe-Legacy-Revo), bien que ce projet ne soit pas officiellement supporté par l'équipe PipePipe.
