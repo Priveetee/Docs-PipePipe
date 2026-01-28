@@ -1,5 +1,18 @@
 # Common Issues
 
+## Network and YouTube Restrictions
+
+### AntiBotException: "Sign in to confirm you’re not a bot"
+This is a server-side block from YouTube. It happens when your IP address is flagged for "abnormal behavior" (too many requests in a short time, often caused by NAT or importing many subscriptions).
+
+**Solutions:**
+1.  **Change your IP:** Switch from Wi-Fi to mobile data, or restart your router to get a new dynamic IP.
+2.  **Use a VPN:** We recommend using a high-quality service like [Proton VPN](https://protonvpn.com/).
+    *   *Note: We are not affiliated with this service; this recommendation is based on community tests showing its reliability.*
+3.  **Switch Region:** If you are using a VPN and still get the error, simply change the server to another country. This provides a new IP that is likely not flagged by YouTube.
+4.  **Orbot (Tor):** Using [Orbot](https://orbot.app/) allows you to rotate through different exit nodes across the world until the block is bypassed.
+5.  **Login:** Logging into your YouTube account within PipePipe remains a stable way to avoid this exception if you don't want to use a VPN.
+
 ## Video Playback: "The page needs to be reloaded"
 
 This is currently the most reported issue. Users see a popup or an error log stating: `org.schabi.newpipe.extractor.exceptions.ContentNotAvailableException: The page needs to be reloaded.`

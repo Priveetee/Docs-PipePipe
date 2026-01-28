@@ -1,5 +1,19 @@
 # Problèmes Courants
 
+
+## Réseau et Restrictions YouTube
+
+### AntiBotException : "Connectez-vous pour prouver que vous n'êtes pas un robot"
+Il s'agit d'un blocage côté serveur de YouTube. Cela arrive quand votre adresse IP est signalée pour "comportement anormal" (trop de requêtes en peu de temps, souvent causé par le partage d'IP (NAT) ou l'import massif d'abonnements).
+
+**Solutions :**
+1.  **Changez d'IP :** Passez du Wi-Fi aux données mobiles, ou redémarrez votre box pour obtenir une nouvelle IP dynamique.
+2.  **Utilisez un VPN :** Nous recommandons un service de qualité comme [Proton VPN](https://protonvpn.com/fr/).
+    *   *Note : Nous ne sommes pas affiliés à ce service ; cette recommandation est basée sur des tests de la communauté montrant sa grande fiabilité.*
+3.  **Changez de Région :** Si vous utilisez déjà un VPN et que l'erreur persiste, changez simplement de serveur pour un autre pays. Cela vous donnera une nouvelle IP non signalée.
+4.  **Orbot (Tor) :** Utiliser [Orbot](https://orbot.app/fr/) vous permet de basculer entre différents nœuds de sortie à travers le monde jusqu'à ce que le blocage soit levé.
+5.  **Connexion :** Se connecter à son compte YouTube dans PipePipe reste une méthode stable pour éviter cette exception si vous ne souhaitez pas utiliser de VPN.
+
 ## Lecture Vidéo : "La page doit être rechargée"
 
 Il s'agit actuellement du problème le plus signalé. Les utilisateurs voient un message d'erreur indiquant : `org.schabi.newpipe.extractor.exceptions.ContentNotAvailableException: The page needs to be reloaded.`
