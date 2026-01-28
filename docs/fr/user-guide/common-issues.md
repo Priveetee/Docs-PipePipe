@@ -60,3 +60,11 @@ Si votre vidéo s'arrête soudainement pour charger et que l'application finit p
 2.  Activez l'option **Always use ExoPlayer video output surface setting workaround**.
 3.  Redémarrez l'application.
 4.  Si le problème persiste, un redémarrage complet de l'appareil est recommandé.
+
+### Crash lors de la lecture d'une vidéo téléchargée
+Si PipePipe plante lorsque vous essayez d'ouvrir un fichier téléchargé, il s'agit généralement d'un conflit de permission avec votre lecteur vidéo externe.
+
+**Solution :**
+*   **Permissions :** Assurez-vous que votre application de lecture vidéo dispose de la permission "Fichiers et contenus multimédias" dans les paramètres Android.
+*   **Lecteur recommandé :** Utilisez un lecteur robuste comme **VLC** ou **Just (Video) Player**. Ils gèrent mieux le système de stockage d'Android que la plupart des applications de galerie natives.
+*   **Alternative :** Au lieu de lancer la lecture depuis PipePipe, essayez d'ouvrir la vidéo directement depuis le Gestionnaire de fichiers de votre téléphone.

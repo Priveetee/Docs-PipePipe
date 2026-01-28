@@ -60,3 +60,11 @@ If your video suddenly starts buffering and the app eventually crashes (common o
 2.  Enable the option **Always use ExoPlayer video output surface setting workaround**.
 3.  Restart the application.
 4.  If it still happens, a full device reboot is recommended.
+
+### Crash when playing downloaded videos
+If PipePipe crashes when you try to open a downloaded file, it is usually a permission conflict with your external video player.
+
+**Solution:**
+*   **Permissions:** Ensure your video player app has "Files and Media" permissions granted in Android Settings.
+*   **Recommended Player:** Use a robust player like **VLC** or **Just (Video) Player**. They handle Android's Scoped Storage better than many stock gallery apps.
+*   **Alternative:** Instead of playing from PipePipe, try opening the video directly from your phone's File Manager.
