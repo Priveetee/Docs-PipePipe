@@ -3,12 +3,12 @@ layout: home
 
 hero:
     name: "PipePipe Wiki"
-    text: "Le Guide Non-Officiel."
-    tagline: Fait par un utilisateur, pour les utilisateurs. Apprenez à maîtriser chaque aspect de l'application.
+    text: "Le guide communautaire."
+    tagline: Fait par la communauté, pour la communauté. Apprenez à maîtriser chaque aspect de l'application.
     actions:
         - theme: brand
           text: Commencer
-          link: /fr/guide/getting-started
+          link: /fr/user-guide/introduction.md
         - theme: alt
           text: Voir sur GitHub
           link: https://github.com/InfinityLoop1308/PipePipe
@@ -20,4 +20,5 @@ features:
       details: Découvrez des astuces et des fonctionnalités cachées pour optimiser votre expérience.
     - title: Dépannage
       details: Trouvez des solutions aux problèmes les plus courants rencontrés par la communauté.
+      link: /fr/user-guide/common-issues
 ---
