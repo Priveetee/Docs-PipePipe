@@ -9,3 +9,36 @@
         #c83270
     );
 }
+
+.vp-footer {
+    border-top: 1px solid var(--vp-c-divider);
+    padding: 32px 24px;
+    color: var(--vp-c-text-1) !important;
+    text-align: center;
+    line-height: 24px;
+    font-size: 14px;
+}
+
+.vp-footer a {
+    color: var(--vp-c-brand-1);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.vp-footer a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.footer-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+}
+
+.github-svg {
+    fill: currentColor;
+}
