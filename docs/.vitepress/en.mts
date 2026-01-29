@@ -2,7 +2,7 @@ import { defineConfig } from "vitepress";
 
 export const en = defineConfig({
     lang: "en-US",
-    description: "The official guide to PipePipe.",
+    description: "The PipePipe Wiki, by and for the community.",
 
     themeConfig: {
         nav: [
@@ -89,8 +89,8 @@ export const en = defineConfig({
         },
 
         footer: {
-            message: "Released under the GNU AGPL v3 License.",
-            copyright: "Copyright © 2025-present Priveetee",
+            message: `Built by <a href="https://github.com/Priveetee" target="_blank">Priveetee</a> for <a href="https://github.com/InfinityLoop1308/PipePipe" target="_blank">PipePipe</a>`,
+            copyright: `Copyright © 2025-${new Date().getFullYear()} Priveetee`,
         },
 
         editLink: {

@@ -3,8 +3,8 @@ layout: home
 
 hero:
     name: "PipePipe Wiki"
-    text: "The Official User Guide."
-    tagline: Built by a user, for the users. Learn to master every aspect of the application.
+    text: "The community-driven guide."
+    tagline: Built by the community, for the community. Learn to master every aspect of the application.
     actions:
         - theme: brand
           text: Get Started
