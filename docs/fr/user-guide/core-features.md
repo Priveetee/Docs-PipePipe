@@ -1,21 +1,36 @@
 # Fonctionnalités Clés
 
-Cette page détaille les fonctionnalités les plus importantes de PipePipe que tout utilisateur devrait connaître.
+PipePipe est un client Android open-source qui vous permet de consulter YouTube, NicoNico et BiliBili sans publicité ni pistage.
 
-Cette page va etre mis a jour plus tard c'est juste pour voir comment cela rend sur le site.
+## Confidentialité et Anonymat
+L'application est conçue pour fonctionner sans compte Google.
+*   **Aucune collecte de données :** Aucune donnée personnelle n'est collectée ou envoyée à des serveurs tiers.
+*   **Abonnements locaux :** Votre liste d'abonnements et votre historique sont stockés exclusivement sur votre appareil.
+*   **Open Source :** L'intégralité du code source est disponible pour audit et contribution.
 
-::: tip
-Vous pouvez contrôler la lecture directement depuis l'écran de verrouillage et le volet de notifications de votre appareil !
-:::
+## Support Multi-Plateforme
+Contrairement à NewPipe, PipePipe intègre plusieurs services dans une interface unique :
+*   **YouTube :** Vidéos, shorts et flux en direct.
+*   **NicoNico & BiliBili :** Support complet de ces plateformes, incluant les fonctionnalités spécifiques comme le Danmaku.
 
-## Lecture en arrière-plan
+## Capacités de Lecture
+*   **Lecture en arrière-plan :** L'audio continue de jouer lorsque l'écran est éteint ou lors de l'utilisation d'autres applications.
+*   **Mode Popup :** Les vidéos peuvent être lues dans une fenêtre flottante (Picture-in-Picture).
+*   **Codecs :** Support de l'AV1 et du VP9 pour une meilleure qualité avec un débit réduit.
+*   **Danmaku :** Superposition de commentaires défilants pour les chats en direct sur les plateformes compatibles.
 
-L'une des fonctionnalités phares de PipePipe est sa capacité à lire l'audio en arrière-plan...
+## Modifications du Contenu
+PipePipe inclut plusieurs modules intégrés pour modifier l'expérience de visionnage :
+*   **SponsorBlock :** Passe automatiquement les segments comme les intros, outros et rappels non liés au contenu.
+*   **YouTube Dislikes :** Restaure la visibilité du compteur de "Je n'aime pas".
+*   **Titres originaux :** Option pour afficher les titres originaux des vidéos au lieu des traductions forcées.
 
-## Téléchargements
+## Filtrage et Organisation
+*   **Filtres de contenu :** Possibilité de masquer les YouTube Shorts, le contenu payant ou les vidéos contenant certains mots-clés.
+*   **Groupes d'abonnements :** Organisez votre flux en créant des catégories locales pour vos abonnements.
+*   **Playlists locales :** Créez et gérez un nombre illimité de listes de lecture hors ligne.
 
-Vous pouvez télécharger des vidéos pour les regarder hors ligne...
-
-::: warning
-Si vous supprimez des vidéos téléchargées, elles seront supprimées de votre appareil.
-:::
+## Téléchargement de Médias
+*   **Sélection du format :** Téléchargement des flux en formats vidéo ou audio (MPEG-4, WebM, M4A, Opus).
+*   **Traitement par lot :** Possibilité de télécharger des listes de lecture entières ou le contenu d'une chaîne.
+*   **Gestion du stockage :** Chemins de téléchargement personnalisés, incluant le support des cartes SD.
