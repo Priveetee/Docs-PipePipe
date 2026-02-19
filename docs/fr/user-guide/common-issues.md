@@ -14,7 +14,7 @@ Bien que les messages d'erreur diffèrent, ils partagent des causes communes : v
 **Solutions :**
 
 1.  **Réessayez la vidéo :** L'`ExtractionException` est souvent temporaire. Appuyer sur réessayer ou rouvrir la vidéo suffit à la résoudre.
-2.  **Augmentez le délai de chargement :** Allez dans `Paramètres > Contenu > Délai de chargement` et augmentez la valeur. Cela laisse plus de temps à PipePipe pour récupérer les métadonnées du stream avant d'abandonner.
+2.  **Augmentez le délai de chargement :** Allez dans `Paramètres > Avancé > Délai d'attente pour le chargement de la vidéo` et augmentez la valeur. Cela laisse plus de temps à PipePipe pour récupérer les métadonnées du stream avant d'abandonner.
 3.  **Changez d'IP :** Passez du Wi-Fi aux données mobiles, ou redémarrez votre box pour obtenir une nouvelle IP dynamique. Une IP signalée est la cause la plus fréquente de l'`AntiBotException`.
 4.  **Utilisez un VPN :** Nous recommandons un service de qualité comme [Proton VPN](https://protonvpn.com/fr/).
     *   *Note : Nous ne sommes pas affiliés à ce service ; cette recommandation est basée sur des tests de la communauté montrant sa grande fiabilité.*
