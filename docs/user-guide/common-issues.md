@@ -2,16 +2,28 @@
 
 ## Network and YouTube Restrictions
 
-### AntiBotException: "Sign in to confirm you’re not a bot"
-This is a server-side block from YouTube. It happens when your IP address is flagged for "abnormal behavior" (too many requests in a short time, often caused by NAT or importing many subscriptions).
+### YouTube Blocking or Failing to Load Streams
+This covers two related errors that both stem from YouTube restricting or failing to serve stream data to anonymous clients:
+
+- `AntiBotException: Sign in to confirm you're not a bot`
+- `ExtractionException: Error occurs when fetching the page. Try increase the loading timeout in Settings.`
+
+While the error messages differ, they share common root causes: your IP being flagged by YouTube, rate-limiting of anonymous requests, network timeouts, or transient server-side failures on YouTube's end.
 
 **Solutions:**
-1.  **Change your IP:** Switch from Wi-Fi to mobile data, or restart your router to get a new dynamic IP.
-2.  **Use a VPN:** We recommend using a high-quality service like [Proton VPN](https://protonvpn.com/).
+
+1.  **Retry the video:** The `ExtractionException` is often transient. Simply tapping retry or reopening the video resolves it.
+2.  **Increase the loading timeout:** Go to `Settings > Content > Loading timeout` and increase the value. This gives PipePipe more time to fetch stream metadata before giving up.
+3.  **Change your IP:** Switch from Wi-Fi to mobile data, or restart your router to get a new dynamic IP. A flagged IP is the most common cause of the `AntiBotException`.
+4.  **Use a VPN:** We recommend a high-quality service like [Proton VPN](https://protonvpn.com/).
     *   *Note: We are not affiliated with this service; this recommendation is based on community tests showing its reliability.*
-3.  **Switch Region:** If you are using a VPN and still get the error, simply change the server to another country. This provides a new IP that is likely not flagged by YouTube.
-4.  **Orbot (Tor):** Using [Orbot](https://orbot.app/) allows you to rotate through different exit nodes across the world until the block is bypassed.
-5.  **Login:** Logging into your YouTube account within PipePipe remains a stable way to avoid this exception if you don't want to use a VPN.
+5.  **Switch VPN region:** If you are already on a VPN and still get the error, change server to another country for a fresh, unflagged IP.
+6.  **Orbot (Tor):** Using [Orbot](https://orbot.app/) lets you rotate through different exit nodes worldwide until the block is bypassed.
+7.  **Login:** Logging into your YouTube account within PipePipe remains a stable way to avoid both exceptions if you prefer not to use a VPN.
+
+::: tip Anonymous vs. logged-in
+YouTube throttles and blocks anonymous (unauthenticated) clients far more aggressively than logged-in ones. If you keep hitting either of these errors, logging in is the most reliable long-term fix.
+:::
 
 ## Video Playback: "The page needs to be reloaded"
 
