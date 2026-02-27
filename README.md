@@ -17,7 +17,7 @@ This website is built with [VitePress](https://vitepress.dev/).
     ```
 3.  Run the local development server:
     ```sh
-    bun run dev
+    bun run docs:dev
     ```
 
 The site will be available at `http://localhost:5173`.
