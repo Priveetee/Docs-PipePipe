@@ -41,7 +41,9 @@ YouTube frequently implements new encryption mechanisms in its API to prevent un
 
 They chose option 2 to prevent a cascade of crash reports and user frustration.
 
-**If you are reading this, login is likely currently disabled.** This is part of a recurring cycle: a workaround has been found before and login has been re-enabled in the past. It will be re-enabled again once a new workaround is found.
+::: warning If you are reading this, login is likely currently disabled.
+This is part of a recurring cycle: a workaround has been found before and login has been re-enabled in the past. It will be re-enabled again once a new workaround is found.
+:::
 
 **Bottom line:** This isn't a feature being phased out, it's a cat and mouse game between YouTube's security team (trying to block unauthorized access) and open source developers (trying to maintain compatibility). When YouTube changes its encryption, PipePipe temporarily breaks until a new workaround is found. This cycle repeats as YouTube continuously evolves its protections.
 
