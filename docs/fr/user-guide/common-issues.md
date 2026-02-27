@@ -20,10 +20,36 @@ Bien que les messages d'erreur diffèrent, ils partagent des causes communes : v
     *   *Note : Nous ne sommes pas affiliés à ce service ; cette recommandation est basée sur des tests de la communauté montrant sa grande fiabilité.*
 5.  **Changez de région VPN :** Si vous utilisez déjà un VPN et que l'erreur persiste, changez de serveur pour un autre pays afin d'obtenir une IP fraîche et non signalée.
 6.  **Orbot (Tor) :** Utiliser [Orbot](https://orbot.app/fr/) vous permet de basculer entre différents nœuds de sortie à travers le monde jusqu'à ce que le blocage soit levé.
-7.  **Connexion :** Se connecter à son compte YouTube dans PipePipe reste une méthode stable pour éviter ces deux exceptions si vous ne souhaitez pas utiliser de VPN.
+7.  **Connexion :** Se connecter à son compte YouTube dans PipePipe reste une méthode stable pour éviter ces deux exceptions si vous ne souhaitez pas utiliser de VPN. Voir [Problèmes de Connexion YouTube](#problèmes-de-connexion-youtube) pour plus d'informations.
 
 ::: tip Anonyme vs. connecté
-YouTube limite et bloque les clients anonymes (non authentifiés) bien plus agressivement que les clients connectés. Si vous rencontrez régulièrement l'une ou l'autre de ces erreurs, se connecter est la solution la plus fiable sur le long terme.
+YouTube limite et bloque les clients anonymes (non authentifiés) bien plus agressivement que les clients connectés. Si vous rencontrez régulièrement l'une ou l'autre de ces erreurs, se connecter est la solution la plus fiable sur le long terme. Voir [Problèmes de Connexion YouTube](#problèmes-de-connexion-youtube) pour plus d'informations.
+:::
+
+## Problèmes de Connexion YouTube
+
+### Pourquoi la connexion peut être indisponible
+
+YouTube implémente fréquemment de nouveaux mécanismes de chiffrement dans son API pour prévenir l'accès non autorisé. À la fin 2025, YouTube a introduit un **chiffrement complexe dans son extracteur d'état connecté**, rendant impossible pour PipePipe d'extraire les flux vidéo lorsque les utilisateurs étaient connectés.
+
+**Contexte :** PipePipe n'utilise pas l'API officielle de YouTube (qui n'existe pas pour les applications tierces). Au lieu de cela, il extrait les données de l'API InnerTube de YouTube en effectuant une ingénierie inverse des interfaces web et mobiles de YouTube. Cette approche nécessite d'analyser les requêtes et les réponses que YouTube envoie aux clients légitimes.
+
+**Le Problème :** Ce n'était pas un problème graduel, c'était un changement cassant qui affectait tous les utilisateurs connectés simultanément, rendant la lecture vidéo impossible pour tous ceux qui essayaient d'utiliser la fonctionnalité de connexion.
+
+**Pourquoi la désactivation temporaire ?** Les développeurs avaient deux options :
+1. Garder la connexion activée et laisser les utilisateurs faire face à des lectures vidéo cassées (mauvaise expérience utilisateur)
+2. Désactiver temporairement la connexion le temps de trouver une solution de contournement
+
+Il a choisi l'option 2 pour éviter une cascade de rapports de crash et de frustration utilisateur.
+
+**Comment a-t-il été résolu ?** Les développeurs ont découvert une solution de contournement en collaborant avec d'autres communautés d'outils open-source YouTube. Cela a permis de réactiver la connexion dans les versions suivantes, bien qu'avec des défaillances d'analyse occasionnelles qui nécessitaient des redémarrages d'application.
+
+**En résumé :** Ce n'est pas une fonctionnalité en train d'être progressivement supprimée, c'est un jeu du chat et de la souris entre l'équipe de sécurité de YouTube (qui essaie de bloquer l'accès non autorisé) et les développeurs open source (qui essaient de maintenir la compatibilité). Quand YouTube change son chiffrement, PipePipe se casse temporairement jusqu'à ce qu'une nouvelle solution de contournement soit trouvée. Ce cycle se répète car YouTube continue d'évoluer ses protections.
+
+### Si la connexion est indisponible
+
+::: warning ⚠️ Connexion Temporairement Indisponible
+Si vous ne pouvez pas vous connecter, utilisez les méthodes alternatives de la section [Réseau et Restrictions YouTube](#réseau-et-restrictions-youtube) ci-dessus.
 :::
 
 ## Lecture Vidéo : "La page doit être rechargée"

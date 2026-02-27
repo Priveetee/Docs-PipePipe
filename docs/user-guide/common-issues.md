@@ -19,10 +19,36 @@ While the error messages differ, they share common root causes: your IP being fl
     *   *Note: We are not affiliated with this service; this recommendation is based on community tests showing its reliability.*
 5.  **Switch VPN region:** If you are already on a VPN and still get the error, change server to another country for a fresh, unflagged IP.
 6.  **Orbot (Tor):** Using [Orbot](https://orbot.app/) lets you rotate through different exit nodes worldwide until the block is bypassed.
-7.  **Login:** Logging into your YouTube account within PipePipe remains a stable way to avoid both exceptions if you prefer not to use a VPN.
+7.  **Login:** Logging into your YouTube account within PipePipe remains a stable way to avoid both exceptions if you prefer not to use a VPN. See [YouTube Login Issues](#youtube-login-issues) for more information.
 
 ::: tip Anonymous vs. logged-in
-YouTube throttles and blocks anonymous (unauthenticated) clients far more aggressively than logged-in ones. If you keep hitting either of these errors, logging in is the most reliable long-term fix.
+YouTube throttles and blocks anonymous (unauthenticated) clients far more aggressively than logged-in ones. If you keep hitting either of these errors, logging in is the most reliable long-term fix. See [YouTube Login Issues](#youtube-login-issues) for more information.
+:::
+
+## YouTube Login Issues
+
+### Why login may be unavailable
+
+YouTube frequently implements new encryption mechanisms in its API to prevent unauthorized access. In late 2025, YouTube introduced **complex encryption in its logged-in state extractor**, making it impossible for PipePipe to extract video streams when users were logged in.
+
+**Background:** PipePipe does not use YouTube's official API (which doesn't exist for third-party apps). Instead, it extracts data from YouTube's InnerTube API by reverse-engineering YouTube's web and mobile interfaces. This approach requires analyzing the requests and responses that YouTube sends to legitimate clients.
+
+**The Problem:** This was not a gradual issue, it was a breaking change that affected all logged-in users simultaneously, making video playback fail for everyone trying to use the login feature.
+
+**Why the temporary disable?** The developers had two options:
+1. Keep login enabled and let users face broken video playback (poor user experience)
+2. Temporarily disable login while finding a workaround
+
+They chose option 2 to prevent a cascade of crash reports and user frustration.
+
+**How was it resolved?** The developers discovered a workaround by collaborating with other open-source YouTube tool communities. This allowed login to be re-enabled in subsequent versions, though with occasional parsing failures that required app restarts.
+
+**Bottom line:** This isn't a feature being phased out, it's a cat and mouse game between YouTube's security team (trying to block unauthorized access) and open source developers (trying to maintain compatibility). When YouTube changes its encryption, PipePipe temporarily breaks until a new workaround is found. This cycle repeats as YouTube continuously evolves its protections.
+
+### If login is unavailable
+
+::: warning ⚠️ Login Temporarily Unavailable
+If you cannot log in, use the alternative methods from the [Network and YouTube Restrictions](#network-and-youtube-restrictions) section above.
 :::
 
 ## Video Playback: "The page needs to be reloaded"
