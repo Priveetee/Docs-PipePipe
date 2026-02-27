@@ -3,6 +3,10 @@ name: Deploy VitePress Site to Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'docs/**'
+      - 'package.json'
+      - 'bun.lock'
   workflow_dispatch:
 
 permissions:
