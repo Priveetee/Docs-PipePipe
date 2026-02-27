@@ -33,7 +33,7 @@ YouTube frequently implements new encryption mechanisms in its API to prevent un
 
 **Background:** PipePipe does not use YouTube's official API (which doesn't exist for third-party apps). Instead, it extracts data from YouTube's InnerTube API by reverse-engineering YouTube's web and mobile interfaces. This approach requires analyzing the requests and responses that YouTube sends to legitimate clients.
 
-**The Problem:** This was not a gradual issue, it was a breaking change that affected all logged-in users simultaneously, making video playback fail for everyone trying to use the login feature.
+**The Problem:** This is not a gradual issue. When it happens, it is a breaking change that affects all logged-in users simultaneously, making video playback fail for everyone trying to use the login feature.
 
 **Why the temporary disable?** The developers had two options:
 1. Keep login enabled and let users face broken video playback (poor user experience)
@@ -41,7 +41,7 @@ YouTube frequently implements new encryption mechanisms in its API to prevent un
 
 They chose option 2 to prevent a cascade of crash reports and user frustration.
 
-**How was it resolved?** The developers discovered a workaround by collaborating with other open-source YouTube tool communities. This allowed login to be re-enabled in subsequent versions, though with occasional parsing failures that required app restarts.
+**If you are reading this, login is likely currently disabled.** This is part of a recurring cycle: a workaround has been found before and login has been re-enabled in the past. It will be re-enabled again once a new workaround is found.
 
 **Bottom line:** This isn't a feature being phased out, it's a cat and mouse game between YouTube's security team (trying to block unauthorized access) and open source developers (trying to maintain compatibility). When YouTube changes its encryption, PipePipe temporarily breaks until a new workaround is found. This cycle repeats as YouTube continuously evolves its protections.
 

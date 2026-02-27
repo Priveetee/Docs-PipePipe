@@ -34,7 +34,7 @@ YouTube implémente fréquemment de nouveaux mécanismes de chiffrement dans son
 
 **Contexte :** PipePipe n'utilise pas l'API officielle de YouTube (qui n'existe pas pour les applications tierces). Au lieu de cela, il extrait les données de l'API InnerTube de YouTube en effectuant une ingénierie inverse des interfaces web et mobiles de YouTube. Cette approche nécessite d'analyser les requêtes et les réponses que YouTube envoie aux clients légitimes.
 
-**Le Problème :** Ce n'était pas un problème graduel, c'était un changement cassant qui affectait tous les utilisateurs connectés simultanément, rendant la lecture vidéo impossible pour tous ceux qui essayaient d'utiliser la fonctionnalité de connexion.
+**Le Problème :** Ce n'est pas un problème graduel. Lorsque cela se produit, c'est un changement cassant qui affecte tous les utilisateurs connectés simultanément, rendant la lecture vidéo impossible pour tous ceux qui essaient d'utiliser la fonctionnalité de connexion.
 
 **Pourquoi la désactivation temporaire ?** Les développeurs avaient deux options :
 1. Garder la connexion activée et laisser les utilisateurs faire face à des lectures vidéo cassées (mauvaise expérience utilisateur)
@@ -42,7 +42,7 @@ YouTube implémente fréquemment de nouveaux mécanismes de chiffrement dans son
 
 Il a choisi l'option 2 pour éviter une cascade de rapports de crash et de frustration utilisateur.
 
-**Comment a-t-il été résolu ?** Les développeurs ont découvert une solution de contournement en collaborant avec d'autres communautés d'outils open-source YouTube. Cela a permis de réactiver la connexion dans les versions suivantes, bien qu'avec des défaillances d'analyse occasionnelles qui nécessitaient des redémarrages d'application.
+**Si vous lisez ceci, il est probable que la connexion soit actuellement désactivée.** Cela fait partie d'un cycle récurrent : une solution de contournement a déjà été trouvée et la connexion a été réactivée par le passé. Elle le sera de nouveau dès qu'une nouvelle solution sera trouvée.
 
 **En résumé :** Ce n'est pas une fonctionnalité en train d'être progressivement supprimée, c'est un jeu du chat et de la souris entre l'équipe de sécurité de YouTube (qui essaie de bloquer l'accès non autorisé) et les développeurs open source (qui essaient de maintenir la compatibilité). Quand YouTube change son chiffrement, PipePipe se casse temporairement jusqu'à ce qu'une nouvelle solution de contournement soit trouvée. Ce cycle se répète car YouTube continue d'évoluer ses protections.
 
