@@ -54,6 +54,39 @@ Cela fait partie d'un cycle récurrent : une solution de contournement a déjà 
 Si vous ne pouvez pas vous connecter, utilisez les méthodes alternatives de la section [Réseau et Restrictions YouTube](#réseau-et-restrictions-youtube) ci-dessus.
 :::
 
+## Vérification de l'APK
+
+PipePipe n'est pas disponible sur le Google Play Store, Android ne peut donc pas vérifier l'application en votre nom. Pour confirmer que l'APK installé a bien été signé par le développeur officiel (InfinityLoop1308) et n'a pas été altéré, vous pouvez vérifier l'empreinte du certificat de signature.
+
+### L'empreinte du certificat de signature
+
+Le développeur n'a pas encore publié ce hash sur une page officielle (voir [issue #893](https://github.com/InfinityLoop1308/PipePipe/issues/893)). Il a été trouvé dans le dépôt de métadonnées F-Droid (`fdroiddata`), où il est enregistré comme valeur `AllowedAPKSigningKeys` pour PipePipe. Un membre de la communauté a confirmé qu'il correspond à la fois à l'APK GitHub et à l'APK F-Droid — ce qui est attendu, car PipePipe utilise un build reproductible signé par le développeur.
+
+**SHA-256 (hexadécimal) :**
+```
+dec73429ce2563275f5ed19825e44652b32b363a46f38bdff9ad6dcde4842d88
+```
+
+**SHA-256 (séparé par des deux-points) :**
+```
+DE:C7:34:29:CE:25:63:27:5F:5E:D1:98:25:E4:46:52:B3:2B:36:3A:46:F3:8B:DF:F9:AD:6D:CD:E4:84:2D:88
+```
+
+### Comment vérifier
+
+**Avec Obtainium :** Lors de l'ajout de PipePipe dans Obtainium, collez l'empreinte hexadécimale dans le champ "Allowed APK Signing Key Fingerprints". Obtainium rejettera automatiquement toute mise à jour qui ne correspond pas.
+
+**Avec AppVerifier :** Installez [AppVerifier](https://github.com/soupslurpr/AppVerifier) depuis F-Droid, ouvrez-le, sélectionnez PipePipe dans la liste, et comparez l'empreinte affichée avec le hash séparé par des deux-points ci-dessus.
+
+**Avec ADB :** Exécutez la commande suivante et comparez la ligne `SHA-256` dans le résultat :
+```
+adb shell pm dump InfinityLoop1309.NewPipeEnhanced | grep -A1 "Signing"
+```
+
+::: tip Même hash pour GitHub et F-Droid
+L'APK téléchargé depuis GitHub et l'APK F-Droid produisent la même empreinte. Il n'est pas nécessaire d'utiliser un hash différent selon la source d'installation.
+:::
+
 ## Lecture Vidéo : "La page doit être rechargée"
 
 Il s'agit actuellement du problème le plus signalé. Les utilisateurs voient un message d'erreur indiquant : `org.schabi.newpipe.extractor.exceptions.ContentNotAvailableException: The page needs to be reloaded.`

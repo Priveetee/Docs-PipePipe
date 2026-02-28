@@ -53,6 +53,39 @@ This is part of a recurring cycle: a workaround has been found before and login 
 If you cannot log in, use the alternative methods from the [Network and YouTube Restrictions](#network-and-youtube-restrictions) section above.
 :::
 
+## APK Verification
+
+PipePipe is not on the Google Play Store, so Android cannot verify the app on your behalf. To confirm that the APK you installed was signed by the official developer (InfinityLoop1308) and has not been tampered with, you can check its signing certificate fingerprint.
+
+### The signing certificate fingerprint
+
+The developer has not published this hash on an official page yet (see [issue #893](https://github.com/InfinityLoop1308/PipePipe/issues/893)). It was sourced from the F-Droid metadata repository (`fdroiddata`), where it is committed as the `AllowedAPKSigningKeys` value for PipePipe. A community member confirmed it matches both the GitHub APK and the F-Droid APK — this is expected, as PipePipe uses a reproducible build signed by the developer.
+
+**SHA-256 (hex):**
+```
+dec73429ce2563275f5ed19825e44652b32b363a46f38bdff9ad6dcde4842d88
+```
+
+**SHA-256 (colon-separated):**
+```
+DE:C7:34:29:CE:25:63:27:5F:5E:D1:98:25:E4:46:52:B3:2B:36:3A:46:F3:8B:DF:F9:AD:6D:CD:E4:84:2D:88
+```
+
+### How to verify
+
+**Using Obtainium:** When adding PipePipe to Obtainium, paste the hex fingerprint into the "Allowed APK Signing Key Fingerprints" field. Obtainium will automatically reject any update that does not match.
+
+**Using AppVerifier:** Install [AppVerifier](https://github.com/soupslurpr/AppVerifier) from F-Droid, open it, select PipePipe from the list, and compare the displayed fingerprint against the colon-separated hash above.
+
+**Using ADB:** Run the following command and compare the `SHA-256` line in the output:
+```
+adb shell pm dump InfinityLoop1309.NewPipeEnhanced | grep -A1 "Signing"
+```
+
+::: tip Same hash for GitHub and F-Droid
+Both the GitHub release APK and the F-Droid APK produce the same fingerprint. There is no need to use a different hash depending on where you installed the app.
+:::
+
 ## Video Playback: "The page needs to be reloaded"
 
 This is currently the most reported issue. Users see a popup or an error log stating: `org.schabi.newpipe.extractor.exceptions.ContentNotAvailableException: The page needs to be reloaded.`
