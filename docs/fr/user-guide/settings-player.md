@@ -26,12 +26,29 @@ Une résolution plus basse est souvent suffisante pour la petite fenêtre du pop
 
 ## Activer les formats avancés
 
+**Chemin :** Paramètres > Vidéo et audio > Activer les formats avancés
+
 Permet au lecteur d'utiliser des codecs vidéo et audio modernes si votre appareil les prend en charge.
 
-- **Options :** VP9, AV1, HEVC, EC-3.
+- **VP9** — Un codec ouvert largement supporté. Bonne compatibilité sur la plupart des appareils Android.
+- **AV1** — Un codec plus efficace que VP9. Requis pour la lecture en 2K/4K sur YouTube. Consomme plus de CPU que VP9 sur les appareils sans décodage matériel AV1.
+- **HEVC** — Un codec courant sur iOS. La prise en charge sur Android varie selon l'appareil.
+- **EC-3** — Un codec audio Dolby Digital Plus. Utile uniquement si votre appareil le prend en charge.
+
+Les formats activés ici déterminent quels streams apparaissent dans le sélecteur de qualité du lecteur. Par exemple, activer AV1 ajoute des streams `AV01` dans la liste de qualité directement dans le lecteur. Une fois activé, ouvrez une vidéo, appuyez sur l'icône de qualité dans le lecteur, et sélectionnez un stream VP9 ou AV01.
+
+::: tip
+Si votre vidéo lagge périodiquement (l'audio est correct mais la vidéo saccade toutes les quelques secondes), essayez de changer de codec :
+1. Allez dans **Paramètres > Vidéo et audio > Activer les formats avancés**
+2. Activez **VP9** ou **AV1**
+3. Ouvrez une vidéo, appuyez sur le sélecteur de qualité dans le lecteur
+4. Sélectionnez un stream **VP9** ou **AV01**
+
+C'est la solution confirmée par le développeur pour ce type de lag (voir [#2085](https://github.com/InfinityLoop1308/PipePipe/issues/2085) et [#2045](https://github.com/InfinityLoop1308/PipePipe/issues/2045)).
+:::
 
 ::: warning
-Activer un format que votre appareil ne supporte pas peut entraîner un écran noir ou des plantages. WEBM ou AV1 sont nécessaires pour la lecture en 2k/4k sur YouTube.
+Activer un format que votre appareil ne supporte pas peut entraîner un écran noir ou des plantages. WEBM ou AV1 sont nécessaires pour la lecture en 2K/4K sur YouTube.
 :::
 
 ## Limiter la résolution lors de l'utilisation des données mobiles

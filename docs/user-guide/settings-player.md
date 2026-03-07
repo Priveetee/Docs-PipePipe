@@ -26,12 +26,29 @@ A lower resolution is often sufficient for the small popup window and consumes f
 
 ## Enable advanced formats
 
+**Path:** Settings > Video and audio > Enable advanced formats
+
 Allows the player to use modern video and audio codecs if your device supports them.
 
-- **Options:** VP9, AV1, HEVC, EC-3.
+- **VP9** — A widely supported open codec. Good compatibility across most Android devices.
+- **AV1** — A more efficient codec than VP9. Required for 2K/4K playback on YouTube. Uses more CPU than VP9 on devices without hardware AV1 decoding.
+- **HEVC** — A codec common on iOS devices. Android support varies by device.
+- **EC-3** — A Dolby Digital Plus audio codec. Only useful if your device supports it.
+
+The formats you enable here determine which streams appear in the in-player quality selector. For example, enabling AV1 adds `AV01` streams to the quality list directly in the player. Once enabled, open a video, tap the quality icon in the player, and select a VP9 or AV01 stream.
+
+::: tip
+If your video lags periodically (audio is fine but video stutters every few seconds), try switching codec:
+1. Go to **Settings > Video and audio > Enable advanced formats**
+2. Enable **VP9** or **AV1**
+3. Open a video, tap the quality selector in the player
+4. Select a **VP9** or **AV01** stream
+
+This is the fix confirmed by the developer for this type of lag (see [#2085](https://github.com/InfinityLoop1308/PipePipe/issues/2085) and [#2045](https://github.com/InfinityLoop1308/PipePipe/issues/2045)).
+:::
 
 ::: warning
-Enabling a format that your device does not support can lead to a black screen or crashes. WEBM or AV1 are required for 2k/4k playback on YouTube.
+Enabling a format that your device does not support can lead to a black screen or crashes. WEBM or AV1 are required for 2K/4K playback on YouTube.
 :::
 
 ## Limit resolution on mobile data
