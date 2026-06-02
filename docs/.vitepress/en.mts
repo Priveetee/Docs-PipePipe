@@ -8,7 +8,7 @@ export const en = defineConfig({
         nav: [
             { text: "Home", link: "/" },
             { text: "User Guide", link: "/user-guide/introduction" },
-            { text: "Developer Guide", link: "/developer-guide/introduction" },
+            { text: "SABR Guide", link: "/developer-guide/introduction" },
         ],
 
         sidebar: {
@@ -68,11 +68,27 @@ export const en = defineConfig({
             ],
             "/developer-guide/": [
                 {
-                    text: "Developer Guide",
+                    text: "SABR Guide",
                     items: [
                         {
                             text: "Introduction",
                             link: "/developer-guide/introduction",
+                        },
+                        {
+                            text: "The origins of SABR",
+                            link: "/developer-guide/sabr-origins",
+                        },
+                        {
+                            text: "The SABR protocol",
+                            link: "/developer-guide/sabr-protocol",
+                        },
+                        {
+                            text: "Inside BotGuard",
+                            link: "/developer-guide/sabr-botguard",
+                        },
+                        {
+                            text: "Attestation",
+                            link: "/developer-guide/sabr-attestation",
                         },
                     ],
                 },
