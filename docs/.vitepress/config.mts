@@ -1,8 +1,9 @@
-import { defineConfig } from "vitepress";
+import { withMermaid } from "vitepress-plugin-mermaid";
 import { en } from "./en.mts";
 import { fr } from "./fr.mts";
+import { es } from "./es.mts";
 
-export default defineConfig({
+export default withMermaid({
     title: "PipePipe Wiki",
     base: "/Docs-PipePipe/",
 
@@ -31,5 +32,15 @@ export default defineConfig({
             link: "/fr/",
             ...fr,
         },
+        es: {
+            label: "Español",
+            link: "/es/",
+            ...es,
+        },
+    },
+
+    vite: {
+        optimizeDeps: { include: ["mermaid"] },
+        ssr: { noExternal: ["mermaid"] },
     },
 });

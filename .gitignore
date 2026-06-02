@@ -8,6 +8,9 @@
 # Build output
 /dist
 
+# Local drafts (held content, not for publication)
+/_drafts
+
 # System files
 .DS_Store
 Thumbs.db

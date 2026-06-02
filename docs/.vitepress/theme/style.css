@@ -45,3 +45,25 @@
 .github-svg {
     fill: currentColor;
 }
+
+/* Diagrams: center them, and stop the tall ones from taking over the page */
+.vp-doc img[src*="/diagrams/"] {
+    display: block;
+    margin: 1.5rem auto;
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+}
+
+/* Dark mode: swap each diagram for a real dark-rendered variant (dark canvas
+   matching the site, light text), instead of filtering the light PNG. */
+.dark .vp-doc img[src$="/diagrams/sabr-pipeline.png"] { content: url(/Docs-PipePipe/diagrams/sabr-pipeline-dark.png); }
+.dark .vp-doc img[src$="/diagrams/sabr-session.png"] { content: url(/Docs-PipePipe/diagrams/sabr-session-dark.png); }
+.dark .vp-doc img[src$="/diagrams/botguard-layers.png"] { content: url(/Docs-PipePipe/diagrams/botguard-layers-dark.png); }
+.dark .vp-doc img[src$="/diagrams/attestation-flow.png"] { content: url(/Docs-PipePipe/diagrams/attestation-flow-dark.png); }
+.dark .vp-doc img[src$="/diagrams/protection-states.png"] { content: url(/Docs-PipePipe/diagrams/protection-states-dark.png); }
+.dark .vp-doc img[src$="/diagrams/token-lifecycle.png"] { content: url(/Docs-PipePipe/diagrams/token-lifecycle-dark.png); }
+.dark .vp-doc img[src$="/diagrams/ump-anatomy.png"] { content: url(/Docs-PipePipe/diagrams/ump-anatomy-dark.png); }
+.dark .vp-doc img[src$="/diagrams/coldstart-vs-followup.png"] { content: url(/Docs-PipePipe/diagrams/coldstart-vs-followup-dark.png); }
+.dark .vp-doc img[src$="/diagrams/media-assembly.png"] { content: url(/Docs-PipePipe/diagrams/media-assembly-dark.png); }

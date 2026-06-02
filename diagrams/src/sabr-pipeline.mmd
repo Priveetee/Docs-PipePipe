@@ -1,0 +1,8 @@
+flowchart LR
+  PR["Player response"] --> REQ["Build SABR request"]
+  REQ --> SRV[("YouTube SABR server")]
+  SRV --> UMP["UMP response"]
+  UMP --> MED{"Media included?"}
+  MED -->|yes| SEG["Collect segments<br/>audio and video"]
+  MED -->|protected| POT["Needs Proof of Origin"]
+  POT --> REQ

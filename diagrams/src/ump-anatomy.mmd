@@ -1,0 +1,17 @@
+flowchart TB
+  UMP["UMP response body<br/>(stream of typed parts)"] --> G1
+  UMP --> G2
+  UMP --> G3
+  subgraph G1["Media"]
+    MH["Media header<br/>describes next segment"]
+    MD["Media bytes"]
+    ME["Media end"]
+  end
+  subgraph G2["Instructions"]
+    NRP["Next request policy<br/>readahead + continuity token"]
+    SPS["Stream protection status<br/>open or protected"]
+  end
+  subgraph G3["Descriptors"]
+    FIM["Format init metadata"]
+    SF["Selectable formats"]
+  end

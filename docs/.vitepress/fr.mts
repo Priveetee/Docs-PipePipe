@@ -9,7 +9,7 @@ export const fr = defineConfig({
             { text: "Accueil", link: "/fr/" },
             { text: "Guide Utilisateur", link: "/fr/user-guide/introduction" },
             {
-                text: "Guide Développeur",
+                text: "Guide SABR",
                 link: "/fr/developer-guide/introduction",
             },
         ],
@@ -71,11 +71,27 @@ export const fr = defineConfig({
             ],
             "/fr/developer-guide/": [
                 {
-                    text: "Guide du Développeur",
+                    text: "Guide SABR",
                     items: [
                         {
                             text: "Introduction",
                             link: "/fr/developer-guide/introduction",
+                        },
+                        {
+                            text: "Les origines de SABR",
+                            link: "/fr/developer-guide/sabr-origins",
+                        },
+                        {
+                            text: "Le protocole SABR",
+                            link: "/fr/developer-guide/sabr-protocol",
+                        },
+                        {
+                            text: "Dans BotGuard",
+                            link: "/fr/developer-guide/sabr-botguard",
+                        },
+                        {
+                            text: "Attestation",
+                            link: "/fr/developer-guide/sabr-attestation",
                         },
                     ],
                 },

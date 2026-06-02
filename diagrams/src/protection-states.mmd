@@ -1,0 +1,5 @@
+flowchart TD
+  A["status 1<br/>open — media flows"] -->|readahead boundary| B["status 2<br/>boundary, pending"]
+  B -->|next segment gated| C["status 3<br/>protected — no media"]
+  C -->|"present valid PO token"| A
+  C -->|"retry without a token"| C

@@ -1,0 +1,12 @@
+flowchart TB
+  I["Stable interpreter<br/>what the browser loads"]
+  P["Encrypted bytecode<br/>program"]
+  VM["Virtual machine<br/>runs the bytecode"]
+  SNAP["Encrypted snapshot<br/>sent for attestation"]
+  AT["Self verification"]
+  DOM["Environment and DOM checks"]
+  I --> P
+  P --> VM
+  VM --> SNAP
+  VM -.guards.-> AT
+  VM -.inspects.-> DOM
