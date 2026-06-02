@@ -1,2 +1,9 @@
 [files]
-extend-exclude = ["docs/fr/"]
+extend-exclude = ["docs/fr/", "docs/es/"]
+
+[default.extend-words]
+SABR = "SABR"
+BotGuard = "BotGuard"
+UMP = "UMP"
+PipePipe = "PipePipe"
+ba = "ba"
