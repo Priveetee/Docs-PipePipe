@@ -1,0 +1,6 @@
+{
+  "look": "handDrawn",
+  "theme": "default",
+  "themeVariables": { "fontFamily": "Caveat, Comic Sans MS, cursive" },
+  "flowchart": { "curve": "basis" }
+}

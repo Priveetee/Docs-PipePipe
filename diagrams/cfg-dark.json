@@ -1,0 +1,21 @@
+{
+  "look": "handDrawn",
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Caveat, Comic Sans MS, cursive",
+    "background": "#1b1b1f",
+    "primaryColor": "#312c52",
+    "mainBkg": "#312c52",
+    "primaryTextColor": "#ececf3",
+    "nodeTextColor": "#ececf3",
+    "primaryBorderColor": "#a896e0",
+    "nodeBorder": "#a896e0",
+    "lineColor": "#c2c2cc",
+    "textColor": "#ececf3",
+    "clusterBkg": "#2b2718",
+    "clusterBorder": "#cdbb5e",
+    "titleColor": "#ececf3",
+    "edgeLabelBackground": "#26262c"
+  },
+  "flowchart": { "curve": "basis" }
+}

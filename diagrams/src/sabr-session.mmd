@@ -1,0 +1,8 @@
+flowchart TB
+  A["Cold start request"] --> B["Server sends init,<br/>formats, media, policy"]
+  B --> C["Client stores cookie,<br/>buffered ranges, player time"]
+  C --> D["Follow up request<br/>carrying the state"]
+  D --> E["Server sends more media"]
+  E --> F{"Target reached?"}
+  F -->|no| D
+  F -->|yes| G["Seek or finish"]

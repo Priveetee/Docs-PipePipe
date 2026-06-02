@@ -1,0 +1,10 @@
+flowchart TB
+  subgraph CS["Cold start — first request"]
+    direction LR
+    CSREQ["Request<br/>formats wanted,<br/>no buffered ranges yet"] --> CSRES["Response<br/>format init metadata<br/>+ init segments<br/>+ first media"]
+  end
+  subgraph FU["Follow up — later requests"]
+    direction LR
+    FUREQ["Request<br/>buffered ranges,<br/>player time,<br/>continuity token"] --> FURES["Response<br/>next media segments"]
+  end
+  CS --> FU

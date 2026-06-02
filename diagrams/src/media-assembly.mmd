@@ -1,0 +1,15 @@
+flowchart LR
+  subgraph V["Video format"]
+    VI["Init segment"] --> VT["Video track"]
+    V1["Segment 1"] --> VT
+    V2["Segment 2"] --> VT
+    V3["Segment n"] --> VT
+  end
+  subgraph A["Audio format"]
+    AI["Init segment"] --> AT["Audio track"]
+    A1["Segment 1"] --> AT
+    A2["Segment 2"] --> AT
+    A3["Segment n"] --> AT
+  end
+  VT --> PLAY["Playable stream"]
+  AT --> PLAY

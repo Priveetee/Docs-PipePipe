@@ -1,0 +1,7 @@
+flowchart TB
+  CH["Attestation challenge<br/>from YouTube"] --> VM["BotGuard VM<br/>runs the challenge"]
+  VM --> SNAP["Encrypted snapshot"]
+  SNAP --> GEN[("GenerateIT<br/>server attestation")]
+  GEN --> IT["Integrity token<br/>limited lifetime"]
+  IT --> PO["Content bound<br/>PO token"]
+  PO --> USE["Used inside the<br/>SABR request"]
