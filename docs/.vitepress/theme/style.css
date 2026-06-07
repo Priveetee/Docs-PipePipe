@@ -67,3 +67,17 @@
 .dark .vp-doc img[src$="/diagrams/ump-anatomy.png"] { content: url(/Docs-PipePipe/diagrams/ump-anatomy-dark.png); }
 .dark .vp-doc img[src$="/diagrams/coldstart-vs-followup.png"] { content: url(/Docs-PipePipe/diagrams/coldstart-vs-followup-dark.png); }
 .dark .vp-doc img[src$="/diagrams/media-assembly.png"] { content: url(/Docs-PipePipe/diagrams/media-assembly-dark.png); }
+.dark .vp-doc img[src$="/diagrams/extractor-overview.png"] { content: url(/Docs-PipePipe/diagrams/extractor-overview-dark.png); }
+.dark .vp-doc img[src$="/diagrams/extractor-architecture.png"] { content: url(/Docs-PipePipe/diagrams/extractor-architecture-dark.png); }
+.dark .vp-doc img[src$="/diagrams/extraction-flow.png"] { content: url(/Docs-PipePipe/diagrams/extraction-flow-dark.png); }
+.dark .vp-doc img[src$="/diagrams/streams-and-delivery.png"] { content: url(/Docs-PipePipe/diagrams/streams-and-delivery-dark.png); }
+.dark .vp-doc img[src$="/diagrams/downloader.png"] { content: url(/Docs-PipePipe/diagrams/downloader-dark.png); }
+.dark .vp-doc img[src$="/diagrams/youtube-service.png"] { content: url(/Docs-PipePipe/diagrams/youtube-service-dark.png); }
+.dark .vp-doc img[src$="/diagrams/info-model.png"] { content: url(/Docs-PipePipe/diagrams/info-model-dark.png); }
+.dark .vp-doc img[src$="/diagrams/list-extractors.png"] { content: url(/Docs-PipePipe/diagrams/list-extractors-dark.png); }
+.dark .vp-doc img[src$="/diagrams/sponsorblock.png"] { content: url(/Docs-PipePipe/diagrams/sponsorblock-dark.png); }
+.dark .vp-doc img[src$="/diagrams/sabr-extractor-round.png"] { content: url(/Docs-PipePipe/diagrams/sabr-extractor-round-dark.png); }
+.dark .vp-doc img[src$="/diagrams/sabr-extractor-decode.png"] { content: url(/Docs-PipePipe/diagrams/sabr-extractor-decode-dark.png); }
+.dark .vp-doc img[src$="/diagrams/sabr-extractor-seek.png"] { content: url(/Docs-PipePipe/diagrams/sabr-extractor-seek-dark.png); }
+.dark .vp-doc img[src$="/diagrams/sabr-ump-layout.png"] { content: url(/Docs-PipePipe/diagrams/sabr-ump-layout-dark.png); }
+.dark .vp-doc img[src$="/diagrams/sabr-buffered-model.png"] { content: url(/Docs-PipePipe/diagrams/sabr-buffered-model-dark.png); }

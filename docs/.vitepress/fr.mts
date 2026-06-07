@@ -8,6 +8,7 @@ export const fr = defineConfig({
         nav: [
             { text: "Accueil", link: "/fr/" },
             { text: "Guide Utilisateur", link: "/fr/user-guide/introduction" },
+            { text: "Extracteur", link: "/fr/extractor/introduction" },
             {
                 text: "Guide SABR",
                 link: "/fr/developer-guide/introduction",
@@ -66,6 +67,72 @@ export const fr = defineConfig({
                             text: "Problèmes Courants",
                             link: "/fr/user-guide/common-issues",
                         },
+                    ],
+                },
+            ],
+            "/fr/extractor/": [
+                {
+                    text: "Concepts",
+                    items: [
+                        { text: "Aperçu", link: "/fr/extractor/introduction" },
+                        { text: "Architecture", link: "/fr/extractor/architecture" },
+                        { text: "Flux d'extraction", link: "/fr/extractor/extraction-flow" },
+                        { text: "Le modèle InfoItem", link: "/fr/extractor/info-model" },
+                    ],
+                },
+                {
+                    text: "Briques de base",
+                    items: [
+                        { text: "Le Downloader", link: "/fr/extractor/the-downloader" },
+                        { text: "Gestion des liens", link: "/fr/extractor/link-handling" },
+                        { text: "Pagination et continuations", link: "/fr/extractor/paging" },
+                        { text: "Recherche et filtres", link: "/fr/extractor/search-and-filters" },
+                        { text: "Localisation et dates", link: "/fr/extractor/localization" },
+                        { text: "Erreurs et exceptions", link: "/fr/extractor/errors" },
+                        { text: "Parsing et utilitaires", link: "/fr/extractor/parsing-utilities" },
+                    ],
+                },
+                {
+                    text: "Types d'extracteurs",
+                    items: [
+                        { text: "Channels, playlists, kiosques", link: "/fr/extractor/list-extractors" },
+                        { text: "Abonnements et fils", link: "/fr/extractor/subscriptions-and-feeds" },
+                    ],
+                },
+                {
+                    text: "Contenu et média",
+                    items: [
+                        { text: "Flux et delivery", link: "/fr/extractor/streams-and-delivery" },
+                        { text: "Commentaires et bullet comments", link: "/fr/extractor/comments" },
+                        { text: "Métadonnées de flux", link: "/fr/extractor/stream-metadata" },
+                        { text: "SponsorBlock", link: "/fr/extractor/sponsorblock" },
+                    ],
+                },
+                {
+                    text: "Services",
+                    items: [
+                        { text: "Tour des services", link: "/fr/extractor/services" },
+                        { text: "Dans YouTube", link: "/fr/extractor/youtube-service" },
+                    ],
+                },
+                {
+                    text: "SABR Extracteur",
+                    items: [
+                        { text: "Overview", link: "/fr/extractor/sabr" },
+                        { text: "Démarrer une session", link: "/fr/extractor/sabr-probe" },
+                        { text: "La requête", link: "/fr/extractor/sabr-request" },
+                        { text: "UMP et décodage", link: "/fr/extractor/sabr-decoding" },
+                        { text: "Média, segments, index", link: "/fr/extractor/sabr-media" },
+                        { text: "Buffered ranges et seek", link: "/fr/extractor/sabr-buffered" },
+                        { text: "Le driver de session", link: "/fr/extractor/sabr-session" },
+                        { text: "Référence des control parts", link: "/fr/extractor/sabr-control-parts" },
+                    ],
+                },
+                {
+                    text: "Contribuer",
+                    items: [
+                        { text: "Ajouter un service", link: "/fr/extractor/adding-a-service" },
+                        { text: "Builder l'extracteur", link: "/fr/extractor/building" },
                     ],
                 },
             ],

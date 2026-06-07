@@ -8,6 +8,7 @@ export const en = defineConfig({
         nav: [
             { text: "Home", link: "/" },
             { text: "User Guide", link: "/user-guide/introduction" },
+            { text: "Extractor", link: "/extractor/introduction" },
             { text: "SABR Guide", link: "/developer-guide/introduction" },
         ],
 
@@ -62,6 +63,135 @@ export const en = defineConfig({
                         {
                             text: "Common Issues",
                             link: "/user-guide/common-issues",
+                        },
+                    ],
+                },
+            ],
+            "/extractor/": [
+                {
+                    text: "Concepts",
+                    items: [
+                        {
+                            text: "Overview",
+                            link: "/extractor/introduction",
+                        },
+                        {
+                            text: "Architecture",
+                            link: "/extractor/architecture",
+                        },
+                        {
+                            text: "Extraction flow",
+                            link: "/extractor/extraction-flow",
+                        },
+                        {
+                            text: "The InfoItem model",
+                            link: "/extractor/info-model",
+                        },
+                    ],
+                },
+                {
+                    text: "Building blocks",
+                    items: [
+                        {
+                            text: "The Downloader",
+                            link: "/extractor/the-downloader",
+                        },
+                        {
+                            text: "Link handling",
+                            link: "/extractor/link-handling",
+                        },
+                        {
+                            text: "Paging and continuations",
+                            link: "/extractor/paging",
+                        },
+                        {
+                            text: "Search and filters",
+                            link: "/extractor/search-and-filters",
+                        },
+                        {
+                            text: "Localization and dates",
+                            link: "/extractor/localization",
+                        },
+                        {
+                            text: "Errors and exceptions",
+                            link: "/extractor/errors",
+                        },
+                        {
+                            text: "Parsing and utilities",
+                            link: "/extractor/parsing-utilities",
+                        },
+                    ],
+                },
+                {
+                    text: "Extractor types",
+                    items: [
+                        {
+                            text: "Channels, playlists, kiosks",
+                            link: "/extractor/list-extractors",
+                        },
+                        {
+                            text: "Subscriptions and feeds",
+                            link: "/extractor/subscriptions-and-feeds",
+                        },
+                    ],
+                },
+                {
+                    text: "Content and media",
+                    items: [
+                        {
+                            text: "Streams and delivery",
+                            link: "/extractor/streams-and-delivery",
+                        },
+                        {
+                            text: "Comments and bullet comments",
+                            link: "/extractor/comments",
+                        },
+                        {
+                            text: "Stream metadata",
+                            link: "/extractor/stream-metadata",
+                        },
+                        {
+                            text: "SponsorBlock",
+                            link: "/extractor/sponsorblock",
+                        },
+                    ],
+                },
+                {
+                    text: "Services",
+                    items: [
+                        {
+                            text: "Services at a glance",
+                            link: "/extractor/services",
+                        },
+                        {
+                            text: "Inside YouTube",
+                            link: "/extractor/youtube-service",
+                        },
+                    ],
+                },
+                {
+                    text: "SABR Extractor",
+                    items: [
+                        { text: "Overview", link: "/extractor/sabr" },
+                        { text: "Starting a session", link: "/extractor/sabr-probe" },
+                        { text: "The request", link: "/extractor/sabr-request" },
+                        { text: "UMP and decoding", link: "/extractor/sabr-decoding" },
+                        { text: "Media, segments, index", link: "/extractor/sabr-media" },
+                        { text: "Buffered ranges and seeking", link: "/extractor/sabr-buffered" },
+                        { text: "The session driver", link: "/extractor/sabr-session" },
+                        { text: "Control parts reference", link: "/extractor/sabr-control-parts" },
+                    ],
+                },
+                {
+                    text: "Contributing",
+                    items: [
+                        {
+                            text: "Adding a service",
+                            link: "/extractor/adding-a-service",
+                        },
+                        {
+                            text: "Building the extractor",
+                            link: "/extractor/building",
                         },
                     ],
                 },
