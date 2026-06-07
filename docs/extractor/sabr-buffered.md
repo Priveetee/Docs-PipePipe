@@ -50,7 +50,7 @@ That last clause is the key: observed timing is only trusted when there is **no 
 3. Otherwise **shrink**: `maxSegment = last`, `contiguousMaxSegment = last`, `observedMaxSegment = min(observedMaxSegment, last)`.
 4. **Drop the observed window**: `firstObservedSegment`, `lastObservedSegment`, `observedStartMs`, `observedEndMs` all back to `-1`.
 
-Step 4 matters as much as step 3: if the observed window survived, `canUseObservedTiming` could still report an end past the seek target and the re-request would again come back empty. With both heads and the observed window walked back, the next request honestly asks for the target and the server re-sends it. The session does this for both the seeked track and its companion (audio/video move together), then sets player time.
+Step 4 matters as much as step 3: if the observed window survived, `canUseObservedTiming` could still report an end past the seek target and the re-request would again come back empty. With both heads and the observed window walked back, the next request honestly asks for the target and the server re-sends it. The session does this for both the rewound track and its companion (audio/video move together), then sets player time.
 
 ---
 
