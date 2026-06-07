@@ -1,0 +1,8 @@
+flowchart TB
+  subgraph C["Segment cache (byte-bounded ~32 MiB)"]
+    direction LR
+    BB["back-buffer"] --- PH["play head"] --- RA["read-ahead"]
+  end
+  PH -->|forward play| EXT["contiguous head extends,<br/>old segments evicted"]
+  SK["backward seek onto<br/>an evicted segment"] --> RW["rewindBufferedTo:<br/>shrink contiguous +<br/>observed-timing window"]
+  RW --> RE["next request re-asks,<br/>server re-sends from target"]

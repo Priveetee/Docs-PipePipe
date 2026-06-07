@@ -1,0 +1,11 @@
+flowchart TB
+  U["UMP response body"] --> R["UmpReader: typed parts"]
+  R --> D["SabrResponseDecoder"]
+  D --> M["Media parts:<br/>header + bytes"]
+  D --> C["Control parts"]
+  M --> SEG["MediaSegmentCollector<br/>-> SabrMediaSegment"]
+  M --> IDX["mp4 / webm index<br/>-> SabrSegmentIndex"]
+  C --> POL["NextRequestPolicy,<br/>ProtectionStatus, Redirect,<br/>Seek, Reload, Live..."]
+  SEG --> ST["ingest -> StreamState + cache"]
+  IDX --> ST
+  POL --> ST

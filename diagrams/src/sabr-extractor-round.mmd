@@ -1,0 +1,12 @@
+sequenceDiagram
+  participant P as Client pump
+  participant S as YoutubeSabrSession
+  participant T as StreamState
+  participant Y as YouTube SABR server
+  P->>S: pumpOnce()
+  S->>T: read player time, buffered ranges, cookie, PO token
+  S->>Y: POST VideoPlaybackAbrRequest
+  Y-->>S: UMP response
+  S->>S: UmpReader + SabrResponseDecoder
+  S->>T: ingest media + control parts
+  S-->>P: collected segments

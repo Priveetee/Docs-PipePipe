@@ -1,0 +1,13 @@
+flowchart TD
+  VID(["videoId"]) --> CLIENTS["InnerTube clients<br/>WEB, ANDROID_VR, IOS, TVHTML5"]
+  CLIENTS -->|"POST youtubei/v1"| EP["player / next / browse / search"]
+  EP --> MERGE["Merge responses"]
+  MERGE --> ITAG["itag to ItagItem<br/>format, resolution, ranges"]
+  MERGE --> SIG["URLs need signature + n param"]
+  SIG -->|"decode"| API[("api.pipepipe.dev<br/>decoder")]
+  ITAG --> DELIV{"Delivery"}
+  DELIV --> DASH["DASH creators<br/>PROGRESSIVE / OTF / LIVE"]
+  DELIV --> SABR["SABR session"]
+  DASH --> OUT(["streams on StreamInfo"])
+  SABR --> OUT
+  API --> OUT

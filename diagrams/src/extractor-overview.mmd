@@ -1,0 +1,12 @@
+flowchart LR
+  APP["PipePipe app"] -->|"link or query"| EXT["Extractor"]
+  EXT --> PICK{"Which service?"}
+  PICK --> YT["YouTube"]
+  PICK --> BI["BiliBili"]
+  PICK --> SC["SoundCloud"]
+  PICK --> MORE["NicoNico, Bandcamp,<br/>PeerTube, media.ccc.de"]
+  YT --> INFO["Structured model<br/>streams, channels,<br/>playlists, search, comments"]
+  BI --> INFO
+  SC --> INFO
+  MORE --> INFO
+  INFO -->|"back to"| APP

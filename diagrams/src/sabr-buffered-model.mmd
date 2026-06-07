@@ -1,0 +1,5 @@
+flowchart LR
+  s1["seg 1"] --> s2["seg 2"] --> s3["seg 3"] --> h["seg 4<br/>(missing)"] --> s5["seg 5"] --> s6["seg 6"]
+  CM["contiguousMaxSegment = 3<br/>reported to the server"] -.-> s3
+  AH["aheadOfContiguous = 5,6<br/>held, waiting for seg 4"] -.-> s5
+  MX["maxSegment = 6"] -.-> s6

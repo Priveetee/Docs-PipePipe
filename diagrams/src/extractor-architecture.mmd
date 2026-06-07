@@ -1,0 +1,15 @@
+flowchart TD
+  NP["NewPipe.init(Downloader)<br/>+ ServiceList"] --> SS["StreamingService<br/>abstract factory, one per service"]
+  SS --> LHF["LinkHandler factories<br/>recognise and normalise URLs"]
+  SS --> CAP["ServiceInfo<br/>media capabilities"]
+  SS --> EX["Extractor base<br/>service + linkHandler + Downloader"]
+  EX --> SE["StreamExtractor<br/>single video or track"]
+  EX --> LE["ListExtractor<br/>paged lists"]
+  LE --> CH["Channel"]
+  LE --> PL["Playlist"]
+  LE --> SR["Search"]
+  LE --> CM["Comments"]
+  EX -.->|"HTTP via"| DL["Downloader<br/>supplied by the host"]
+  LE -->|"per item"| COL["InfoItemsCollector<br/>commit: item or error"]
+  SE --> INFO["Info / InfoItem<br/>model objects"]
+  COL --> INFO

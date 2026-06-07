@@ -1,0 +1,9 @@
+flowchart LR
+  EX["Extractor code"] -->|"get / post"| DL["Downloader<br/>abstract"]
+  DL -->|"sync"| EXE["execute(Request)"]
+  DL -->|"async"| AEX["executeAsync(Request, AsyncCallback)<br/>returns CancellableCall"]
+  EXE --> IMPL["DownloaderImpl<br/>host app, OkHttp"]
+  AEX --> IMPL
+  IMPL --> NET[("Network")]
+  NET --> RESP["Response<br/>code, headers, body, latestUrl"]
+  RESP --> EX

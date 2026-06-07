@@ -1,0 +1,10 @@
+flowchart TD
+  RAW["raw entry on a page"] --> IIE["InfoItemExtractor<br/>reads one card"]
+  IIE -->|"commit()"| COL["InfoItemsCollector"]
+  COL -->|"extract() ok"| OK["build typed item"]
+  COL -->|"ParsingException"| ERR["addError()"]
+  OK --> ITEM["InfoItem"]
+  ITEM --> S["StreamInfoItem"]
+  ITEM --> C["ChannelInfoItem"]
+  ITEM --> P["PlaylistInfoItem"]
+  ITEM --> CM["CommentsInfoItem"]

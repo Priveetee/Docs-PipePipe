@@ -1,0 +1,11 @@
+flowchart TD
+  LE["ListExtractor<br/>paged, returns ListInfo"]
+  LE --> CH["ChannelExtractor"]
+  LE --> CT["ChannelTabExtractor"]
+  LE --> PL["PlaylistExtractor"]
+  LE --> KI["KioskExtractor"]
+  LE --> FE["FeedExtractor"]
+  LE --> SE["SearchExtractor"]
+  LE --> CO["CommentsExtractor"]
+  CH -->|"getTabs()"| CT
+  CT --> TABS["videos / playlists / shorts /<br/>livestreams / albums / tracks"]

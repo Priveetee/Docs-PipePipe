@@ -1,0 +1,7 @@
+flowchart LR
+  VID(["videoId"]) --> SHA["sha256(videoId)"]
+  SHA --> PFX["first 4 hex chars"]
+  PFX -->|"GET skipSegments/{prefix}<br/>?categories=...&actionTypes=skip,poi"| API[("SponsorBlock API<br/>sponsor.ajay.app / bsbsb.top")]
+  API --> MANY["segments for many videos<br/>sharing the prefix"]
+  MANY --> KEEP["keep ours by full hash"]
+  KEEP --> OUT(["SponsorBlockSegment[]"])

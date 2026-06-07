@@ -1,0 +1,17 @@
+flowchart TD
+  SI["StreamInfo"] --> VS["videoStreams<br/>muxed video + audio"]
+  SI --> AS["audioStreams<br/>audio only"]
+  SI --> VO["videoOnlyStreams<br/>video, no audio"]
+  SI --> SUB["subtitles"]
+  VS --> ST["each is a Stream:<br/>content + isUrl,<br/>MediaFormat,<br/>DeliveryMethod"]
+  AS --> ST
+  VO --> ST
+  ST --> DM{"DeliveryMethod"}
+  DM --> PR["PROGRESSIVE_HTTP"]
+  DM --> DA["DASH"]
+  DM --> HL["HLS"]
+  DM --> SAB["SABR"]
+  PR --> PLAYER["Player"]
+  DA --> PLAYER
+  HL --> PLAYER
+  SAB --> SESSION["SABR session<br/>see SABR Guide"]

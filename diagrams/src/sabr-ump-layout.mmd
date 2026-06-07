@@ -1,0 +1,7 @@
+flowchart LR
+  B["UMP body<br/>(single byte array)"] --> P1
+  subgraph parts["one part, repeated until EOF"]
+    direction LR
+    P1["part type<br/>(UMP varint)"] --> P2["part size<br/>(UMP varint)"] --> P3["payload<br/>(size bytes)"]
+  end
+  P3 -. next part .-> P1

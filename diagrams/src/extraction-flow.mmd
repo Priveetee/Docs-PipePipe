@@ -1,0 +1,9 @@
+flowchart TD
+  URL(["Pasted URL"]) --> SVC["NewPipe.getServiceByUrl(url)<br/>which service?"]
+  SVC --> LH["LinkHandlerFactory.fromUrl(url)<br/>accept, then id + canonical URL"]
+  LH --> MK["service.getStreamExtractor(handler)"]
+  MK --> FETCH["extractor.fetchPage()<br/>calls onFetchPage(Downloader)"]
+  FETCH --> NET[("Service endpoints<br/>InnerTube player, next, ...")]
+  NET --> CACHE["Parsed responses<br/>cached as fields"]
+  CACHE --> BUILD["StreamInfo.getInfo()<br/>extractImportantData<br/>extractStreams<br/>extractOptionalData"]
+  BUILD --> OUT(["StreamInfo"])
