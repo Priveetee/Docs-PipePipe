@@ -41,9 +41,11 @@ That last clause is the key: observed timing is only trusted when there is **no 
 
 ![Buffered head and seek](/diagrams/sabr-extractor-seek.png)
 
-**Forward** seeks are easy because the model has a forward bias. `assumeBufferedUntil(format, seq)` only ever *raises* `maxSegment`; the session's `prepareForMediaSegment` / `maybePrepareForDistantMediaSegment` use it to jump the bookkeeping ahead and let `SabrSeek` / player time align. Nothing needs to be undone.
+**Forward** seeks within reach are easy because the model has a forward bias. `assumeBufferedUntil(format, seq)` only ever *raises* `maxSegment`; the session's `prepareForMediaSegment` / `maybePrepareForDistantMediaSegment` use it to jump the bookkeeping ahead and let `SabrSeek` / player time align.
 
-**Backward** seeks are the hard case and the most recent fix. After playing forward, the buffered head sits high; a seek back onto an already-received segment would leave the request still advertising that range as buffered, the server sends nothing, the reader stalls. `prepareForRewind` → `rewindBufferedTo(fromSegment)` repairs the state precisely:
+But a **distant** forward seek (a cold seek far past the buffered edge: a SponsorBlock skip, resume-from-history) is *not* free. `prepareForMediaSegment` only raises `maxSegment`; it leaves `contiguousMaxSegment` (the segment the reported range actually *ends* at) behind at the old edge. So the request keeps advertising the old span as buffered, the server keeps filling it, the pump ping-pongs between the old edge and the target, and the reader can wait forever on the far segment. `prepareForForwardJump` → `jumpBufferedTo(fromSegment)` is the symmetric counterpart of the rewind below: it moves `contiguousMaxSegment` onto the target (folding in target-zone segments that already arrived out of order, dropping the observed window), so the server streams from there and the edge-driven pacing follows. A later backward seek into the skipped span goes through `prepareForRewind` honestly.
+
+**Backward** seeks are the hard case. After playing forward, the buffered head sits high; a seek back onto an already-received segment would leave the request still advertising that range as buffered, the server sends nothing, the reader stalls. `prepareForRewind` → `rewindBufferedTo(fromSegment)` repairs the state precisely:
 
 1. `last = max(0, fromSegment - 1)`.
 2. Guard: if `last >= contiguousMaxSegment`, it isn't a rewind for this track, return.
