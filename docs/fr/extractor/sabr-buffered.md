@@ -41,9 +41,11 @@ Cette dernière clause est la clé : le timing observé n'est cru que s'il n'y a
 
 ![Tête bufferisée et seek](/diagrams/sabr-extractor-seek.png)
 
-Les seeks **avant** sont faciles parce que le modèle a un biais avant. `assumeBufferedUntil(format, seq)` ne fait jamais que *relever* `maxSegment` ; les `prepareForMediaSegment` / `maybePrepareForDistantMediaSegment` de la session l'utilisent pour faire sauter le bookkeeping en avant et laisser `SabrSeek` / le player time aligner. Rien à défaire.
+Les seeks **avant** à portée sont faciles parce que le modèle a un biais avant. `assumeBufferedUntil(format, seq)` ne fait jamais que *relever* `maxSegment` ; les `prepareForMediaSegment` / `maybePrepareForDistantMediaSegment` de la session l'utilisent pour faire sauter le bookkeeping en avant et laisser `SabrSeek` / le player time aligner.
 
-Les seeks **arrière** sont le cas dur et le fix le plus récent. Après lecture en avant, la tête bufferisée est haute ; un seek arrière sur un segment déjà reçu laisserait la requête annoncer cette range comme bufferisée, le serveur n'envoie rien, le reader cale. `prepareForRewind` → `rewindBufferedTo(fromSegment)` répare l'état précisément :
+Mais un seek **avant lointain** (un seek à froid loin au-delà de la tête bufferisée : un skip SponsorBlock, une reprise depuis l'historique) n'est *pas* gratuit. `prepareForMediaSegment` ne fait que relever `maxSegment` ; il laisse `contiguousMaxSegment` (le segment où la range rapportée se *termine* réellement) en arrière à l'ancienne tête. Du coup la requête continue d'annoncer l'ancien span comme bufferisé, le serveur continue de le remplir, le pump fait du ping-pong entre l'ancienne tête et la cible, et le reader peut attendre indéfiniment le segment lointain. `prepareForForwardJump` → `jumpBufferedTo(fromSegment)` est le pendant symétrique du rewind ci-dessous : il déplace `contiguousMaxSegment` sur la cible (en repliant les segments de la zone cible déjà arrivés dans le désordre, en droppant la fenêtre observée), pour que le serveur streame depuis là et que le rythme piloté par la tête suive. Un seek arrière ultérieur dans le span sauté passe honnêtement par `prepareForRewind`.
+
+Les seeks **arrière** sont le cas dur. Après lecture en avant, la tête bufferisée est haute ; un seek arrière sur un segment déjà reçu laisserait la requête annoncer cette range comme bufferisée, le serveur n'envoie rien, le reader cale. `prepareForRewind` → `rewindBufferedTo(fromSegment)` répare l'état précisément :
 
 1. `last = max(0, fromSegment - 1)`.
 2. Garde : si `last >= contiguousMaxSegment`, ce n'est pas un rewind pour ce track, return.
