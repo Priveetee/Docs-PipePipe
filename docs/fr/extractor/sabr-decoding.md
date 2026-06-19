@@ -4,11 +4,14 @@ Partie de [SABR dans l'extracteur](./sabr). Ici : l'enveloppe UMP au niveau octe
 
 ## Le cadrage UMP
 
-Le corps de la réponse est de l'**UMP** (Ultra-Minimal Playback), le conteneur propre à YouTube, *pas* du protobuf au niveau de l'enveloppe (les payloads à l'intérieur des parts sont du protobuf). `UmpReader.readAll(byte[])` parcourt un seul tableau en mémoire comme une suite de parts :
+Le corps de la réponse est de l'**UMP** (Ultra-Minimal Playback), le conteneur propre à YouTube, *pas* du protobuf au niveau de l'enveloppe (les payloads à l'intérieur des parts sont du protobuf). `UmpReader` le parcourt comme une suite de parts, dans l'un de deux modes :
+
+- `readStreaming(InputStream, PartConsumer)` : lit une part (type, size, payload) à la fois directement depuis le flux réseau et la passe à un consumer, pour ne jamais tenir tout le body en mémoire d'un coup. Le pic transitoire est le payload d'une seule part au lieu de la réponse entière (50-150 Mo en 4K). C'est le chemin utilisé par la session pour le décodage live (voir "Streamer le décodage" plus bas).
+- `readAll(byte[])` : parcourt un seul tableau en mémoire et renvoie toutes les parts en liste. Pratique pour les petites réponses et les tests, mais il faut bufferiser tout le body d'abord.
 
 ![Layout d'une part UMP](/diagrams/sabr-ump-layout.png)
 
-Chaque part est `[type : varint-UMP][size : varint-UMP][payload : size octets]`, répété jusqu'à EOF. Il n'y a **aucun réassemblage cross-buffer** à cette couche, le body entier doit déjà être un seul tableau ; un buffer tronqué throw simplement `SabrProtocolException`.
+Chaque part est `[type : varint-UMP][size : varint-UMP][payload : size octets]`, répété jusqu'à EOF (un EOF propre sur une frontière de part termine simplement la boucle). Aucun des deux modes ne fait de réassemblage cross-buffer *d'une seule part* : les `size` octets d'une part sont lus en entier avant la suivante, et un body tronqué throw `SabrProtocolException`.
 
 ### Le varint UMP
 
@@ -69,6 +72,12 @@ Plus des ids connus-mais-non-parsés (30 CONFIG, 32–34 hints live-metadata, 36
 - **MEDIA_END (22)** → 1er octet = header id, marque l'id complet.
 - control parts riches → décode dans le champ typé de `SabrDecodedResponse` + un résumé humain.
 - `NEXT_REQUEST_POLICY` a un traitement spécial : après décodage, le backoff est relu directement du **champ 4** proto (varint) comme `backoffTimeMs` faisant autorité.
+
+## Streamer le décodage (le fix 4K)
+
+`SabrResponseDecoder.decode(byte[])` lit toutes les parts d'abord, donc tout le body reste en mémoire ; ça va pour les petits rounds, mais ça pic à 50-150 Mo en 4K et c'était la source de l'OOM 4K.
+
+`SabrStreamingResponseReader.read(InputStream)` est la contrepartie streaming. Il pilote `UmpReader.readStreaming` et assemble les segments MEDIA à la volée (via `SabrMediaSegmentCollector.Incremental`), en ne gardant que les petites control parts. Les gros payloads `MEDIA` deviennent des segments au fur et à mesure et ne sont jamais tous retenus, donc le pic transitoire tombe du body entier à un seul segment en vol. Il tient quand même le compte d'octets média par header-id, donc le résultat passe les mêmes contrôles `getIntegrityIssues()` que le chemin bufferisé sans tenir les octets, et renvoie un `Result` portant les segments assemblés plus un `SabrDecodedResponse` construit depuis les control parts.
 
 ## La réponse décodée
 

@@ -4,11 +4,14 @@ Part of [SABR in the extractor](./sabr). Here: the UMP envelope at the byte leve
 
 ## UMP framing
 
-The response body is **UMP** (Ultra-Minimal Playback), YouTube's own container, *not* protobuf at the envelope level (the payloads inside parts are protobuf). `UmpReader.readAll(byte[])` walks a single in-memory array as a sequence of parts:
+The response body is **UMP** (Ultra-Minimal Playback), YouTube's own container, *not* protobuf at the envelope level (the payloads inside parts are protobuf). `UmpReader` walks it as a sequence of parts in either of two modes:
+
+- `readStreaming(InputStream, PartConsumer)`: read one part (type, size, payload) at a time straight off the network stream and hand it to a consumer, so the whole body is never held at once. Peak transient is a single part's payload instead of the entire response (50-150 MB at 4K). This is the path the session uses for live decoding (see "Streaming the decode" below).
+- `readAll(byte[])`: walk a single in-memory array and return every part as a list. Handy for small responses and tests, but it needs the whole body buffered first.
 
 ![UMP part layout](/diagrams/sabr-ump-layout.png)
 
-Each part is `[type: UMP-varint][size: UMP-varint][payload: size bytes]`, repeated until EOF. There is **no cross-buffer reassembly** at this layer, the whole body must already be one array; a truncated buffer just throws `SabrProtocolException`.
+Each part is `[type: UMP-varint][size: UMP-varint][payload: size bytes]`, repeated until EOF (a clean EOF on a part boundary just ends the loop). Neither mode does cross-buffer reassembly *of a single part*: a part's `size` bytes are read in full before the next one, and a truncated body throws `SabrProtocolException`.
 
 ### The UMP varint
 
@@ -69,6 +72,12 @@ Plus generic/known-but-unparsed ids (30 CONFIG, 32–34 live-metadata hints, 36/
 - **MEDIA_END (22)** → first byte = header id, marks it complete.
 - rich control parts → decode into the typed field on `SabrDecodedResponse` + a human summary.
 - `NEXT_REQUEST_POLICY` gets special handling: after decoding, the backoff is re-read directly from proto **field 4** (varint) as the authoritative `backoffTimeMs`.
+
+## Streaming the decode (the 4K fix)
+
+`SabrResponseDecoder.decode(byte[])` reads every part up front, so the whole body sits in memory; fine for small rounds, but it peaks at the full 50-150 MB at 4K and was the source of the 4K OOM.
+
+`SabrStreamingResponseReader.read(InputStream)` is the streaming counterpart. It drives `UmpReader.readStreaming` and assembles MEDIA segments on the fly (via `SabrMediaSegmentCollector.Incremental`), keeping only the small control parts. The big `MEDIA` payloads become segments as they arrive and are never all retained, so the peak transient drops from the whole body to a single in-flight segment. It still tallies per-header-id media byte counts, so the result passes the same `getIntegrityIssues()` checks as the buffered path without holding the bytes, and returns a `Result` carrying the assembled segments plus a `SabrDecodedResponse` built from the control parts.
 
 ## The decoded response
 
