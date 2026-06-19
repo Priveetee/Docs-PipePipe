@@ -8,7 +8,7 @@ Audio and comments. Talks to the `api-v2.soundcloud.com` REST API. The catch: th
 
 ## BiliBili (id 5)
 
-Video, comments, bullet comments, and SponsorBlock, the most involved service. Stream URLs come from `api.bilibili.com` JSON, but most calls must be **WBI-signed**: it pulls a rotating permutation table from `/x/web-interface/nav`, builds a mixin key, and stamps requests with `w_rid` + `wts`. It also fabricates a cookie/ticket set (`buvid3/4`, `b_lsid`, `bili_ticket`, ...). Bullet comments (danmaku) arrive two ways: a zlib-compressed binary dump for VOD, and a WebSocket `DANMU_MSG` stream for live. Premium content uses a separate PGC endpoint. Expect the signing and table bits to need maintenance.
+Video, comments, bullet comments, and SponsorBlock, the most involved service. Stream URLs come from `api.bilibili.com` JSON, but most calls must be **WBI-signed**: it pulls a rotating permutation table from `/x/web-interface/nav`, builds a mixin key, and stamps requests with `w_rid` + `wts`. It also fabricates a cookie/ticket set (`buvid3/4`, `b_lsid`, `bili_ticket`, ...). Bullet comments (danmaku) arrive two ways: a zlib-compressed binary dump for VOD, and a WebSocket `DANMU_MSG` stream for live. Premium content uses a separate PGC endpoint. Adaptive (DASH) streams carry per-stream byte ranges (init + index), parsed from the `SegmentBase` `Initialization` / `indexRange` onto the audio and video tracks, so each plays as its own DASH representation. Expect the signing and table bits to need maintenance.
 
 ## NicoNico (id 6)
 
