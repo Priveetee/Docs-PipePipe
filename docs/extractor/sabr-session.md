@@ -42,6 +42,7 @@ Every failure mode is bounded:
 | `MAX_CACHE_BYTES` | 32 MiB | media-byte cache budget (~50 s of 4K) |
 | `MIN_CACHED_SEGMENTS` | 6 | eviction never drops below this many |
 | `EVICT_BEHIND_MS` | 10 000 | back-buffer kept behind the play head |
+| `SEEK_KEEP_WINDOW_MS` | 30 000 | cache window kept either side of a seek target |
 
 ## The cache
 
@@ -55,6 +56,8 @@ A `ConcurrentHashMap<String, SabrMediaSegment>` keyed `itag + ":" + ("init" | se
 - otherwise drop it and subtract its bytes.
 
 `playHeadMs` is fed in by the client via `setPlayHeadMs`, this is what makes eviction play-head-aware rather than blindly FIFO. (Seeking, which also lives partly here via `prepareForRewind`, is covered in [the buffered-range model](./sabr-buffered).)
+
+On a seek, byte-budget eviction alone is not enough: a large jump leaves the old span *and* the freshly fetched target span in the cache, two disjoint regions that together blow far past `MAX_CACHE_BYTES` (the OOM seen at 4K). `evictOutsideSeekWindow(targetMs)` collapses the cache to a single window: it drops every media segment whose time falls outside `[targetMs - SEEK_KEEP_WINDOW_MS, targetMs + SEEK_KEEP_WINDOW_MS]` (init segments excepted) and re-subtracts their bytes, so right after a jump the cache holds only the ±30 s around where playback resumes. It runs on the seek-prep path, next to `prepareForRewind` / `prepareForForwardJump`.
 
 ## Resilience
 

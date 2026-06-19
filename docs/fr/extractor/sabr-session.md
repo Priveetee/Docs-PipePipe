@@ -42,6 +42,7 @@ Chaque mode de défaillance est borné :
 | `MAX_CACHE_BYTES` | 32 Mio | budget cache d'octets média (~50 s de 4K) |
 | `MIN_CACHED_SEGMENTS` | 6 | l'éviction ne descend jamais en dessous |
 | `EVICT_BEHIND_MS` | 10 000 | back-buffer gardé derrière la tête de lecture |
+| `SEEK_KEEP_WINDOW_MS` | 30 000 | fenêtre de cache gardée de part et d'autre d'une cible de seek |
 
 ## Le cache
 
@@ -55,6 +56,8 @@ Une `ConcurrentHashMap<String, SabrMediaSegment>` keyée `itag + ":" + ("init" |
 - sinon le jette et soustrait ses octets.
 
 `playHeadMs` est fourni par le client via `setPlayHeadMs`, c'est ce qui rend l'éviction consciente de la tête de lecture plutôt qu'aveuglément FIFO. (Le seek, qui vit aussi en partie ici via `prepareForRewind`, est couvert dans [le modèle buffered](./sabr-buffered).)
+
+Lors d'un seek, l'éviction par budget d'octets ne suffit pas : un grand saut laisse l'ancien span *et* le span cible fraîchement récupéré dans le cache, deux régions disjointes qui ensemble explosent bien au-delà de `MAX_CACHE_BYTES` (l'OOM vu en 4K). `evictOutsideSeekWindow(targetMs)` collapse le cache à une seule fenêtre : il jette tout segment média dont le temps tombe hors de `[targetMs - SEEK_KEEP_WINDOW_MS, targetMs + SEEK_KEEP_WINDOW_MS]` (segments init exceptés) et resoustrait leurs octets, donc juste après un saut le cache ne tient que les ±30 s autour de la reprise. Ça tourne sur le chemin de prépa du seek, à côté de `prepareForRewind` / `prepareForForwardJump`.
 
 ## Résilience
 
