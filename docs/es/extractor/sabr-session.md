@@ -57,7 +57,7 @@ Un `ConcurrentHashMap<String, SabrMediaSegment>` con clave `itag + ":" + ("init"
 
 `playHeadMs` lo provee el cliente vía `setPlayHeadMs`, eso es lo que hace la evicción consciente del play head en vez de ciegamente FIFO. (El seek, que también vive en parte aquí vía `prepareForRewind`, se cubre en [el modelo buffered](./sabr-buffered).)
 
-En un seek, la evicción por presupuesto de bytes no basta: un salto grande deja el span viejo *y* el span objetivo recién traído en la caché, dos regiones disjuntas que juntas se disparan muy por encima de `MAX_CACHE_BYTES` (el OOM visto en 4K). `evictOutsideSeekWindow(targetMs)` colapsa la caché a una sola ventana: descarta todo segmento de medio cuyo tiempo cae fuera de `[targetMs - SEEK_KEEP_WINDOW_MS, targetMs + SEEK_KEEP_WINDOW_MS]` (segmentos init exceptuados) y resta sus bytes, así que justo tras un salto la caché solo guarda los ±30 s alrededor de donde se reanuda. Corre en el camino de preparación del seek, junto a `prepareForRewind` / `prepareForForwardJump`.
+En un seek, la evicción por presupuesto de bytes no basta: un salto grande deja el span viejo *y* el span objetivo recién traído en la caché, dos regiones disjuntas que juntas pueden dispararse muy por encima de `MAX_CACHE_BYTES`, insostenible con segmentos 4K. `evictOutsideSeekWindow(targetMs)` colapsa la caché a una sola ventana: descarta todo segmento de medio cuyo tiempo cae fuera de `[targetMs - SEEK_KEEP_WINDOW_MS, targetMs + SEEK_KEEP_WINDOW_MS]` (segmentos init exceptuados) y resta sus bytes, así que justo tras un salto la caché solo guarda los ±30 s alrededor de donde se reanuda. Corre en el camino de preparación del seek, junto a `prepareForRewind` / `prepareForForwardJump`.
 
 ## Resiliencia
 

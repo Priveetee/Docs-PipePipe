@@ -73,11 +73,11 @@ Más ids conocidos-pero-no-parseados (30 CONFIG, 32–34 hints de live-metadata,
 - control parts ricas → decodifica en el campo tipado de `SabrDecodedResponse` + un resumen humano.
 - `NEXT_REQUEST_POLICY` tiene un trato especial: tras decodificar, el backoff se relee directamente del **campo 4** proto (varint) como `backoffTimeMs` autoritativo.
 
-## Streamear el decodificado (el fix 4K)
+## Streamear el decodificado
 
-`SabrResponseDecoder.decode(byte[])` lee todas las parts primero, así que todo el body queda en memoria; bien para rounds pequeños, pero pica a 50-150 MB en 4K y era la fuente del OOM 4K.
+`SabrResponseDecoder.decode(byte[])` lee todas las parts primero, así que todo el body queda en memoria. Está bien para rounds pequeños, pero un body de respuesta en 4K ronda los 50-150 MB, así que bufferizarlo entero es un transitorio grande.
 
-`SabrStreamingResponseReader.read(InputStream)` es la contraparte en streaming. Maneja `UmpReader.readStreaming` y ensambla los segmentos MEDIA al vuelo (vía `SabrMediaSegmentCollector.Incremental`), guardando solo las pequeñas control parts. Los grandes payloads `MEDIA` se vuelven segmentos a medida que llegan y nunca se retienen todos, así que el pico transitorio baja del body entero a un solo segmento en vuelo. Sigue contando los bytes de medio por header-id, así que el resultado pasa los mismos chequeos `getIntegrityIssues()` que el camino bufferizado sin retener los bytes, y devuelve un `Result` con los segmentos ensamblados más un `SabrDecodedResponse` construido desde las control parts.
+`SabrStreamingResponseReader.read(InputStream)` es la contraparte en streaming, para cuando el body no debe tenerse entero. Maneja `UmpReader.readStreaming` y ensambla los segmentos MEDIA al vuelo (vía `SabrMediaSegmentCollector.Incremental`), guardando solo las pequeñas control parts. Los grandes payloads `MEDIA` se vuelven segmentos a medida que llegan y nunca se retienen todos, así que el pico de memoria es un solo segmento en vuelo en lugar del body entero. Sigue contando los bytes de medio por header-id, así que el resultado pasa los mismos chequeos `getIntegrityIssues()` que el camino bufferizado sin retener los bytes, y devuelve un `Result` con los segmentos ensamblados más un `SabrDecodedResponse` construido desde las control parts.
 
 ## La respuesta decodificada
 

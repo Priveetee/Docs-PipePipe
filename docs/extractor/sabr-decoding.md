@@ -73,11 +73,11 @@ Plus generic/known-but-unparsed ids (30 CONFIG, 32–34 live-metadata hints, 36/
 - rich control parts → decode into the typed field on `SabrDecodedResponse` + a human summary.
 - `NEXT_REQUEST_POLICY` gets special handling: after decoding, the backoff is re-read directly from proto **field 4** (varint) as the authoritative `backoffTimeMs`.
 
-## Streaming the decode (the 4K fix)
+## Streaming the decode
 
-`SabrResponseDecoder.decode(byte[])` reads every part up front, so the whole body sits in memory; fine for small rounds, but it peaks at the full 50-150 MB at 4K and was the source of the 4K OOM.
+`SabrResponseDecoder.decode(byte[])` reads every part up front, so the whole body sits in memory. That is fine for small rounds, but a 4K response body runs 50-150 MB, so buffering it whole is a large transient.
 
-`SabrStreamingResponseReader.read(InputStream)` is the streaming counterpart. It drives `UmpReader.readStreaming` and assembles MEDIA segments on the fly (via `SabrMediaSegmentCollector.Incremental`), keeping only the small control parts. The big `MEDIA` payloads become segments as they arrive and are never all retained, so the peak transient drops from the whole body to a single in-flight segment. It still tallies per-header-id media byte counts, so the result passes the same `getIntegrityIssues()` checks as the buffered path without holding the bytes, and returns a `Result` carrying the assembled segments plus a `SabrDecodedResponse` built from the control parts.
+`SabrStreamingResponseReader.read(InputStream)` is the streaming counterpart, for when the body should not be held whole. It drives `UmpReader.readStreaming` and assembles MEDIA segments on the fly (via `SabrMediaSegmentCollector.Incremental`), keeping only the small control parts. The big `MEDIA` payloads become segments as they arrive and are never all retained, so peak memory is a single in-flight segment rather than the whole body. It still tallies per-header-id media byte counts, so the result passes the same `getIntegrityIssues()` checks as the buffered path without holding the bytes, and returns a `Result` carrying the assembled segments plus a `SabrDecodedResponse` built from the control parts.
 
 ## The decoded response
 
