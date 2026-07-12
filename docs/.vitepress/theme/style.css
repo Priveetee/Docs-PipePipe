@@ -81,3 +81,65 @@
 .dark .vp-doc img[src$="/diagrams/sabr-extractor-seek.png"] { content: url(/Docs-PipePipe/diagrams/sabr-extractor-seek-dark.png); }
 .dark .vp-doc img[src$="/diagrams/sabr-ump-layout.png"] { content: url(/Docs-PipePipe/diagrams/sabr-ump-layout-dark.png); }
 .dark .vp-doc img[src$="/diagrams/sabr-buffered-model.png"] { content: url(/Docs-PipePipe/diagrams/sabr-buffered-model-dark.png); }
+.dark .vp-doc img[src$="/diagrams/webview-playback.png"] { content: url(/Docs-PipePipe/diagrams/webview-playback-dark.png); }
+.dark .vp-doc img[src$="/diagrams/issue-triage.png"] { content: url(/Docs-PipePipe/diagrams/issue-triage-dark.png); }
+
+/* Real-device screenshots are deliberately kept as screenshots. The SVG layer
+   above them is a responsive, non-destructive annotation: it highlights a
+   control without redrawing, translating, or otherwise altering the UI. */
+.vp-doc .screenshot-callout {
+    position: relative;
+    display: block;
+    width: min(100%, 420px);
+    margin: 1.5rem auto;
+    overflow: hidden;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgb(0 0 0 / 12%);
+    line-height: 0;
+}
+
+.vp-doc .screenshot-callout > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+.vp-doc .screenshot-callout > svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.screenshot-callout .callout-box {
+    fill: rgb(56 189 248 / 10%);
+    stroke: #0284c7;
+    stroke-width: 12;
+    vector-effect: non-scaling-stroke;
+}
+
+.screenshot-callout .callout-arrow {
+    fill: none;
+    stroke: #0284c7;
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+}
+
+.screenshot-callout .callout-number {
+    fill: #0284c7;
+    stroke: #fff;
+    stroke-width: 8;
+    vector-effect: non-scaling-stroke;
+}
+
+.screenshot-callout text {
+    fill: #fff;
+    font: 700 42px/1 system-ui, sans-serif;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
