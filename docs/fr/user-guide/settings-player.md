@@ -2,6 +2,10 @@
 
 Cette section couvre tous les paramètres liés au lecteur vidéo et audio.
 
+![Réglages Lecteur de PipePipe, 5.2.3 sur Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+
+*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. L'ordre et les valeurs peuvent évoluer selon la version.*
+
 ## Résolution par défaut
 
 Définit la qualité vidéo préférée pour toutes les vidéos lues dans le lecteur principal.
@@ -70,6 +74,10 @@ Reprend automatiquement la lecture après une interruption, comme un appel tél�
 
 - **Défaut :** Activé
 
+::: warning
+Sur certaines versions, le passage en plein écran peut relancer une vidéo mise en pause. Dans ce cas, conservez la séquence exacte (pause, plein écran, rotation, retour, etc.) pour un signalement : ce n'est pas le même réglage que la reprise après interruption.
+:::
+
 ## Toujours commencer la lecture depuis le début
 
 Désactive la fonction de reprise de lecture pour les vidéos que vous avez déjà commencées. Chaque vidéo commencera à 00:00.
@@ -113,4 +121,6 @@ Ouvre un sous-menu pour configurer les commentaires du chat en direct de style "
 
 ## Sous-titres
 
-Ouvre un sous-menu pour configurer l'apparence des sous-titres.
+Ouvre un sous-menu pour l'apparence et les choix liés aux sous-titres. Les pistes de sous-titres ordinaires sont fournies par le service/la vidéo. La traduction automatique est une fonction YouTube distincte et exige une connexion YouTube ; un contrôle de traduction grisé peut donc indiquer qu'aucune connexion compatible n'est active, pas que les sous-titres sont absents.
+
+Dans un rapport, distinguez : aucune piste ordinaire proposée ; une piste ordinaire ne s'affiche pas ; une traduction automatique ne peut pas être sélectionnée ; ou la traduction choisie est incorrecte. Indiquez l'URL, les langues source/cible, la piste choisie, l'état de connexion et la version, sans jamais joindre de cookie ni d'identifiants.
