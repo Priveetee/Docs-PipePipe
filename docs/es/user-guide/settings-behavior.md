@@ -2,12 +2,22 @@
 
 Esta sección controla el comportamiento general de la aplicación, como lo que ocurre cuando abres contenido o cambias entre apps.
 
+::: info Ubicación actual
+En PipePipe 5.2.3, estos controles están en **Ajustes → Reproductor**. La agrupación puede cambiar en una versión futura; usa la búsqueda de ajustes si una etiqueta no está donde indica esta guía.
+:::
+
 ### Acción 'abrir' preferida
 
-Define la acción por defecto cuando tocas un vídeo o un flujo.
+Define la acción usada **cuando PipePipe recibe un enlace de vídeo desde otra aplicación Android** (navegador, mensajería, hoja de compartir, etc.). No cambia el comportamiento habitual al tocar un vídeo dentro de PipePipe: los toques internos siguen abriendo la ficha o el reproductor principal.
 
 - **Opciones:** Mostrar información, Reproductor de vídeo, Reproductor en segundo plano, Reproductor popup, Descargar, Añadir a la lista, Preguntar siempre.
 - **Por defecto:** Reproductor de vídeo
+
+Si parece que se ignora, pruébalo con un enlace compartido desde otra aplicación e indica cuál era. Un toque normal dentro de PipePipe no es un fallo de este ajuste: queda fuera de su alcance.
+
+![Ajustes de reproductor PipePipe, 5.2.3 en Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+
+*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. Los valores y apariencia Android pueden variar.*
 
 ::: tip Mi Preferencia
 Yo lo configuro en **Reproductor de vídeo** para empezar a ver el contenido de inmediato sin pasos adicionales.
@@ -25,6 +35,8 @@ Determina qué le ocurre al vídeo cuando cambias a otra app desde el reproducto
 
 - **Opciones:** Ninguna, Minimizar al reproductor en segundo plano, Minimizar al reproductor popup.
 - **Por defecto:** Minimizar al reproductor en segundo plano
+
+Solo controla la salida del reproductor principal hacia otra aplicación. Es independiente de la acción para enlaces externos. Si al volver a PipePipe el vídeo se reinicia o vuelve a cargar, descríbelo como un problema del ciclo de vida del reproductor e indica el modo de reproducción.
 
 ::: tip Mi Preferencia
 **Minimizar al reproductor en segundo plano** es perfecto para escuchar contenido mientras haces otras cosas en el teléfono.

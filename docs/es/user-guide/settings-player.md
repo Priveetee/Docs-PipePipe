@@ -2,6 +2,10 @@
 
 Esta sección cubre todos los ajustes relacionados con el reproductor de vídeo y audio.
 
+![Ajustes de reproductor PipePipe, 5.2.3 en Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+
+*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. El orden y valores pueden cambiar según versión.*
+
 ## Resolución por defecto
 
 Establece la calidad de vídeo preferida para todos los vídeos reproducidos en el reproductor principal.
@@ -53,6 +57,10 @@ Reanuda automáticamente la reproducción tras una interrupción, como una llama
 
 - **Por defecto:** Activado
 
+::: warning
+En algunas versiones, entrar en pantalla completa puede reanudar un vídeo que estaba en pausa. Conserva la secuencia exacta (pausa, pantalla completa, rotación, volver, etc.) para un informe: no es el mismo ajuste que reanudar tras una interrupción.
+:::
+
 ## Empezar siempre desde el principio
 
 Desactiva la función de "reanudar la reproducción" para los vídeos que ya has empezado a ver. Cada vídeo empezará desde 00:00.
@@ -96,4 +104,6 @@ Abre un submenú para configurar los comentarios de chat en directo estilo Danma
 
 ## Subtítulos
 
-Abre un submenú para configurar la apariencia de los subtítulos.
+Abre un submenú para la apariencia y las opciones relacionadas con subtítulos. Las pistas normales las proporciona el servicio o el vídeo. La traducción automática es una función distinta de YouTube y requiere iniciar sesión en YouTube; un control de traducción en gris puede indicar que no hay una sesión compatible activa, no que falten subtítulos.
+
+Al informar, distingue: no aparece ninguna pista normal; una pista normal no se muestra; no se puede seleccionar traducción automática; o la traducción elegida es incorrecta. Incluye URL, idiomas de origen/destino, pista seleccionada, estado de inicio de sesión y versión, sin cookies ni credenciales.
