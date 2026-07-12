@@ -1,0 +1,11 @@
+flowchart TB
+  SYMPTOM["A PipePipe feature fails"] --> EXACT["Read the exact error<br/>and repeat once"]
+  EXACT --> PICK{"What failed?"}
+  PICK --> WEBVIEW["WebView unavailable"]
+  PICK --> STREAM["Playback, network,<br/>or sign-in"]
+  PICK --> SEARCH["Search results"]
+  PICK --> ANDROID["MediaCodec or<br/>Android integration"]
+  WEBVIEW --> REPORT["Collect matching details<br/>and open one focused report"]
+  STREAM --> REPORT
+  SEARCH --> REPORT
+  ANDROID --> REPORT
