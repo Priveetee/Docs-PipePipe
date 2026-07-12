@@ -10,6 +10,7 @@ export const en = defineConfig({
             { text: "User Guide", link: "/user-guide/introduction" },
             { text: "Extractor", link: "/extractor/introduction" },
             { text: "SABR Guide", link: "/developer-guide/introduction" },
+            { text: "Troubleshooting", link: "/issues/" },
         ],
 
         sidebar: {
@@ -55,15 +56,54 @@ export const en = defineConfig({
                             text: "Behavior Settings",
                             link: "/user-guide/settings-behavior",
                         },
+                        {
+                            text: "Settings Reference",
+                            link: "/user-guide/settings-reference",
+                        },
                     ],
                 },
                 {
                     text: "Troubleshooting",
                     items: [
                         {
-                            text: "Common Issues",
-                            link: "/user-guide/common-issues",
+                            text: "Troubleshooting Centre",
+                            link: "/issues/",
                         },
+                    ],
+                },
+            ],
+            "/issues/": [
+                {
+                    text: "Start here",
+                    items: [
+                        { text: "Overview", link: "/issues/" },
+                        { text: "Setup, updates, and backups", link: "/issues/setup" },
+                        { text: "Reporting a problem", link: "/issues/reporting" },
+                    ],
+                },
+                {
+                    text: "YouTube",
+                    items: [
+                        { text: "WebView and protected playback", link: "/issues/webview" },
+                        { text: "Playback, network, and sign-in", link: "/issues/youtube-playback" },
+                        { text: "Background, popup, fullscreen, and queue", link: "/issues/player-modes" },
+                        { text: "Downloads", link: "/issues/downloads" },
+                        { text: "Search and discovery", link: "/issues/search" },
+                    ],
+                },
+                {
+                    text: "Library and discovery",
+                    items: [
+                        { text: "Playlists, history, and subscriptions", link: "/issues/library-and-feeds" },
+                        { text: "Filters, comments, and subtitles", link: "/issues/content-controls" },
+                    ],
+                },
+                {
+                    text: "App and device",
+                    items: [
+                        { text: "Accounts and services", link: "/issues/accounts-and-services" },
+                        { text: "Interface and language", link: "/issues/interface-and-language" },
+                        { text: "MediaCodec and Android Auto", link: "/issues/android" },
                     ],
                 },
             ],

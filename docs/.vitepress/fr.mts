@@ -13,6 +13,7 @@ export const fr = defineConfig({
                 text: "Guide SABR",
                 link: "/fr/developer-guide/introduction",
             },
+            { text: "Dépannage", link: "/fr/issues/" },
         ],
 
         sidebar: {
@@ -58,15 +59,54 @@ export const fr = defineConfig({
                             text: "Paramètres de Comportement",
                             link: "/fr/user-guide/settings-behavior",
                         },
+                        {
+                            text: "Référence des réglages",
+                            link: "/fr/user-guide/settings-reference",
+                        },
                     ],
                 },
                 {
                     text: "Dépannage",
                     items: [
                         {
-                            text: "Problèmes Courants",
-                            link: "/fr/user-guide/common-issues",
+                            text: "Centre de dépannage",
+                            link: "/fr/issues/",
                         },
+                    ],
+                },
+            ],
+            "/fr/issues/": [
+                {
+                    text: "Commencer ici",
+                    items: [
+                        { text: "Vue d'ensemble", link: "/fr/issues/" },
+                        { text: "Configuration, mises à jour et sauvegardes", link: "/fr/issues/setup" },
+                        { text: "Signaler un problème", link: "/fr/issues/reporting" },
+                    ],
+                },
+                {
+                    text: "YouTube",
+                    items: [
+                        { text: "WebView et lecture protégée", link: "/fr/issues/webview" },
+                        { text: "Lecture, réseau et connexion", link: "/fr/issues/youtube-playback" },
+                        { text: "Arrière-plan, popup, plein écran et file", link: "/fr/issues/player-modes" },
+                        { text: "Téléchargements", link: "/fr/issues/downloads" },
+                        { text: "Recherche et découverte", link: "/fr/issues/search" },
+                    ],
+                },
+                {
+                    text: "Bibliothèque et découverte",
+                    items: [
+                        { text: "Playlists, historique et abonnements", link: "/fr/issues/library-and-feeds" },
+                        { text: "Filtres, commentaires et sous-titres", link: "/fr/issues/content-controls" },
+                    ],
+                },
+                {
+                    text: "Application et appareil",
+                    items: [
+                        { text: "Comptes et services", link: "/fr/issues/accounts-and-services" },
+                        { text: "Interface et langue", link: "/fr/issues/interface-and-language" },
+                        { text: "MediaCodec et Android Auto", link: "/fr/issues/android" },
                     ],
                 },
             ],
