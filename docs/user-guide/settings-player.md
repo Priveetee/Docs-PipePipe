@@ -2,6 +2,10 @@
 
 This section covers all settings related to the video and audio player.
 
+![PipePipe Player settings, 5.2.3 on Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+
+*Reference capture: PipePipe 5.2.3 · Android 16/API 36. Settings and their order can change between releases.*
+
 ## Default resolution
 
 Sets the preferred video quality for all videos played in the main player.
@@ -70,6 +74,10 @@ Automatically resumes playback after an interruption, such as a phone call.
 
 - **Default:** Enabled
 
+::: warning
+On some builds, entering fullscreen can resume a video that was paused. If that happens, keep the selected playback mode and the exact sequence (pause, enter fullscreen, rotate, return, etc.) for a report; it is not the same setting as resume after an interruption.
+:::
+
 ## Always start from the beginning
 
 Disables the "resume playback" feature for videos you've already started watching. Every video will start from 00:00.
@@ -113,4 +121,6 @@ Opens a sub-menu to configure the danmaku-style (scrolling) live chat comments.
 
 ## Subtitles
 
-Opens a sub-menu to configure the appearance of subtitles.
+Opens a sub-menu to configure subtitle appearance and subtitle-related choices. Ordinary caption tracks are supplied by the service/video. Automatic translation is a separate YouTube feature and requires a YouTube login; a greyed-out translation control can therefore mean that no supported login is active, not that captions are missing.
+
+When a subtitle problem is reported, distinguish these cases: no normal track is offered; a normal track does not render; an automatic translation cannot be selected; or a selected translation is wrong. Include the video URL, source/target languages, selected track, login state, and app version. Never include cookies or account credentials.

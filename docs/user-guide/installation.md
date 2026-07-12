@@ -1,74 +1,63 @@
-# Installation
+# Installation and updates
 
-PipePipe is not available on the Google Play Store. Choose the method that best fits your needs.
+PipePipe is distributed outside Google Play. Choose one trusted update path and
+keep it consistent so that you can identify the installed version when reporting
+a problem.
 
-::: danger F-Droid: 7-Day Delay Warning
-F-Droid is often slow to publish updates. It usually takes **7 days** for a new version to appear.
+## System requirements
 
-**If you experience bugs or video playback errors, do not wait for F-Droid.** Update immediately using Obtainium or the GitHub APK.
-:::
+The current application requires **Android 6.0 (API 23) or newer**. Release APKs
+are available for `arm64-v8a`, `armeabi-v7a`, `x86_64`, and `x86`; use the
+universal APK when you are unsure which ABI your device uses.
 
-## 1. Obtainium (Highly Recommended)
+## Choose an update path
 
-Obtainium is the gold standard for PipePipe. It monitors the GitHub repository directly and lets you install updates the second they are released.
+### PipePipe's update settings
 
-*   **Link:** [Download Obtainium](https://github.com/ImranR98/Obtainium/releases)
-*   **Setup:**
-    1.  Install Obtainium.
-    2.  Add this URL: `https://github.com/InfinityLoop1308/PipePipe`.
-    3.  Obtainium will handle everything from there.
-
----
-
-## 2. F-Droid
-
-F-Droid is an open-source catalog of applications. It provides automatic updates but is subject to the 7-day delay mentioned above.
-
-*   **Link:** [Get it on F-Droid](https://f-droid.org/packages/InfinityLoop1309.NewPipeEnhanced/)
-*   **Note:** Use this only if you don't mind waiting for fixes.
-
----
-
-## 3. IzzyOnDroid
-
-IzzyOnDroid is an alternative repository that often syncs faster than the official F-Droid repo.
-
-*   **Link:** [Get it on IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/InfinityLoop1309.NewPipeEnhanced)
-
----
-
-## Manual Installation
+PipePipe includes update settings. They let you check for updates manually and,
+if you opt in, show prerelease builds. Prefer stable releases unless you are
+testing a fix and are prepared to report regressions with logs.
 
 ### GitHub Releases
-If you don't want to use any manager, you can grab the APK file directly.
 
-[Download Latest APK](https://github.com/InfinityLoop1308/PipePipe/releases)
+[GitHub Releases](https://github.com/InfinityLoop1308/PipePipe/releases) is the
+direct upstream source. It is the best place to check whether a reported issue
+has already been fixed in a newer release.
 
-::: tip Architecture Guide
-*   **arm64-v8a:** For most modern smartphones.
-*   **universal:** Works on everything but the file is larger.
-:::
+### Obtainium
 
----
+[Obtainium](https://github.com/ImranR98/Obtainium/releases) watches the GitHub
+repository and can notify you about new releases without an app-store account.
+Add `https://github.com/InfinityLoop1308/PipePipe` as the source, then verify
+the signing certificate below before enabling automatic updates.
 
-## Security and Verification
+### F-Droid and IzzyOnDroid
 
-### APK Signing Certificate (SHA-256)
-If you use tools like **Obtainium** or **AppVerifier** to ensure the integrity of your download, you can verify the APK against the official signing certificate fingerprint:
+[F-Droid](https://f-droid.org/packages/InfinityLoop1309.NewPipeEnhanced/) and
+[IzzyOnDroid](https://apt.izzysoft.de/fdroid/index/apk/InfinityLoop1309.NewPipeEnhanced)
+are alternative catalogues. Their publication timing is independent of GitHub,
+so a new upstream release may not appear there immediately. For a known urgent
+fix, compare the installed version with GitHub Releases instead of assuming a
+catalogue is current.
 
-`dec73429ce2563275f5ed19825e44652b32b363a46f38bdff9ad6dcde4842d88`
+## Verify the APK
 
-::: info Why verify?
-Verification ensures that the APK you installed was indeed built by the official PipePipe developer and has not been tampered with.
-:::
+Before installing or accepting an update from any source, verify PipePipe's
+signing certificate. Obtainium accepts the hex form as an allowed signing-key
+fingerprint; AppVerifier can display and compare the colon-separated form.
 
----
+**SHA-256 (hex):**
 
-## System Requirements
+```
+dec73429ce2563275f5ed19825e44652b32b363a46f38bdff9ad6dcde4842d88
+```
 
-To run PipePipe, your device must meet the following minimum requirements:
+**SHA-256 (colon-separated):**
 
-*   **Android Version:** Android 5.0 (Lollipop) or higher.
-*   **Architecture:** arm64-v8a, armeabi-v7a, or x86_64.
+```
+DE:C7:34:29:CE:25:63:27:5F:5E:D1:98:25:E4:46:52:B3:2B:36:3A:46:F3:8B:DF:F9:AD:6D:CD:E4:84:2D:88
+```
 
-If you are using a legacy device (Android 4.4 or lower), PipePipe will not work. In this case, we advise trying [NewPipe-Legacy-Revo](https://github.com/ShareASmile/NewPipe-Legacy-Revo), although it is not officially supported by the PipePipe team.
+If Android refuses an APK, check both the Android version/ABI and whether the
+package was downloaded completely. Do not install an APK from an untrusted
+mirror merely to bypass an update delay.

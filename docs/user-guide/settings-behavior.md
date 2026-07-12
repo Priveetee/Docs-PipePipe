@@ -2,12 +2,22 @@
 
 This section controls the general behavior of the application, such as what happens when you open content or switch between apps.
 
+::: info Current location
+In PipePipe 5.2.3, the controls documented on this page are found in **Settings → Player**. The grouping can change in a later release; use Settings search if a label is not where this guide shows it.
+:::
+
 ### Preferred 'open' action
 
-Defines the default action when you tap on a video or stream.
+Defines the action used **when PipePipe receives a video link from another Android app** (a browser, a messenger, a share sheet, etc.). It does not change the usual behaviour of tapping a video inside PipePipe: internal taps still open the normal detail/main-player flow.
 
 - **Options:** Show info, Video player, Background player, Popup player, Download, Add to playlist, Always ask.
 - **Default:** Video player
+
+If this option appears to be ignored, test with a shared YouTube link from another app and say which sending app you used. Do not report an ordinary in-app tap as a failure of this setting; it is outside this setting's scope.
+
+![PipePipe Player settings, 5.2.3 on Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+
+*Reference capture: PipePipe 5.2.3 · Android 16/API 36. Your chosen values and Android appearance can differ.*
 
 ::: tip My Preference
 I set this to **Video player** to immediately start watching content without extra steps.
@@ -25,6 +35,8 @@ Determines what happens to the video when you switch to another app from the mai
 
 - **Options:** None, Minimize to background player, Minimize to popup player.
 - **Default:** Minimize to background player
+
+This only governs leaving the main player for another app. It is separate from the external-link opening action above. If returning to PipePipe restarts or buffers a stream, describe that as a return-to-app/player-lifecycle issue and include the playback mode.
 
 ::: tip My Preference
 **Minimize to background player** is perfect for listening to content while doing other things on your phone.
