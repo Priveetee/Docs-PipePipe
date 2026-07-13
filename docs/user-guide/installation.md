@@ -10,6 +10,11 @@ The current application requires **Android 6.0 (API 23) or newer**. Release APKs
 are available for `arm64-v8a`, `armeabi-v7a`, `x86_64`, and `x86`; use the
 universal APK when you are unsure which ABI your device uses.
 
+That is the APK installation floor, not a guarantee that the WebView bundled by
+an old ROM can still play current YouTube streams. Protected playback also needs
+an active, compatible WebView provider. See [WebView and YouTube playback](/issues/webview),
+including the Android 6, 7, and 8 results without Google services.
+
 ## Choose an update path
 
 ### PipePipe's update settings

@@ -1,9 +1,23 @@
 flowchart TB
-  START["Start a YouTube video"] --> CHECK{"Android WebView provider<br/>available and JavaScript-ready?"}
-  CHECK -- "No" --> ERROR["WebView unavailable<br/>Check provider and report details"]
-  CHECK -- "Yes" --> EXTRACT["PipePipe extracts stream data"]
-  EXTRACT --> SABR{"YouTube requires<br/>SABR protection?"}
-  SABR -- "No" --> PLAY["Playback"]
-  SABR -- "Yes" --> BOT["WebView runs<br/>BotGuard"]
-  BOT --> TOKEN["Proof of Origin token"]
-  TOKEN --> PLAY
+  subgraph CHECKS["1. Provider check"]
+    direction LR
+    START["Start a YouTube video"] --> PROVIDER{"Android accepts an active<br/>WebView provider?"}
+    PROVIDER -- "No" --> LOCKED["Provider missing, locked,<br/>or signature rejected"]
+    LOCKED --> ERROR["WebView unavailable<br/>Check provider and report details"]
+    PROVIDER -- "Yes" --> PROBE{"JavaScript capability<br/>probe passes?"}
+    PROBE -- "No" --> ERROR
+  end
+
+  PROBE -- "Yes" --> DELIVERY
+
+  subgraph DELIVERY["2. Playback path once WebView is ready"]
+    direction LR
+    EXTRACT["PipePipe extracts stream data"] --> SABR{"YouTube requires<br/>SABR protection?"}
+    SABR -- "No" --> PLAY["Playback"]
+    SABR -- "Yes" --> BOT["WebView runs<br/>BotGuard"]
+    BOT --> TOKEN["Proof of Origin token"]
+    TOKEN --> PLAY
+  end
+
+  style CHECKS fill:transparent
+  style DELIVERY fill:transparent
