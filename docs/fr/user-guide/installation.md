@@ -6,6 +6,8 @@ PipePipe est distribué hors de Google Play. Choisissez une source de mise à jo
 
 L'application actuelle nécessite **Android 6.0 (API 23) ou plus récent**. Les APK de publication existent pour `arm64-v8a`, `armeabi-v7a`, `x86_64` et `x86` ; utilisez l'APK universel si vous ne connaissez pas l'ABI de l'appareil.
 
+Il s'agit du minimum pour installer l'APK, pas de la garantie que la WebView fournie par une ancienne ROM puisse encore lire les flux YouTube actuels. La lecture protégée exige aussi un fournisseur WebView actif et compatible. Consultez [WebView et lecture YouTube](/fr/issues/webview), notamment les résultats Android 6, 7 et 8 sans services Google.
+
 ## Choisir une source de mise à jour
 
 ### Réglages de mise à jour de PipePipe
