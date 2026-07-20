@@ -30,12 +30,39 @@ Una resolución más baja suele bastar para la pequeña ventana del popup y cons
 
 ## Activar formatos avanzados
 
-Permite que el reproductor use códecs de vídeo y audio modernos si tu dispositivo los admite.
+**Ruta:** menú lateral de PipePipe > Ajustes > Reproductor > Activar formatos avanzados
 
-- **Opciones:** VP9, AV1, HEVC, EC-3.
+Controla los formatos modernos de vídeo y audio que PipePipe puede usar.
+
+- **VP9**: un códec de vídeo abierto con amplia compatibilidad en Android.
+- **AV1**: un códec de vídeo reciente y eficiente. Puede exigir muchos recursos
+  cuando Android debe decodificarlo por software.
+- **HEVC**: un códec de vídeo cuya compatibilidad varía según tu dispositivo.
+- **EC-3**: audio Dolby Digital Plus, útil solo si tu dispositivo lo admite.
+
+VP9 y HEVC están habilitados por defecto. AV1 y EC-3 están deshabilitados por
+defecto. Habilitar un formato permite que sus streams aparezcan en la lista de
+calidad, pero no garantiza que el decodificador de tu dispositivo sea estable
+durante la reproducción. Para una misma resolución, PipePipe ordena actualmente
+los formatos habilitados así: AV1, VP9, HEVC y AVC. Habilitar AV1 puede hacer que
+sea la opción automática.
+
+VP9/WebM o AV1 debe estar habilitado para mostrar streams de YouTube en 2K/4K.
+AV1 por sí solo no es obligatorio.
+
+::: tip
+Si el vídeo se entrecorta pero el audio continúa normalmente, prueba primero
+VP9 y baja la resolución. Cada códec usa un decodificador Android diferente, por
+lo que un cambio puede ayudar en un dispositivo y empeorar la reproducción en
+otro. Consulta [#2085](https://github.com/InfinityLoop1308/PipePipe/issues/2085)
+y [#2045](https://github.com/InfinityLoop1308/PipePipe/issues/2045).
+:::
 
 ::: warning
-Activar un formato que tu dispositivo no admite puede provocar una pantalla negra o fallos. Para la reproducción en 2k/4k en YouTube se requiere WEBM o AV1.
+Si un informe contiene `video/av01` o `c2.android.av1-dav1d.decoder`, desmarca
+**AV01**, vuelve a abrir completamente el vídeo y prueba VP9 con la misma
+resolución o una inferior. Si VP9 también falla, desmarca VP9 y HEVC para dejar
+AVC disponible y prueba 720p. Sigue la [guía completa de MediaCodec](/es/issues/android#el-video-se-detiene-al-cabo-de-un-rato-con-un-error-av1).
 :::
 
 ## Limitar la resolución con datos móviles
