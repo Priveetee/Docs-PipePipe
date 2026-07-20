@@ -30,29 +30,39 @@ A lower resolution is often sufficient for the small popup window and consumes f
 
 ## Enable advanced formats
 
-**Path:** Settings > Video and audio > Enable advanced formats
+**Path:** PipePipe side menu > Settings > Player > Enable advanced formats
 
-Allows the player to use modern video and audio codecs if your device supports them.
+You do not need to enable every box. If videos already play correctly, keep the
+defaults: VP9 and HEVC checked, AV1 and EC-3 unchecked.
 
-- **VP9** — A widely supported open codec. Good compatibility across most Android devices.
-- **AV1** — A more efficient codec than VP9. Required for 2K/4K playback on YouTube. Uses more CPU than VP9 on devices without hardware AV1 decoding.
-- **HEVC** — A codec common on iOS devices. Android support varies by device.
-- **EC-3** — A Dolby Digital Plus audio codec. Only useful if your device supports it.
+- **VP9**: an open video codec with broad Android support.
+- **AV1**: a newer, efficient video codec. It can be demanding when Android has
+  to decode it in software.
+- **HEVC**: a video codec whose Android support varies by device.
+- **EC-3**: Dolby Digital Plus audio, useful only when your device supports it.
 
-The formats you enable here determine which streams appear in the in-player quality selector. For example, enabling AV1 adds `AV01` streams to the quality list directly in the player. Once enabled, open a video, tap the quality icon in the player, and select a VP9 or AV01 stream.
+Each checked box allows PipePipe to use that format. It does not guarantee that
+your device will always decode it successfully. At the same resolution,
+PipePipe currently chooses AV1 before VP9, HEVC, and AVC. If you check AV1,
+PipePipe may therefore select it without asking again.
+
+Either VP9/WebM or AV1 must be enabled for YouTube 2K/4K streams to appear. AV1
+alone is not required.
 
 ::: tip
-If your video lags periodically (audio is fine but video stutters every few seconds), try switching codec:
-1. Go to **Settings > Video and audio > Enable advanced formats**
-2. Enable **VP9** or **AV1**
-3. Open a video, tap the quality selector in the player
-4. Select a **VP9** or **AV01** stream
-
-This is the fix confirmed by the developer for this type of lag (see [#2085](https://github.com/InfinityLoop1308/PipePipe/issues/2085) and [#2045](https://github.com/InfinityLoop1308/PipePipe/issues/2045)).
+If video stutters while audio continues normally, try VP9 first and lower the
+resolution. Different codecs use different Android decoders, so changing codec
+can help on one device and make playback worse on another. See
+[#2085](https://github.com/InfinityLoop1308/PipePipe/issues/2085) and
+[#2045](https://github.com/InfinityLoop1308/PipePipe/issues/2045).
 :::
 
 ::: warning
-Enabling a format that your device does not support can lead to a black screen or crashes. WEBM or AV1 are required for 2K/4K playback on YouTube.
+If an error report contains `video/av01` or
+`c2.android.av1-dav1d.decoder`, clear **AV01**, fully reopen the video, and try
+VP9 at the same or a lower resolution. If VP9 also fails, clear VP9 and HEVC to
+leave AVC available, then try 720p. Follow the complete
+[MediaCodec troubleshooting guide](/issues/android#your-video-stops-after-a-while-with-an-av1-error).
 :::
 
 ## Limit resolution on mobile data
