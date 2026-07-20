@@ -1,25 +1,51 @@
 # WebView et lecture YouTube
 
-## Quand suivre ce guide
+## Commencez ici : vérifiez PipePipe avant de remplacer WebView
 
-Suivez ce guide lorsque PipePipe affiche le message suivant au chargement d'une vidéo YouTube :
+Le prérequis WebView a changé après PipePipe 5.2.3. Utilisez la version de
+PipePipe installée, pas seulement la version d'Android, pour choisir l'action.
+
+| Version de PipePipe | Ce qu'elle attend | Première action |
+| --- | --- | --- |
+| **5.2.4-beta ou ultérieure** | Un fournisseur WebView actif qu'Android sait initialiser. La version majeure 80 n'est plus un minimum imposé. | Gardez le fournisseur sélectionné par la ROM. Ne le remplacez pas uniquement parce qu'il est ancien. |
+| **5.2.3** | Un fournisseur WebView en version majeure 80 ou ultérieure. | Mettez de préférence PipePipe à jour. Si vous restez sur 5.2.3, suivez les instructions historiques plus bas. |
+| Toute version signale l'absence du fournisseur ou un échec d'initialisation | Android ne fournit pas de WebView utilisable à PipePipe. | Vérifiez **Implémentation WebView** et l'état du fournisseur. |
+
+Le message exact ci-dessous appartient à PipePipe 5.2.3 et aux versions plus
+anciennes :
 
 > **WebView indisponible. Veuillez vous assurer que la version de votre WebView est supérieure à 80.**
 
-C'est une erreur de compatibilité. Ce n'est ni une demande de connexion à YouTube, ni la preuve que le téléphone est forcément trop ancien.
+C'est une erreur de compatibilité, pas une demande de connexion à YouTube ni la
+preuve que le téléphone est trop ancien. La solution la plus simple est
+désormais d'installer
+[5.2.4-beta](https://github.com/InfinityLoop1308/PipePipe/releases/tag/v5.2.4-beta)
+ou une version ultérieure. Comme 5.2.4-beta est une préversion, créez d'abord
+une [sauvegarde](/fr/user-guide/backup-and-restore) et conservez l'ancien APK si
+vous dépendez de cet appareil.
 
 ![Comment WebView intervient dans la lecture YouTube](/diagrams/webview-playback.png)
 
 ## Pourquoi PipePipe vérifie WebView
 
-Certains flux YouTube utilisent SABR, un protocole de livraison basé sur une session. Lorsque YouTube protège un flux, le client doit obtenir un jeton Proof of Origin (PO) de courte durée avant que YouTube ne renvoie plus de média. PipePipe exécute le challenge BotGuard de YouTube dans Android WebView pour obtenir ce jeton.
+Certains flux YouTube utilisent SABR, un protocole de livraison basé sur une
+session. PipePipe utilise Android WebView localement pour deux tâches
+JavaScript : décoder les données du lecteur YouTube avec EJS et exécuter
+BotGuard afin d'obtenir les jetons de session et de vidéo. Google Play Services
+n'intervient pas dans ce parcours.
 
-Le client PipePipe actuel vérifie aussi que WebView est utilisable avant de commencer l'extraction d'un flux YouTube. Il vérifie qu'Android a sélectionné un fournisseur, que ce fournisseur s'initialise et qu'il sait exécuter les fonctionnalités JavaScript nécessaires au challenge. L'indication « version 80 » du message est donc un seuil pratique, pas la seule cause possible de l'erreur.
+PipePipe 5.2.4-beta fournit les ressources EJS en ES5, des polyfills et un pont
+BotGuard compatible avec l'ancien JavaScript. Le blocage sur la version 80 et
+le test de capacités JavaScript modernes ont été supprimés. PipePipe vérifie
+toujours qu'Android expose un fournisseur et que son moteur démarre vraiment ;
+un fournisseur absent, désactivé, verrouillé ou cassé peut donc encore échouer.
 
-Deux conséquences importantes :
+Trois conséquences importantes :
 
-- Web et MWeb sont les endpoints qui utilisent SABR, mais changer d'endpoint ne contourne pas le contrôle de disponibilité WebView de PipePipe.
-- Une WebView récente peut tout de même échouer si son fournisseur est désactivé, ne démarre pas ou échoue au contrôle des capacités JavaScript. Il faut alors un rapport de bug, pas des mises à jour WebView répétées sans diagnostic.
+- Changer d'endpoint YouTube ne remplace pas le moteur WebView local.
+- Un ancien fournisseur n'est plus refusé uniquement à cause de son numéro de version.
+- Un fournisseur récent peut encore ne pas démarrer. Il faut alors le journal et
+  les détails du fournisseur, pas des installations d'APK répétées.
 
 Pour l'explication technique, lisez le [guide SABR](/fr/developer-guide/introduction) et [Attestation](/fr/developer-guide/sabr-attestation).
 
@@ -40,19 +66,73 @@ uniquement le parcours de mise à jour pris en charge par la ROM.
 
 *Capture de référence : Android 16/API 36. Nom et version sont des exemples : relevez ceux de votre appareil.*
 
-L'écran d'erreur de PipePipe donne ces consignes pratiques :
+Avec PipePipe 5.2.4-beta ou une version ultérieure, le fournisseur inclus dans
+une ancienne ROM peut suffire. Nous avons vérifié une vraie lecture avec les
+fournisseurs d'origine d'Android 6, 7 et 8. N'installez pas Chrome uniquement
+parce que le téléphone utilise Android 7 à 9.
 
-- **Android 6 et Android 10 :** mettez à jour **Android System WebView**.
-- **Android 7, 8 et 9 :** mettez à jour **Chrome**, puis sélectionnez-le comme implémentation WebView si Android propose ce choix.
-- **Autres versions Android :** l'erreur est inattendue ; signalez-la.
-
-Ces noms correspondent à la configuration Android Google habituelle. Sur une ROM dégooglisée, le fournisseur actif peut être la WebView autonome de la ROM. Mettez à jour le fournisseur qu'Android accepte et sélectionne réellement ; installer Chrome n'est ni nécessaire ni utile si la ROM ne le reconnaît pas comme fournisseur WebView.
+Dans la configuration Google habituelle, Android 7 à 9 peut exposer Chrome
+comme WebView. Une ROM dégooglisée peut proposer un fournisseur autonome. Ce
+qui compte est le fournisseur réellement sélectionné par Android, pas la
+présence d'un APK Chrome ou WebView sans rapport dans la liste des applications.
 
 ::: info Android orienté vie privée et constructeurs
-Certains systèmes proposent un autre fournisseur WebView ; certains appareils n'autorisent que le fournisseur du constructeur. Utilisez un fournisseur maintenu qu'Android accepte pour votre appareil. PipePipe ne peut pas installer, sélectionner ou remplacer un fournisseur WebView système à votre place.
+Certains systèmes proposent un autre fournisseur WebView ; certains appareils
+n'autorisent que celui du constructeur. Gardez le fournisseur pris en charge
+par la ROM lorsqu'il fonctionne. PipePipe ne peut pas installer, sélectionner
+ou remplacer un fournisseur WebView système à votre place.
 :::
 
 ## Ce que nous avons vérifié sur d'anciens Android sans services Google
+
+Nous avons testé l'APK x86_64 publié de PipePipe **5.2.4-beta** sur des images
+AOSP propres le 2026-07-20. Elles ne contenaient ni Play Store, ni Google Play
+Services, ni Chrome. Nous avons conservé la WebView d'origine de chaque système
+et ouvert la même vidéo YouTube publique.
+
+| Système | Fournisseur actif d'origine | Résultat vérifié |
+| --- | --- | --- |
+| Android 6.0 / API 23 | AOSP `com.android.webview` 44.0.2403.119 | Moteur partagé prêt, décodage EJS et création des jetons réussis, lecture SABR en mouvement vérifiée. |
+| Android 7.0 / API 24 | AOSP `com.android.webview` 52.0.2743.100 | Lecture SABR en mouvement vérifiée sans installer Chrome. |
+| Android 8.1 / API 27 | AOSP `com.android.webview` 61.0.3163.98 | Fournisseur sélectionné par Android, lecture SABR en mouvement vérifiée. |
+
+Il s'agit de résultats de lecture de bout en bout, pas d'essais arrêtés après le
+chargement d'un accueil, d'une miniature ou d'une page vidéo.
+
+<div class="screenshot-callout" role="img" aria-label="Lecture YouTube dans PipePipe 5.2.4-beta sous Android 6 avec la WebView 44 d'origine">
+  <img src="/screenshots/pipepipe-playback-5.2.4-beta-android6-webview44.png" alt="Lecture YouTube dans PipePipe 5.2.4-beta sous Android 6 avec WebView 44">
+  <svg viewBox="0 0 1080 1920" aria-hidden="true">
+    <rect class="callout-box" x="12" y="62" width="1056" height="608" rx="28" />
+    <path class="callout-arrow" d="M 920 760 L 990 682 M 950 696 L 990 682 L 980 724" />
+    <circle class="callout-number" cx="920" cy="760" r="42" /><text x="920" y="760">1</text>
+  </svg>
+</div>
+
+*PipePipe 5.2.4-beta · Android 6/API 23 · WebView AOSP 44 d'origine · aucun service Google. **1** surligne une vraie image de la vidéo en mouvement.*
+
+<div class="screenshot-callout" role="img" aria-label="Lecture YouTube dans PipePipe 5.2.4-beta sous Android 7 avec la WebView 52 d'origine">
+  <img src="/screenshots/pipepipe-playback-5.2.4-beta-android7-webview52.png" alt="Lecture YouTube dans PipePipe 5.2.4-beta sous Android 7 avec WebView 52">
+  <svg viewBox="0 0 1080 1920" aria-hidden="true">
+    <rect class="callout-box" x="12" y="72" width="1056" height="608" rx="28" />
+    <path class="callout-arrow" d="M 920 770 L 990 692 M 950 706 L 990 692 L 980 734" />
+    <circle class="callout-number" cx="920" cy="770" r="42" /><text x="920" y="770">2</text>
+  </svg>
+</div>
+
+*PipePipe 5.2.4-beta · Android 7/API 24 · WebView AOSP 52 d'origine · aucun Chrome ni service Google. **2** surligne la lecture en mouvement.*
+
+<div class="screenshot-callout" role="img" aria-label="Lecture YouTube dans PipePipe 5.2.4-beta sous Android 8.1 avec la WebView 61 d'origine">
+  <img src="/screenshots/pipepipe-playback-5.2.4-beta-android8-webview61.png" alt="Lecture YouTube dans PipePipe 5.2.4-beta sous Android 8.1 avec WebView 61">
+  <svg viewBox="0 0 1080 1920" aria-hidden="true">
+    <rect class="callout-box" x="12" y="72" width="1056" height="608" rx="28" />
+    <path class="callout-arrow" d="M 920 770 L 990 692 M 950 706 L 990 692 L 980 734" />
+    <circle class="callout-number" cx="920" cy="770" r="42" /><text x="920" y="770">3</text>
+  </svg>
+</div>
+
+*PipePipe 5.2.4-beta · Android 8.1/API 27 · WebView AOSP 61 d'origine · aucun Chrome ni service Google. **3** surligne la lecture en mouvement.*
+
+::: details Pourquoi les anciennes captures 5.2.3 exigeaient une mise à jour WebView
 
 Nous avons testé la version x86_64 de PipePipe **5.2.3** sur des images AOSP propres le 2026-07-13. Elles ne contenaient ni Play Store, ni Google Play Services, ni Chrome. La même vidéo YouTube publique a servi pour chaque essai.
 
@@ -124,39 +204,29 @@ l'extracteur de la capacité WebView nécessaire à la lecture.
 </div>
 
 *Capture de référence : PipePipe 5.2.3 · Android 8.1/API 27 · Mulch WebView 131 intégrée au système · aucun service Google. **3** surligne une vraie image de la vidéo pendant la lecture.*
+:::
 
-### Vérification visuelle sur un ancien Android
+### Vérification visuelle lorsqu'une erreur persiste
 
-Après l'installation ou la mise à jour du fournisseur de confiance par la ROM,
-ouvrez **Options pour les développeurs → Implémentation WebView**. Le bouton de
-sélection et la version complète doivent être visibles. La simple installation
-d'un APK ne suffit pas.
+Si 5.2.4-beta ou une version ultérieure signale encore WebView indisponible,
+ouvrez **Options pour les développeurs → Implémentation WebView**. Le bouton
+sélectionné et la version complète doivent être visibles. Installer un APK ne
+suffit pas.
 
-<div class="screenshot-callout" role="img" aria-label="Écran d'implémentation WebView sous Android 8.1 avec WebView 131 sélectionnée">
-  <img src="/screenshots/android8-webview-provider-131.png" alt="Écran d'implémentation WebView sous Android 8.1 avec Android System WebView 131 sélectionnée">
-  <svg viewBox="0 0 720 1280" aria-hidden="true">
-    <rect class="callout-box" x="24" y="158" width="672" height="150" rx="20" />
-    <path class="callout-arrow" d="M 610 360 L 654 286 M 620 300 L 654 286 L 650 322" />
-    <circle class="callout-number" cx="610" cy="360" r="30" /><text x="610" y="360">4</text>
+<div class="screenshot-callout" role="img" aria-label="Écran d'implémentation WebView sous Android 8.1 avec la WebView 61 d'origine sélectionnée">
+  <img src="/screenshots/android8-webview-provider-61.png" alt="Écran d'implémentation WebView sous Android 8.1 avec Android System WebView 61 sélectionnée">
+  <svg viewBox="0 0 1080 1920" aria-hidden="true">
+    <rect class="callout-box" x="18" y="240" width="1044" height="218" rx="28" />
+    <path class="callout-arrow" d="M 820 555 L 980 460 M 930 462 L 980 460 L 955 505" />
+    <circle class="callout-number" cx="820" cy="555" r="42" /><text x="820" y="555">4</text>
   </svg>
 </div>
 
-*Capture du tutoriel : Android 8.1/API 27 · Mulch WebView 131 intégrée par la ROM de laboratoire · aucun service Google. **4** surligne le fournisseur sélectionné et sa version.*
+*Android 8.1/API 27 · WebView AOSP 61 d'origine · aucun service Google. **4** surligne le fournisseur sélectionné et sa version complète. La capture Android 8 plus haut vérifie que ce même fournisseur fonctionnait réellement.*
 
 Fermez ensuite complètement PipePipe, rouvrez-le et lancez une vidéo YouTube
-publique. Le chargement de l'accueil ou d'une miniature ne teste pas à lui seul
-le parcours SABR/WebView.
-
-<div class="screenshot-callout" role="img" aria-label="Vidéo YouTube en direct lue dans PipePipe sous Android 8.1 après la sélection de WebView 131">
-  <img src="/screenshots/pipepipe-playback-5.2.3-android8-webview131-tutorial.png" alt="Lecture YouTube en direct dans PipePipe sous Android 8.1 avec WebView 131">
-  <svg viewBox="0 0 720 1280" aria-hidden="true">
-    <rect class="callout-box" x="16" y="48" width="688" height="405" rx="20" />
-    <path class="callout-arrow" d="M 620 500 L 620 470 M 598 492 L 620 470 L 642 492" />
-    <circle class="callout-number" cx="668" cy="420" r="30" /><text x="668" y="420">5</text>
-  </svg>
-</div>
-
-*Capture du tutoriel : PipePipe 5.2.3 · Android 8.1/API 27 · Mulch WebView 131 · aucun service Google. **5** surligne la zone de lecture ; un enregistrement de sept secondes a confirmé que les images changeaient.*
+publique. Le chargement d'un accueil ou d'une miniature ne teste pas à lui seul
+le parcours complet EJS, BotGuard, jetons et SABR.
 
 ### Un fournisseur sélectionné peut rester incompatible
 
@@ -192,16 +262,22 @@ fonctionnel pour Android 8.
 
 Ces tests établissent trois faits distincts :
 
-1. PipePipe n'a pas besoin de Google Play Services pour la lecture SABR elle-même.
-2. La version Android minimale permettant d'installer PipePipe ne garantit pas que la WebView fournie puisse exécuter le JavaScript YouTube actuel.
-3. Sur un ancien Android, installer l'APK d'une autre WebView ne suffit souvent pas. Android ne liste que les fournisseurs autorisés par la configuration et la politique de signature de la ROM. Le projet Chromium décrit ce travail destiné aux intégrateurs système dans son [guide d'intégration WebView pour AOSP](https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/aosp-system-integration.md).
+1. PipePipe n'a besoin ni de Google Play Services ni de Chrome pour la lecture SABR locale.
+2. C'est le code de compatibilité de PipePipe, et non le remplacement du fournisseur, qui a rendu les WebView 44, 52 et 61 utilisables.
+3. Android décide toujours quel paquet WebView est approuvé et actif. Installer un APK qui ne devient jamais le fournisseur sélectionné ne change rien. Le projet Chromium décrit l'enregistrement d'un fournisseur comme une tâche d'intégration système dans son [guide d'intégration WebView pour AOSP](https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/aosp-system-integration.md).
 
-::: warning Une ancienne WebView n'est pas une solution sûre à long terme
-Les versions 119 et 131 ci-dessus étaient des sondes de compatibilité contrôlées, pas des recommandations de mise à jour. Elles ne reçoivent plus les correctifs de sécurité Chromium actuels. Préférez une ROM maintenue et son canal de mise à jour pris en charge. Si la ROM ne peut fournir aucune WebView maintenue et sélectionnable, un appareil ou OS maintenu, ou une autre architecture de client, est plus sûr que de forcer un APK archivé dans le système.
+::: warning La compatibilité de lecture n'est pas une mise à jour de sécurité
+Les fournisseurs d'origine testés ci-dessus sont anciens et ne reçoivent plus
+les correctifs de sécurité Chromium. Le fait que PipePipe rende son JavaScript
+local compatible ne sécurise pas WebView pour la navigation courante ou les
+contenus non fiables. Préférez une ROM maintenue et son canal de mise à jour
+pris en charge lorsqu'il existe.
 :::
 
-::: details Téléchargements directs pour les mainteneurs de ROM et les tests reproductibles
-Ces liens sont épinglés sur les versions ou commits archivés examinés ici. Ce ne
+::: details Artefacts historiques de PipePipe 5.2.3 pour les mainteneurs de ROM
+Cette section documente les essais contrôlés de PipePipe 5.2.3. Elle n'est pas
+nécessaire avec 5.2.4-beta ou une version ultérieure. Ces liens sont épinglés
+sur les versions ou commits archivés examinés ici. Ce ne
 sont **pas** des mises à jour universelles en un clic. Sur les images AOSP
 propres, l'installation normale des paquets testés sous Android 7, Android 8 et
 de Cromite a été refusée avec `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, car leur
@@ -229,7 +305,7 @@ charge explicitement par votre ROM.
   [commit d'intégration](https://android.googlesource.com/platform/external/chromium-webview/+/aca588a17000289da9b228d94cc82bd751f91f85)
   indique `sdkVersion=24` et toutes les métadonnées du paquet.
 - **Android 8/9 / API 26 à 28, lecture testée sur l'API 27 :** Mulch WebView
-  131.0.6778.81 pour
+  131.0.6778.200 pour ARM/ARM64 et 131.0.6778.81 pour x86/x86_64 :
   [ARM](https://gitlab.com/divested-mobile/mulch/-/raw/c4c5b73fa5a599fbc61568c5ce0d2cc6d33ad4f2/prebuilt/arm/webview.apk?inline=false),
   [ARM64](https://gitlab.com/divested-mobile/mulch/-/raw/c4c5b73fa5a599fbc61568c5ce0d2cc6d33ad4f2/prebuilt/arm64/webview.apk?inline=false),
   [x86](https://gitlab.com/divested-mobile/mulch/-/raw/c4c5b73fa5a599fbc61568c5ce0d2cc6d33ad4f2/prebuilt/x86/webview.apk?inline=false) ou
@@ -247,25 +323,80 @@ faire tourner un Android 32 bits ; utilisez donc l'ABI signalée par l'OS.
 
 Si un autre fournisseur s'installe mais n'apparaît pas dans **Implémentation WebView**, il n'est pas actif. Le réinstaller ne modifiera ni la liste des fournisseurs autorisés ni la politique de signature de la ROM. Indiquez la version Android, la ROM, le paquet et la version installés, le fournisseur actif et le résultat exact de l'installation.
 
+::: details Android 8 rooté : ce que root peut corriger, et ses limites
+Sur une image de test Android 8.0/API 26 rootée, nous avons reproduit exactement
+le cas où le paquet Mulch s'installe correctement sans apparaître dans
+**Implémentation WebView**. Android connaissait l'APK, mais son service WebView ne
+considérait pas `us.spotco.mulch_wv` comme un fournisseur autorisé.
+
+Un overlay de ressources du framework ajoutant le paquet Mulch et son certificat
+de signature officiel a changé ce résultat. Après redémarrage, Android affichait
+Mulch et `dumpsys webviewupdate` le déclarait à la fois valide et actif. Des
+versions x86 correctement empaquetées de Mulch 119 et 131 ont ensuite affiché une
+vraie page HTTPS sur l'API 26. Nous avons aussi vérifié que le certificat autorisé
+par l'overlay correspond exactement aux APK Mulch ARM et ARM64 officiels.
+
+Cela valide le mécanisme d'enregistrement du fournisseur, pas chaque téléphone
+rooté. L'émulateur Android de cet hôte x86_64 ne peut pas démarrer l'image ARM64 ;
+la combinaison Sony/ARM exacte n'a donc pas été exécutée ici. PipePipe 5.2.3 a
+initialisé sa WebView partagée sur l'API 26, mais l'extraction du flux YouTube
+testé n'a pas abouti : ce test n'est **pas** présenté comme une lecture réussie
+sur l'API 26. Le résultat de lecture complet sur l'API 27 documenté plus haut
+reste le test de bout en bout vérifié.
+
+Récupérez ces diagnostics en lecture seule avant de modifier le système :
+
+```sh
+adb shell getprop ro.product.cpu.abi
+adb shell pm path us.spotco.mulch_wv
+adb shell dumpsys webviewupdate
+```
+
+- Un chemin Mulch sous `/data/app/` sans entrée `us.spotco.mulch_wv` dans
+  **WebView packages** reproduit le blocage de la liste des fournisseurs.
+- `Valid package us.spotco.mulch_wv` avec le même **Current WebView package**
+  prouve qu'Android l'a accepté et sélectionné.
+- Un fournisseur valide et actif suivi d'un échec PipePipe exige le log de
+  l'application ; la sélection seule ne prouve ni le JavaScript ni la lecture.
+
+[Open WebView](https://github.com/Magisk-Modules-Alt-Repo/open_webview) est une
+implémentation de référence de l'overlay Magisk requis et annonce la prise en
+charge des API 26 et 27. Considérez-le comme une référence pour utilisateurs
+expérimentés, pas comme une mise à jour courante : sa dernière version est la
+[2.5.2 du 16 décembre 2024](https://github.com/Magisk-Modules-Alt-Repo/open_webview/releases/tag/v2.5.2),
+le module ne met pas automatiquement le fournisseur à jour, et Mulch est
+archivé. Sauvegardez entièrement l'état de démarrage et du système, puis suivez
+la procédure de récupération propre à la ROM ; un remplacement générique peut
+supprimer toute WebView fonctionnelle ou empêcher le démarrage.
+:::
+
 ## Ne pas confondre ces échecs
 
 | Ce que vous voyez | Ce que cela établit | Action suivante |
 | --- | --- | --- |
-| Message exact **WebView indisponible** | PipePipe n'a pas pu utiliser le fournisseur WebView sélectionné. | Suivez cette page et signalez les détails du fournisseur si le problème persiste. |
+| Message exact exigeant une version **supérieure à 80** | L'appareil utilise PipePipe 5.2.3 ou une version antérieure avec l'ancien blocage par version. | Mettez PipePipe à jour avant de remplacer le fournisseur système. |
+| **Aucun fournisseur Android WebView n'est disponible** ou échec d'initialisation du moteur avec 5.2.4-beta+ | Android n'a exposé aucun fournisseur, ou le fournisseur sélectionné n'a pas pu démarrer. | Vérifiez **Implémentation WebView**, puis signalez les détails du fournisseur et le journal. |
 | `Source error`, buffering ou lecture arrêtée | Ce n'est pas une preuve que WebView est en cause. SABR, le réseau, le compte ou le lecteur peuvent être impliqués. | Mettez PipePipe à jour et joignez le rapport d'erreur généré. |
 | `AntiBotException: Sign in to confirm you're not a bot` | Restriction YouTube, réseau ou authentification. | Consultez [Lecture, réseau et connexion](./youtube-playback). |
 | La recherche ne renvoie aucun résultat | Problème distinct d'extracteur ou de recherche. | Ouvrez un rapport séparé avec le service, le pays, l'endpoint et l'état du VPN. |
 
-Le fait qu'une autre application fonctionne sur le même appareil ne prouve pas que PipePipe peut retirer ce prérequis. Les applications peuvent utiliser des clients YouTube, endpoints ou chemins de repli différents. Un client adossé à un service d'extraction distant peut aussi déplacer le JavaScript et l'attestation hors du téléphone ; c'est une autre architecture, pas la preuve que la WebView locale est utilisable.
+Le fait qu'une autre application fonctionne sur le même appareil ne prouve pas
+que le fournisseur WebView sélectionné par Android fonctionne. Les applications
+peuvent utiliser d'autres clients YouTube, endpoints ou services distants.
+PipePipe 5.2.4-beta exécute toujours EJS et l'attestation localement, mais adapte
+désormais ce JavaScript aux anciens fournisseurs.
 
-## Si WebView est récente mais rejetée par PipePipe
+## Si 5.2.4-beta ou une version ultérieure rejette encore WebView
 
-1. Mettez PipePipe à jour vers la dernière version stable, puis redémarrez Android et PipePipe.
+1. Confirmez la version de PipePipe installée. L'ancien message exigeant la
+   version 80 signifie que l'application n'a pas encore été mise à jour.
 2. Confirmez à nouveau le fournisseur actif dans **Implémentation WebView** ; installer Chrome ou Android System WebView ne suffit pas si Android ne l'a pas sélectionné.
 3. Si le fournisseur est verrouillé par le constructeur ou ne peut pas être changé, ne supposez pas qu'un fournisseur téléchargé arbitrairement est compatible. Gardez un chemin de mise à jour système/WebView pris en charge et maintenu.
 4. Envoyez un rapport de bug avec les informations ci-dessous.
 
-Ce point vaut même sur une version Android récente. Un fournisseur actuel peut échouer à l'initialisation, et PipePipe a besoin du log pour distinguer un problème de l'application d'un fournisseur trop ancien ou incompatible.
+L'âge du fournisseur ne suffit plus à décider. PipePipe a besoin du journal pour
+distinguer un fournisseur absent, un échec d'initialisation du moteur et une
+erreur YouTube/SABR plus tardive.
 
 ## Contenu d'un rapport de bug
 
