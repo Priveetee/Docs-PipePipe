@@ -1,22 +1,21 @@
 flowchart TB
-  subgraph CHECKS["1. Provider check"]
-    direction LR
-    START["Start a YouTube video"] --> PROVIDER{"Android accepts an active<br/>WebView provider?"}
-    PROVIDER -- "No" --> LOCKED["Provider missing, locked,<br/>or signature rejected"]
-    LOCKED --> ERROR["WebView unavailable<br/>Check provider and report details"]
-    PROVIDER -- "Yes" --> PROBE{"JavaScript capability<br/>probe passes?"}
-    PROBE -- "No" --> ERROR
+  subgraph CHECKS["1. Start with the PipePipe version"]
+    direction TB
+    START["Start a YouTube video"] --> VERSION{"PipePipe 5.2.4-beta<br/>or newer?"}
+    VERSION -- "No" --> UPDATE["Update PipePipe first"]
+    VERSION -- "Yes" --> PROVIDER{"Android exposes an active<br/>WebView provider?"}
+    PROVIDER -- "No" --> ERROR["WebView unavailable<br/>Check the active provider"]
+    PROVIDER -- "Yes" --> COMPAT["Compatibility runtime<br/>supports old WebView JavaScript"]
   end
 
-  PROBE -- "Yes" --> DELIVERY
+  COMPAT --> DELIVERY
 
-  subgraph DELIVERY["2. Playback path once WebView is ready"]
-    direction LR
-    EXTRACT["PipePipe extracts stream data"] --> SABR{"YouTube requires<br/>SABR protection?"}
-    SABR -- "No" --> PLAY["Playback"]
-    SABR -- "Yes" --> BOT["WebView runs<br/>BotGuard"]
-    BOT --> TOKEN["Proof of Origin token"]
-    TOKEN --> PLAY
+  subgraph DELIVERY["2. Local YouTube playback path"]
+    direction TB
+    EJS["ES5-compatible EJS decoder"] --> BOT["WebView runs BotGuard"]
+    BOT --> TOKEN["Session and video tokens"]
+    TOKEN --> SABR["SABR audio and video"]
+    SABR --> PLAY["Playback"]
   end
 
   style CHECKS fill:transparent

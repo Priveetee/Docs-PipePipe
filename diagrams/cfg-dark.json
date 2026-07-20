@@ -1,8 +1,10 @@
 {
   "look": "handDrawn",
   "theme": "base",
+  "fontSize": 26,
   "themeVariables": {
-    "fontFamily": "Caveat, Comic Sans MS, cursive",
+    "fontFamily": "Arial, Liberation Sans, sans-serif",
+    "fontSize": "26px",
     "background": "#1b1b1f",
     "primaryColor": "#312c52",
     "mainBkg": "#312c52",
@@ -17,5 +19,6 @@
     "titleColor": "#ececf3",
     "edgeLabelBackground": "#26262c"
   },
+  "themeCSS": ".nodeLabel, .edgeLabel, .cluster-label { font-weight: 700 !important; }",
   "flowchart": { "curve": "basis" }
 }
