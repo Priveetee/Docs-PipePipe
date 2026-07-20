@@ -30,29 +30,41 @@ Une résolution plus basse est souvent suffisante pour la petite fenêtre du pop
 
 ## Activer les formats avancés
 
-**Chemin :** Paramètres > Vidéo et audio > Activer les formats avancés
+**Chemin :** menu latéral de PipePipe > Paramètres > Lecteur > Activer les formats avancés
 
-Permet au lecteur d'utiliser des codecs vidéo et audio modernes si votre appareil les prend en charge.
+Vous n'avez pas besoin d'activer toutes les cases. Si vos vidéos fonctionnent,
+gardez simplement les valeurs d'origine : VP9 et HEVC cochés, AV1 et EC-3
+décochés.
 
-- **VP9** — Un codec ouvert largement supporté. Bonne compatibilité sur la plupart des appareils Android.
-- **AV1** — Un codec plus efficace que VP9. Requis pour la lecture en 2K/4K sur YouTube. Consomme plus de CPU que VP9 sur les appareils sans décodage matériel AV1.
-- **HEVC** — Un codec courant sur iOS. La prise en charge sur Android varie selon l'appareil.
-- **EC-3** — Un codec audio Dolby Digital Plus. Utile uniquement si votre appareil le prend en charge.
+- **VP9** : un codec vidéo ouvert largement pris en charge sous Android.
+- **AV1** : un codec vidéo récent et efficace. Il peut être exigeant lorsqu'Android
+  doit le décoder de façon logicielle.
+- **HEVC** : un codec vidéo dont la prise en charge varie selon votre appareil.
+- **EC-3** : l'audio Dolby Digital Plus, utile seulement si votre appareil le prend
+  en charge.
 
-Les formats activés ici déterminent quels streams apparaissent dans le sélecteur de qualité du lecteur. Par exemple, activer AV1 ajoute des streams `AV01` dans la liste de qualité directement dans le lecteur. Une fois activé, ouvrez une vidéo, appuyez sur l'icône de qualité dans le lecteur, et sélectionnez un stream VP9 ou AV01.
+Chaque case cochée autorise PipePipe à utiliser ce format. Cela ne garantit pas
+que votre appareil réussira toujours à le décoder. À résolution égale, PipePipe
+choisit actuellement AV1 avant VP9, HEVC et AVC. Si vous cochez AV1, PipePipe
+peut donc le sélectionner sans vous le redemander.
+
+VP9/WebM ou AV1 doit être activé pour faire apparaître les streams YouTube en
+2K/4K. AV1 seul n'est pas nécessaire.
 
 ::: tip
-Si votre vidéo lagge périodiquement (l'audio est correct mais la vidéo saccade toutes les quelques secondes), essayez de changer de codec :
-1. Allez dans **Paramètres > Vidéo et audio > Activer les formats avancés**
-2. Activez **VP9** ou **AV1**
-3. Ouvrez une vidéo, appuyez sur le sélecteur de qualité dans le lecteur
-4. Sélectionnez un stream **VP9** ou **AV01**
-
-C'est la solution confirmée par le développeur pour ce type de lag (voir [#2085](https://github.com/InfinityLoop1308/PipePipe/issues/2085) et [#2045](https://github.com/InfinityLoop1308/PipePipe/issues/2045)).
+Si l'image saccade alors que le son continue normalement, essayez d'abord VP9
+et réduisez la résolution. Chaque codec utilise un décodeur Android différent :
+un changement peut aider sur un appareil et dégrader la lecture sur un autre.
+Voir [#2085](https://github.com/InfinityLoop1308/PipePipe/issues/2085) et
+[#2045](https://github.com/InfinityLoop1308/PipePipe/issues/2045).
 :::
 
 ::: warning
-Activer un format que votre appareil ne supporte pas peut entraîner un écran noir ou des plantages. WEBM ou AV1 sont nécessaires pour la lecture en 2K/4K sur YouTube.
+Si un rapport d'erreur contient `video/av01` ou
+`c2.android.av1-dav1d.decoder`, décochez **AV01**, rouvrez complètement la vidéo
+et essayez VP9 à la même résolution ou à une résolution inférieure. Si VP9
+échoue aussi, décochez VP9 et HEVC pour ne laisser qu'AVC, puis essayez en 720p.
+Suivez le [guide MediaCodec complet](/fr/issues/android#votre-video-s-arrete-apres-un-moment-avec-une-erreur-av1).
 :::
 
 ## Limiter la résolution lors de l'utilisation des données mobiles
