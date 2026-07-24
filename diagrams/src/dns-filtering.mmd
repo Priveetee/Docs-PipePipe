@@ -1,0 +1,19 @@
+flowchart TB
+  START["Open one public<br/>YouTube video"] --> DNS{"Where does the required<br/>Google host resolve?"}
+
+  DNS -- "Public address" --> REQUEST["PipePipe requests the<br/>PO token and stream data"]
+  REQUEST --> PLAY["Playback starts"]
+
+  DNS -- "0.0.0.0, 127.0.0.1<br/>or localhost" --> BLOCKED["The DNS or network filter<br/>stops the request locally"]
+  BLOCKED --> ERROR["Source error or<br/>playback failure"]
+  ERROR --> CHECK["Check Private DNS, VPN,<br/>ad blocker, router and hosts file"]
+  CHECK --> ALLOW["Allow googleapis.com<br/>and google.com families"]
+  ALLOW --> RETRY["Reconnect, reopen PipePipe<br/>and retry the same video"]
+  RETRY --> DNS
+
+  classDef success fill:#dcfce7,stroke:#15803d,color:#14532d
+  classDef failure fill:#fee2e2,stroke:#b91c1c,color:#7f1d1d
+  classDef action fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e
+  class PLAY success
+  class BLOCKED,ERROR failure
+  class CHECK,ALLOW,RETRY action

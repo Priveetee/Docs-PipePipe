@@ -24,6 +24,7 @@ collects the information that is actually useful for a diagnosis.
 | Exact symptom | Start here | Do not assume |
 | --- | --- | --- |
 | **WebView unavailable** | [WebView and protected playback](./webview) | That changing the YouTube endpoint bypasses the WebView check. |
+| Every YouTube video fails; a Google host resolves to `0.0.0.0` or `127.0.0.1` | [DNS filtering and playback](./youtube-playback#every-youtube-video-fails-check-dns-filtering) | That changing endpoint, reinstalling, or updating WebView bypasses DNS filtering. |
 | `AntiBotException`, `Source error`, buffering, live seek failure | [Playback, network, and sign-in](./youtube-playback) | That a current WebView or a login proves the cause. |
 | No/incorrect search results | [Search and discovery](./search) | That a player fix will fix search. |
 | Link opens in the “wrong” player | [Background, popup, fullscreen, and queue](./player-modes) | That the preferred-open setting controls in-app taps. |
@@ -42,7 +43,8 @@ collects the information that is actually useful for a diagnosis.
 - [WebView and protected playback](./webview): PipePipe says WebView is
   unavailable, or a system WebView provider is missing, locked, or incompatible.
 - [Playback, network, and sign-in](./youtube-playback): `AntiBotException`,
-  `Source error`, buffering, endpoint choice, or logged-in playback.
+  DNS filtering, `Source error`, buffering, endpoint choice, or logged-in
+  playback.
 - [Search and discovery](./search): empty, wrong, or incomplete search results.
 - [Background, popup, fullscreen, and queue](./player-modes): lifecycle,
   rotation, picture-in-picture, queue, and playlist transitions.

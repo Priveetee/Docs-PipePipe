@@ -84,6 +84,7 @@
 .dark .vp-doc img[src$="/diagrams/sabr-buffered-model.png"] { content: url(/Docs-PipePipe/diagrams/sabr-buffered-model-dark.png); }
 .dark .vp-doc img[src$="/diagrams/webview-playback.png"] { content: url(/Docs-PipePipe/diagrams/webview-playback-dark.png); }
 .dark .vp-doc img[src$="/diagrams/issue-triage.png"] { content: url(/Docs-PipePipe/diagrams/issue-triage-dark.png); }
+.dark .vp-doc img[src$="/diagrams/dns-filtering.png"] { content: url(/Docs-PipePipe/diagrams/dns-filtering-dark.png); }
 
 /* Real-device screenshots are deliberately kept as screenshots. The SVG layer
    above them is a responsive, non-destructive annotation: it highlights a
