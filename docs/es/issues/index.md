@@ -21,6 +21,7 @@ Esta sección es el mapa para usuarios de los problemas de PipePipe. Parte del s
 | Síntoma exacto | Empieza aquí | No supongas |
 | --- | --- | --- |
 | **WebView unavailable** | [WebView y reproducción protegida](./webview) | Que cambiar endpoint evita la comprobación WebView. |
+| Fallan todos los vídeos de YouTube; un host de Google resuelve a `0.0.0.0` o `127.0.0.1` | [Filtrado DNS y reproducción](./youtube-playback#fallan-todos-los-videos-de-youtube-comprueba-el-filtrado-dns) | Que cambiar endpoint, reinstalar o actualizar WebView evita el filtrado DNS. |
 | `AntiBotException`, `Source error`, búfer, seek en directo | [Reproducción, red e inicio de sesión](./youtube-playback) | Que WebView actual o sesión demuestra la causa. |
 | Búsqueda vacía/incorrecta | [Búsqueda y descubrimiento](./search) | Que una corrección del reproductor arregla búsqueda. |
 | Enlace en reproductor «equivocado» | [Segundo plano, emergente, pantalla completa y cola](./player-modes) | Que la acción preferida controla toques internos. |
@@ -36,7 +37,8 @@ Esta sección es el mapa para usuarios de los problemas de PipePipe. Parte del s
 ### YouTube y reproducción
 
 - [WebView y reproducción protegida](./webview): PipePipe indica que WebView no está disponible, o falta el proveedor del sistema, está bloqueado o es incompatible.
-- [Reproducción, red e inicio de sesión](./youtube-playback): `AntiBotException`, `Source error`, buffering, endpoint o reproducción con sesión.
+- [Reproducción, red e inicio de sesión](./youtube-playback): filtrado DNS,
+  `Source error`, buffering, endpoint o reproducción con sesión.
 - [Búsqueda y descubrimiento](./search): resultados vacíos, incorrectos o incompletos.
 - [Segundo plano, emergente, pantalla completa y cola](./player-modes): ciclo de
   vida, rotación, imagen en imagen, cola y transiciones de listas.
