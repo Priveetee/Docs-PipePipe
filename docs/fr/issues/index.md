@@ -23,6 +23,7 @@ les éléments réellement utiles au diagnostic.
 | Symptôme exact | Commencer ici | Ne pas supposer |
 | --- | --- | --- |
 | **WebView unavailable** | [WebView et lecture protégée](./webview) | Qu'un changement d'endpoint contourne WebView. |
+| Toutes les vidéos YouTube échouent ; un domaine Google pointe vers `0.0.0.0` ou `127.0.0.1` | [Filtrage DNS et lecture](./youtube-playback#toutes-les-videos-youtube-echouent-verifiez-le-filtrage-dns) | Qu'un changement d'endpoint, une réinstallation ou une mise à jour WebView contourne le filtrage DNS. |
 | `AntiBotException`, `Source error`, tampon, seek live | [Lecture, réseau et connexion](./youtube-playback) | Qu'un WebView à jour ou une connexion prouve la cause. |
 | Recherche vide/incorrecte | [Recherche et découverte](./search) | Qu'un correctif lecteur corrige la recherche. |
 | Lien dans le « mauvais » lecteur | [Arrière-plan, popup, plein écran et file](./player-modes) | Que l'action préférée contrôle les appuis internes. |
@@ -38,7 +39,8 @@ les éléments réellement utiles au diagnostic.
 ### YouTube et lecture
 
 - [WebView et lecture protégée](./webview) : PipePipe indique que WebView est indisponible, ou le fournisseur système manque, est verrouillé ou incompatible.
-- [Lecture, réseau et connexion](./youtube-playback) : `AntiBotException`, `Source error`, buffering, endpoint ou lecture connectée.
+- [Lecture, réseau et connexion](./youtube-playback) : filtrage DNS, `Source
+  error`, buffering, endpoint ou lecture connectée.
 - [Recherche et découverte](./search) : résultats de recherche vides, erronés ou incomplets.
 - [Arrière-plan, popup, plein écran et file](./player-modes) : cycle de vie,
   rotation, image dans l'image, file et transitions de playlist.
