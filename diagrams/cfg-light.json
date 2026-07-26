@@ -1,11 +1,12 @@
 {
   "look": "handDrawn",
   "theme": "default",
-  "fontSize": 26,
+  "fontSize": 30,
   "themeVariables": {
-    "fontFamily": "Arial, Liberation Sans, sans-serif",
-    "fontSize": "26px"
+    "fontFamily": "Reddit Sans, Arial, Liberation Sans, sans-serif",
+    "fontSize": "30px",
+    "background": "#ffffff"
   },
-  "themeCSS": ".nodeLabel, .edgeLabel, .cluster-label { font-weight: 700 !important; }",
+  "themeCSS": ".nodeLabel, .edgeLabel, .cluster-label { font-family: 'Reddit Sans', Arial, Liberation Sans, sans-serif !important; font-size: 30px !important; font-weight: 700 !important; }",
   "flowchart": { "curve": "basis" }
 }

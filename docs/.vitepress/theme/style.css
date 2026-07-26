@@ -55,10 +55,12 @@
     max-height: none;
     width: 100%;
     height: auto;
+    background-color: #fff;
 }
 
 /* Dark mode: swap each diagram for a real dark-rendered variant (dark canvas
    matching the site, light text), instead of filtering the light PNG. */
+.dark .vp-doc img[src*="/diagrams/"] { background-color: #1b1b1f; }
 .dark .vp-doc img[src$="/diagrams/sabr-pipeline.png"] { content: url(/Docs-PipePipe/diagrams/sabr-pipeline-dark.png); }
 .dark .vp-doc img[src$="/diagrams/sabr-session.png"] { content: url(/Docs-PipePipe/diagrams/sabr-session-dark.png); }
 .dark .vp-doc img[src$="/diagrams/botguard-layers.png"] { content: url(/Docs-PipePipe/diagrams/botguard-layers-dark.png); }
