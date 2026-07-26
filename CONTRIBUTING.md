@@ -20,7 +20,7 @@ The easiest way to contribute is by adding or editing the documentation pages. A
 
 ### Reporting Issues
 
-If you find a typo, outdated information, or have an idea for a new page but don't want to write it yourself, please [open an issue](https://github.com/YOUR-USERNAME/YOUR-REPO/issues) on GitHub.
+If you find a typo, outdated information, or have an idea for a new page but don't want to write it yourself, please [open an issue](https://github.com/Priveetee/Docs-PipePipe/issues) on GitHub.
 
 ## Code of Conduct
 
