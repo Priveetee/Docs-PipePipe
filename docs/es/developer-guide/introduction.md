@@ -4,6 +4,14 @@ Esta parte de la wiki trata sobre SABR, el protocolo que YouTube usa ahora para 
 
 SABR, abreviatura de Server Adaptive BitRate, es el protocolo de entrega que YouTube usa cada vez más en lugar de las simples URLs de medio. Si desarrollas o mantienes un extractor de YouTube, te concierne, porque cambia el funcionamiento de principio a fin.
 
+::: info Estado de la implementación comprobado
+Las páginas del protocolo se comprobaron contra `main` de PipePipeExtractor y
+`dev` de PipePipeClient el 03/09/2026. La última release de PipePipe comprobada
+es la **5.3.0**, y **5.3.1-beta** es la preversión actual. Los detalles que
+dependen de la versión están en las páginas del extractor, porque YouTube puede
+cambiar este flujo.
+:::
+
 El método antiguo era sobre todo sin estado. Resolvías una URL o un manifiesto y descargabas los bytes. SABR, en cambio, es una conversación. El cliente abre una sesión y sigue dialogando con el servidor, enviando su estado de reproducción actual y recibiendo el medio en pequeños trozos, hasta que termina la reproducción.
 
 ![Pipeline SABR](/diagrams/sabr-pipeline.png)

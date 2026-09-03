@@ -12,7 +12,7 @@ export avant une réinitialisation, une migration ou le test d'une préversion.
 4. Copiez le fichier hors de l'appareil si cette sauvegarde compte réellement.
 
 <div class="screenshot-callout" role="img" aria-label="Écran Sauvegarde PipePipe avec Import database et Export database surlignés">
-  <img src="/screenshots/pipepipe-backup-5.2.3-api36.png" alt="Réglages Sauvegarde PipePipe, 5.2.3 sur Android 16">
+  <img src="/screenshots/pipepipe-backup-5.3.1-beta-api36.png" alt="Réglages Sauvegarde PipePipe, 5.3.1-beta sur Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="300" width="1030" height="225" rx="28" />
     <circle class="callout-number" cx="990" cy="330" r="42" /><text x="990" y="330">1</text>
@@ -21,7 +21,7 @@ export avant une réinitialisation, une migration ou le test d'une préversion.
   </svg>
 </div>
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. **1** importe et peut remplacer les données locales ; **2** crée l'export de récupération à faire d'abord.*
+*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. **1** importe et peut remplacer les données locales ; **2** crée l'export de récupération à faire d'abord.*
 
 ::: warning Une sauvegarde peut contenir des données de visionnage personnelles
 Traitez l'export comme une archive privée. Ne le joignez pas à une issue publique

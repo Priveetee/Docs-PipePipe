@@ -3,7 +3,9 @@
 This section controls the general behavior of the application, such as what happens when you open content or switch between apps.
 
 ::: info Current location
-In PipePipe 5.2.3, the controls documented on this page are found in **Settings → Player**. The grouping can change in a later release; use Settings search if a label is not where this guide shows it.
+In the current 5.3.x builds, the controls documented on this page are found in
+**Settings → Player**. The grouping can change in a later release; use Settings
+search if a label is not where this guide shows it.
 :::
 
 ### Preferred 'open' action
@@ -11,13 +13,13 @@ In PipePipe 5.2.3, the controls documented on this page are found in **Settings 
 Defines the action used **when PipePipe receives a video link from another Android app** (a browser, a messenger, a share sheet, etc.). It does not change the usual behaviour of tapping a video inside PipePipe: internal taps still open the normal detail/main-player flow.
 
 - **Options:** Show info, Video player, Background player, Popup player, Download, Add to playlist, Always ask.
-- **Default:** Video player
+- **Default:** Always ask
 
 If this option appears to be ignored, test with a shared YouTube link from another app and say which sending app you used. Do not report an ordinary in-app tap as a failure of this setting; it is outside this setting's scope.
 
-![PipePipe Player settings, 5.2.3 on Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+![PipePipe Player settings, 5.3.1-beta on Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Reference capture: PipePipe 5.2.3 · Android 16/API 36. Your chosen values and Android appearance can differ.*
+*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. Your chosen values and Android appearance can differ.*
 
 ::: tip My Preference
 I set this to **Video player** to immediately start watching content without extra steps.

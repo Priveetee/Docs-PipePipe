@@ -4,6 +4,12 @@ PipePipe is an independent Android video client built from the NewPipe lineage.
 It supports multiple services and keeps user data on the device rather than
 requiring a PipePipe account or cloud service.
 
+::: info Version status
+The latest upstream stable release checked for this guide is **5.3.0**. The
+current prerelease track is **5.3.1-beta**. Prereleases can contain regressions;
+check the release notes before switching and keep a backup first.
+:::
+
 ## An independent project
 
 PipePipe and NewPipe are separate projects with separate releases, issue trackers,

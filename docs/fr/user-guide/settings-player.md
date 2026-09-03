@@ -2,16 +2,16 @@
 
 Cette section couvre tous les paramètres liés au lecteur vidéo et audio.
 
-![Réglages Lecteur de PipePipe, 5.2.3 sur Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+![Réglages Lecteur de PipePipe, 5.3.1-beta sur Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. L'ordre et les valeurs peuvent évoluer selon la version.*
+*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. L'ordre et les valeurs peuvent évoluer selon la version.*
 
 ## Résolution par défaut
 
 Définit la qualité vidéo préférée pour toutes les vidéos lues dans le lecteur principal.
 
-- **Options :** Meilleure résolution, 1080p60, 1080p, 720p60, 720p, 480p, 360p, 240p, 144p.
-- **Défaut :** 1080p60
+- **Options :** Meilleure résolution, 2160p, 1440p, 1080p, 720p, 480p, 360p, 240p, 144p.
+- **Défaut :** 720p
 
 ::: tip
 Choisir une résolution plus basse comme 720p peut aider à économiser des données mobiles et à réduire le temps de chargement sur des connexions lentes.

@@ -1,9 +1,10 @@
 # Referencia de ajustes
 
 Esta referencia visual complementa las páginas de [Reproductor](./settings-player)
-y [Comportamiento](./settings-behavior). Las capturas usan la release oficial de
-PipePipe 5.2.3 en Android 16/API 36. Las etiquetas pueden cambiar entre versiones;
-usa la búsqueda de ajustes si hace falta.
+y [Comportamiento](./settings-behavior). Las capturas de Reproductor y Avanzado
+usan PipePipe 5.3.1-beta en Android 16/API 36. Las demás pantallas conservan su
+versión en el nombre del archivo hasta que se actualicen. Las etiquetas pueden
+cambiar entre versiones; usa la búsqueda de ajustes si hace falta.
 
 ## Reproductor y gestos
 
@@ -12,7 +13,7 @@ autoplay y cola. La pantalla Gestos configura por separado las interacciones del
 reproductor.
 
 <div class="screenshot-callout" role="img" aria-label="Ajustes de reproductor con acción abrir preferida y minimizar resaltados">
-  <img src="/screenshots/pipepipe-player-5.2.3-api36.png" alt="Ajustes de reproductor">
+  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="Ajustes de reproductor, PipePipe 5.3.1-beta en Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="1420" width="1030" height="180" rx="28" />
     <path class="callout-arrow" d="M 850 1330 L 850 1400 M 825 1375 L 850 1400 L 875 1375" />
@@ -23,7 +24,7 @@ reproductor.
   </svg>
 </div>
 
-*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. **1** se usa para enlaces externos entregados a PipePipe; **2** controla salir del reproductor principal hacia otra app.*
+*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. **1** se usa para enlaces externos entregados a PipePipe; **2** controla salir del reproductor principal hacia otra app.*
 
 ![Ajustes de gestos](/screenshots/pipepipe-gestures-5.2.3-api36.png)
 
@@ -57,7 +58,7 @@ varias opciones a la vez: anota valor inicial, cambia una y vuelve a probar el
 mismo vídeo. Para workarounds de decodificador/superficie, consulta
 [Reproducción e integración Android](/es/issues/android).
 
-![Ajustes avanzados](/screenshots/pipepipe-advanced-5.2.3-api36.png)
+![Ajustes avanzados, PipePipe 5.3.1-beta en Android 16](/screenshots/pipepipe-advanced-5.3.1-beta-api36.png)
 
 ## Pantallas relacionadas con tareas
 

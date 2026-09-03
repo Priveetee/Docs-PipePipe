@@ -1,8 +1,9 @@
 # Settings reference
 
 This visual reference complements the focused [Player](./settings-player) and
-[Behavior](./settings-behavior) pages. The screenshots use the official
-PipePipe 5.2.3 release on Android 16/API 36. Labels can move between releases;
+[Behavior](./settings-behavior) pages. The Player and Advanced captures below
+use PipePipe 5.3.1-beta on Android 16/API 36. Other screens keep their version
+in the image name until they are refreshed. Labels can move between releases;
 use Settings search if yours differ.
 
 ## Player and gestures
@@ -11,7 +12,7 @@ The Player screen combines quality, format, opening action, app-switch, autoplay
 and queue controls. The Gestures screen controls player interactions separately.
 
 <div class="screenshot-callout" role="img" aria-label="Player settings with preferred open action and minimize-on-app-switch highlighted">
-  <img src="/screenshots/pipepipe-player-5.2.3-api36.png" alt="Player settings">
+  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="Player settings, PipePipe 5.3.1-beta on Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="1420" width="1030" height="180" rx="28" />
     <path class="callout-arrow" d="M 850 1330 L 850 1400 M 825 1375 L 850 1400 L 875 1375" />
@@ -22,7 +23,7 @@ and queue controls. The Gestures screen controls player interactions separately.
   </svg>
 </div>
 
-*Reference capture: PipePipe 5.2.3 · Android 16/API 36. **1** is used for external links handed to PipePipe; **2** controls leaving the main player for another app.*
+*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. **1** is used for external links handed to PipePipe; **2** controls leaving the main player for another app.*
 
 ![Gesture settings](/screenshots/pipepipe-gestures-5.2.3-api36.png)
 
@@ -56,7 +57,7 @@ several of them together: record the initial value, change one option, and
 retest the same video. For decoder and surface workarounds, see
 [Android playback and integration](/issues/android).
 
-![Advanced settings](/screenshots/pipepipe-advanced-5.2.3-api36.png)
+![Advanced settings, PipePipe 5.3.1-beta on Android 16](/screenshots/pipepipe-advanced-5.3.1-beta-api36.png)
 
 ## More task-specific screens
 

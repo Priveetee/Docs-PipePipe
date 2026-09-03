@@ -2,16 +2,16 @@
 
 Esta sección cubre todos los ajustes relacionados con el reproductor de vídeo y audio.
 
-![Ajustes de reproductor PipePipe, 5.2.3 en Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+![Ajustes de reproductor PipePipe, 5.3.1-beta en Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. El orden y valores pueden cambiar según versión.*
+*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. El orden y valores pueden cambiar según versión.*
 
 ## Resolución por defecto
 
 Establece la calidad de vídeo preferida para todos los vídeos reproducidos en el reproductor principal.
 
-- **Opciones:** Mejor resolución, 1080p60, 1080p, 720p60, 720p, 480p, 360p, 240p, 144p.
-- **Por defecto:** 1080p60
+- **Opciones:** Mejor resolución, 2160p, 1440p, 1080p, 720p, 480p, 360p, 240p, 144p.
+- **Por defecto:** 720p
 
 ::: tip
 Elegir una resolución más baja como 720p puede ayudar a ahorrar datos móviles y reducir el almacenamiento en búfer en conexiones lentas.

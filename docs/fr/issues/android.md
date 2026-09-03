@@ -53,7 +53,7 @@ simplement leur version AV1.
    l'application utilisée pour ce guide est réglée en anglais.
 
 <div class="screenshot-callout" role="img" aria-label="Écran principal de PipePipe avec le bouton du menu surligné">
-  <img src="/screenshots/pipepipe-home-5.2.4-beta3-api36.png" alt="Écran principal de PipePipe montrant le bouton du menu en haut à gauche">
+  <img src="/screenshots/pipepipe-home-5.3.1-beta-api36.png" alt="Écran principal de PipePipe 5.3.1-beta montrant le bouton du menu en haut à gauche sur Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="8" y="58" width="142" height="158" rx="24" />
     <path class="callout-arrow" d="M 280 285 L 120 185 M 183 195 L 120 185 L 151 240" />
@@ -64,7 +64,7 @@ simplement leur version AV1.
 2. Le menu latéral s'ouvre. Appuyez sur **Paramètres**, tout en bas de la liste.
 
 <div class="screenshot-callout" role="img" aria-label="Menu latéral de PipePipe avec Paramètres surligné">
-  <img src="/screenshots/pipepipe-drawer-settings-5.2.4-beta3-api36.png" alt="Menu latéral de PipePipe montrant Settings, ou Paramètres en français">
+  <img src="/screenshots/pipepipe-drawer-settings-5.3.1-beta-api36.png" alt="Menu latéral de PipePipe 5.3.1-beta montrant Settings sur Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="1205" width="720" height="190" rx="28" />
     <path class="callout-arrow" d="M 820 1320 L 710 1310 M 762 1275 L 710 1310 L 770 1340" />
@@ -75,7 +75,7 @@ simplement leur version AV1.
 3. Vous arrivez sur la liste des réglages. Appuyez sur **Lecteur** ou **Player**.
 
 <div class="screenshot-callout" role="img" aria-label="Écran Paramètres de PipePipe avec Lecteur surligné">
-  <img src="/screenshots/pipepipe-settings-5.2.4-beta3-api36.png" alt="Écran Paramètres de PipePipe montrant Player, ou Lecteur en français">
+  <img src="/screenshots/pipepipe-settings-5.3.1-beta-api36.png" alt="Écran Paramètres de PipePipe 5.3.1-beta montrant Player sur Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="205" width="1056" height="155" rx="28" />
     <path class="callout-arrow" d="M 900 450 L 980 350 M 930 380 L 980 350 L 968 410" />
@@ -87,7 +87,7 @@ simplement leur version AV1.
    texte ou la description grise : toute la zone est un bouton.
 
 <div class="screenshot-callout" role="img" aria-label="Paramètres du Lecteur avec Activer les formats avancés surligné">
-  <img src="/screenshots/pipepipe-player-5.2.4-beta3-api36.png" alt="Paramètres du Lecteur montrant Enable advanced formats, ou Activer les formats avancés en français">
+  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="Paramètres du Lecteur de PipePipe 5.3.1-beta montrant Enable advanced formats sur Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="580" width="1056" height="435" rx="28" />
     <path class="callout-arrow" d="M 890 1090 L 990 1000 M 932 1020 L 990 1000 L 968 1058" />
@@ -100,7 +100,7 @@ simplement leur version AV1.
    ce premier essai.
 
 <div class="screenshot-callout" role="img" aria-label="Fenêtre Formats avancés avec AV01 activé et surligné">
-  <img src="/screenshots/pipepipe-advanced-formats-av01-on-5.2.4-beta3-api36.png" alt="Fenêtre Formats avancés avec une case rouge cochée devant AV01">
+  <img src="/screenshots/pipepipe-advanced-formats-av01-on-5.3.1-beta-api36.png" alt="Fenêtre Formats avancés de PipePipe 5.3.1-beta avec une case rouge cochée devant AV01 sur Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="100" y="1015" width="860" height="155" rx="24" />
     <path class="callout-arrow" d="M 935 1235 L 900 1150 M 889 1198 L 900 1150 L 930 1190" />
@@ -113,7 +113,7 @@ simplement leur version AV1.
    pas la modification.
 
 <div class="screenshot-callout" role="img" aria-label="Fenêtre Formats avancés avec AV01 désactivé et OK surligné">
-  <img src="/screenshots/pipepipe-advanced-formats-av01-off-5.2.4-beta3-api36.png" alt="Fenêtre Formats avancés avec une case vide devant AV01 et le bouton OK">
+  <img src="/screenshots/pipepipe-advanced-formats-av01-off-5.3.1-beta-api36.png" alt="Fenêtre Formats avancés de PipePipe 5.3.1-beta avec une case vide devant AV01 et le bouton OK sur Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="100" y="1015" width="860" height="155" rx="24" />
     <path class="callout-arrow" d="M 940 970 L 900 1040 M 940 1010 L 900 1040 L 910 992" />

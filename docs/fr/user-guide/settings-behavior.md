@@ -3,7 +3,10 @@
 Cette section contrôle le comportement général de l'application, comme ce qui se passe lorsque vous ouvrez un contenu ou changez d'application.
 
 ::: info Emplacement actuel
-Dans PipePipe 5.2.3, les contrôles documentés ici se trouvent dans **Paramètres → Lecteur**. Le regroupement peut évoluer dans une version ultérieure ; utilisez la recherche des réglages si un libellé n'est plus à l'endroit indiqué.
+Dans les versions 5.3.x actuelles, les contrôles documentés ici se trouvent dans
+**Paramètres → Lecteur**. Le regroupement peut évoluer dans une version
+ultérieure ; utilisez la recherche des réglages si un libellé n'est plus à
+l'endroit indiqué.
 :::
 
 ### Action préférée 'ouvrir'
@@ -11,13 +14,13 @@ Dans PipePipe 5.2.3, les contrôles documentés ici se trouvent dans **Paramètr
 Définit l'action utilisée **lorsque PipePipe reçoit un lien vidéo depuis une autre application Android** (navigateur, messagerie, feuille de partage, etc.). Elle ne modifie pas le comportement habituel d'un appui sur une vidéo *dans* PipePipe : ces appuis suivent toujours le flux normal fiche/lecteur principal.
 
 - **Options :** Afficher les infos, Lecteur vidéo, Lecteur en arrière-plan, Lecteur popup, Télécharger, Ajouter à la liste de lecture, Toujours demander.
-- **Défaut :** Lecteur vidéo
+- **Défaut :** Toujours demander
 
 Si l'option semble ignorée, testez avec un lien partagé depuis une autre application et indiquez laquelle. Un appui ordinaire dans PipePipe n'est pas un échec de ce réglage : il est hors de son périmètre.
 
-![Réglages Lecteur de PipePipe, 5.2.3 sur Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+![Réglages Lecteur de PipePipe, 5.3.1-beta sur Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. Vos valeurs et l'apparence Android peuvent différer.*
+*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. Vos valeurs et l'apparence Android peuvent différer.*
 
 ::: tip Ma Préférence
 Je règle ceci sur **Lecteur vidéo** pour commencer immédiatement à regarder le contenu sans étapes supplémentaires.

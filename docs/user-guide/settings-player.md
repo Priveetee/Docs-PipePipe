@@ -2,16 +2,16 @@
 
 This section covers all settings related to the video and audio player.
 
-![PipePipe Player settings, 5.2.3 on Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+![PipePipe Player settings, 5.3.1-beta on Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Reference capture: PipePipe 5.2.3 · Android 16/API 36. Settings and their order can change between releases.*
+*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. Settings and their order can change between releases.*
 
 ## Default resolution
 
 Sets the preferred video quality for all videos played in the main player.
 
-- **Options:** Best resolution, 1080p60, 1080p, 720p60, 720p, 480p, 360p, 240p, 144p.
-- **Default:** 1080p60
+- **Options:** Best resolution, 2160p, 1440p, 1080p, 720p, 480p, 360p, 240p, 144p.
+- **Default:** 720p
 
 ::: tip
 Choosing a lower resolution like 720p can help save mobile data and reduce buffering on slow connections.

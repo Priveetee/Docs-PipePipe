@@ -17,6 +17,11 @@ including the Android 6, 7, and 8 results without Google services.
 
 ## Choose an update path
 
+At the time this page was checked, GitHub listed **5.3.0** as the latest stable
+release and **5.3.1-beta** as the latest prerelease. Treat those labels as a
+snapshot, not a promise that they will still be the newest versions when you
+read this page; always open the release page before installing.
+
 ### PipePipe's update settings
 
 PipePipe includes update settings. They let you check for updates manually and,

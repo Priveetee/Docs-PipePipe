@@ -7,7 +7,7 @@ Check the installed version against [GitHub Releases](https://github.com/Infinit
 The built-in update check is a notification mechanism: it tells Android/PipePipe that an update is available; it does not silently replace the installed APK. In **Settings → Updates**, check whether update checking is enabled and whether **Show prerelease updates** is enabled before reporting that an expected beta did not appear.
 
 <div class="screenshot-callout" role="img" aria-label="PipePipe Updates settings with the Show pre-releases and Check for updates controls highlighted">
-  <img src="/screenshots/pipepipe-updates-5.2.3-api36.png" alt="PipePipe Updates settings, 5.2.3 on Android 16">
+  <img src="/screenshots/pipepipe-updates-5.3.1-beta-api36.png" alt="PipePipe Updates settings, 5.3.1-beta on Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="555" width="1030" height="235" rx="28" />
     <path class="callout-arrow" d="M 900 470 L 900 535 M 875 510 L 900 535 L 925 510" />
@@ -17,7 +17,7 @@ The built-in update check is a notification mechanism: it tells Android/PipePipe
   </svg>
 </div>
 
-*Reference capture: PipePipe 5.2.3 · Android 16/API 36. **1** is the prerelease toggle; **2** is the manual check. The update checker is notification-only and does not silently install an APK.*
+*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. **1** is the prerelease toggle; **2** is the manual check. The update checker is notification-only and does not silently install an APK.*
 
 ::: tip
 When an issue says “fixed in beta” or “fixed in the next release”, install exactly that named build, restart PipePipe, and retest once before opening a duplicate report.

@@ -3,7 +3,9 @@
 Esta sección controla el comportamiento general de la aplicación, como lo que ocurre cuando abres contenido o cambias entre apps.
 
 ::: info Ubicación actual
-En PipePipe 5.2.3, estos controles están en **Ajustes → Reproductor**. La agrupación puede cambiar en una versión futura; usa la búsqueda de ajustes si una etiqueta no está donde indica esta guía.
+En las versiones 5.3.x actuales, estos controles están en **Ajustes →
+Reproductor**. La agrupación puede cambiar en una versión futura; usa la
+búsqueda de ajustes si una etiqueta no está donde indica esta guía.
 :::
 
 ### Acción 'abrir' preferida
@@ -11,13 +13,13 @@ En PipePipe 5.2.3, estos controles están en **Ajustes → Reproductor**. La agr
 Define la acción usada **cuando PipePipe recibe un enlace de vídeo desde otra aplicación Android** (navegador, mensajería, hoja de compartir, etc.). No cambia el comportamiento habitual al tocar un vídeo dentro de PipePipe: los toques internos siguen abriendo la ficha o el reproductor principal.
 
 - **Opciones:** Mostrar información, Reproductor de vídeo, Reproductor en segundo plano, Reproductor popup, Descargar, Añadir a la lista, Preguntar siempre.
-- **Por defecto:** Reproductor de vídeo
+- **Por defecto:** Preguntar siempre
 
 Si parece que se ignora, pruébalo con un enlace compartido desde otra aplicación e indica cuál era. Un toque normal dentro de PipePipe no es un fallo de este ajuste: queda fuera de su alcance.
 
-![Ajustes de reproductor PipePipe, 5.2.3 en Android 16](/screenshots/pipepipe-player-5.2.3-api36.png)
+![Ajustes de reproductor PipePipe, 5.3.1-beta en Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. Los valores y apariencia Android pueden variar.*
+*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. Los valores y apariencia Android pueden variar.*
 
 ::: tip Mi Preferencia
 Yo lo configuro en **Reproductor de vídeo** para empezar a ver el contenido de inmediato sin pasos adicionales.

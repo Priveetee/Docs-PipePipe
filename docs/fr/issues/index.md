@@ -12,11 +12,16 @@ les éléments réellement utiles au diagnostic.
 2. Reproduisez le problème une fois et notez l'heure, l'URL ou la requête, ainsi que l'endpoint YouTube sélectionné.
 3. Ouvrez la catégorie correspondante ci-dessous. Gardez les symptômes distincts dans des rapports distincts.
 
-![Réglages PipePipe, 5.2.3 sur Android 16](/screenshots/pipepipe-settings-5.2.3-api36.png)
+![Réglages PipePipe, 5.3.1-beta sur Android 16](/screenshots/pipepipe-settings-5.3.1-beta-api36.png)
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. Les catégories et leur ordre peuvent évoluer.*
+*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. Les catégories et leur ordre peuvent évoluer.*
 
-## Catégories
+::: info Instantané des versions
+Cette carte de dépannage a été vérifiée avec la release stable amont **5.3.0**
+et la préversion **5.3.1-beta** le 03/09/2026. La capture principale ci-dessus
+vient de la **5.3.1-beta** ; suivez le texte et les notes de release actuelles
+si les libellés diffèrent.
+:::
 
 ## Trouver rapidement la bonne branche
 
@@ -24,6 +29,7 @@ les éléments réellement utiles au diagnostic.
 | --- | --- | --- |
 | **WebView unavailable** | [WebView et lecture protégée](./webview) | Qu'un changement d'endpoint contourne WebView. |
 | Toutes les vidéos YouTube échouent ; un domaine Google pointe vers `0.0.0.0` ou `127.0.0.1` | [Filtrage DNS et lecture](./youtube-playback#toutes-les-videos-youtube-echouent-verifiez-le-filtrage-dns) | Qu'un changement d'endpoint, une réinstallation ou une mise à jour WebView contourne le filtrage DNS. |
+| Une seule vidéo YouTube (ou quelques-unes) échoue alors que les autres fonctionnent | [Lecture, réseau et connexion](./youtube-playback#une-seule-video-ou-quelques-unes-echoue-alors-que-les-autres-fonctionnent) | Que WebView, le DNS ou toute l'installation est cassé. |
 | `AntiBotException`, `Source error`, tampon, seek live | [Lecture, réseau et connexion](./youtube-playback) | Qu'un WebView à jour ou une connexion prouve la cause. |
 | Recherche vide/incorrecte | [Recherche et découverte](./search) | Qu'un correctif lecteur corrige la recherche. |
 | Lien dans le « mauvais » lecteur | [Arrière-plan, popup, plein écran et file](./player-modes) | Que l'action préférée contrôle les appuis internes. |

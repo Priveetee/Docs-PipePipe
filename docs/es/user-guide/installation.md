@@ -10,6 +10,11 @@ Ese es el mínimo para instalar el APK, no una garantía de que la WebView inclu
 
 ## Elegir una fuente de actualización
 
+Cuando se comprobó esta página, GitHub mostraba **5.3.0** como última versión
+estable y **5.3.1-beta** como última preversión. Esos números son una instantánea:
+abre siempre la página de releases antes de instalar, porque puede haber
+cambiado.
+
 ### Ajustes de actualización de PipePipe
 
 PipePipe incluye sus propios ajustes de actualización. Permiten comprobar actualizaciones manualmente y, si lo activas, mostrar versiones preliminares. Prefiere las versiones estables salvo que estés probando una corrección y puedas informar regresiones con logs.

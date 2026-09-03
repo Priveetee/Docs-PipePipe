@@ -1,9 +1,10 @@
 # Référence des réglages
 
 Cette référence visuelle complète les pages ciblées [Lecteur](./settings-player)
-et [Comportement](./settings-behavior). Les captures utilisent la release
-officielle PipePipe 5.2.3 sur Android 16/API 36. Les libellés peuvent bouger
-entre versions : utilisez la recherche des réglages si besoin.
+et [Comportement](./settings-behavior). Les captures Lecteur et Avancé ci-dessous
+utilisent PipePipe 5.3.1-beta sur Android 16/API 36. Les autres écrans conservent
+leur version dans le nom du fichier tant qu'ils ne sont pas rafraîchis. Les
+libellés peuvent bouger entre versions : utilisez la recherche des réglages si besoin.
 
 ## Lecteur et gestes
 
@@ -12,7 +13,7 @@ d'application, autoplay et file. L'écran Gestes règle séparément les interac
 du lecteur.
 
 <div class="screenshot-callout" role="img" aria-label="Réglages Lecteur avec action d'ouverture préférée et minimisation surlignées">
-  <img src="/screenshots/pipepipe-player-5.2.3-api36.png" alt="Réglages Lecteur">
+  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="Réglages Lecteur, PipePipe 5.3.1-beta sur Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="1420" width="1030" height="180" rx="28" />
     <path class="callout-arrow" d="M 850 1330 L 850 1400 M 825 1375 L 850 1400 L 875 1375" />
@@ -23,7 +24,7 @@ du lecteur.
   </svg>
 </div>
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. **1** concerne les liens externes transmis à PipePipe ; **2** contrôle la sortie du lecteur principal vers une autre app.*
+*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. **1** concerne les liens externes transmis à PipePipe ; **2** contrôle la sortie du lecteur principal vers une autre app.*
 
 ![Réglages Gestes](/screenshots/pipepipe-gestures-5.2.3-api36.png)
 
@@ -58,7 +59,7 @@ pas plusieurs options ensemble : notez la valeur initiale, changez-en une seule
 et retestez la même vidéo. Pour les contournements décodeur/surface, consultez
 [Lecture et intégration Android](/fr/issues/android).
 
-![Réglages Avancé](/screenshots/pipepipe-advanced-5.2.3-api36.png)
+![Réglages Avancé, PipePipe 5.3.1-beta sur Android 16](/screenshots/pipepipe-advanced-5.3.1-beta-api36.png)
 
 ## Écrans liés à une tâche
 

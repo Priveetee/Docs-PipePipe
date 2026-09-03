@@ -12,7 +12,7 @@ una exportación antes de restablecer, migrar o probar una versión preliminar.
 4. Copia el archivo fuera del dispositivo si la copia es importante.
 
 <div class="screenshot-callout" role="img" aria-label="Pantalla Copia de seguridad PipePipe con Import database y Export database resaltados">
-  <img src="/screenshots/pipepipe-backup-5.2.3-api36.png" alt="Ajustes de copia de seguridad PipePipe, 5.2.3 en Android 16">
+  <img src="/screenshots/pipepipe-backup-5.3.1-beta-api36.png" alt="Ajustes de copia de seguridad PipePipe, 5.3.1-beta en Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="300" width="1030" height="225" rx="28" />
     <circle class="callout-number" cx="990" cy="330" r="42" /><text x="990" y="330">1</text>
@@ -21,7 +21,7 @@ una exportación antes de restablecer, migrar o probar una versión preliminar.
   </svg>
 </div>
 
-*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. **1** importa y puede reemplazar datos locales; **2** crea primero la exportación de recuperación.*
+*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. **1** importa y puede reemplazar datos locales; **2** crea primero la exportación de recuperación.*
 
 ::: warning Una copia puede contener datos personales de reproducción
 Trata la exportación como un archivo privado. No la adjuntes a una issue pública

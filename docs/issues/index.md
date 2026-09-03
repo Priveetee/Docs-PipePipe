@@ -13,11 +13,16 @@ collects the information that is actually useful for a diagnosis.
    selected YouTube extraction endpoint.
 3. Open the matching category below. Keep separate symptoms in separate reports.
 
-![PipePipe Settings, 5.2.3 on Android 16](/screenshots/pipepipe-settings-5.2.3-api36.png)
+![PipePipe Settings, 5.3.1-beta on Android 16](/screenshots/pipepipe-settings-5.3.1-beta-api36.png)
 
-*Reference capture: PipePipe 5.2.3 · Android 16/API 36. Categories and their order can change between releases.*
+*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. Categories and their order can change between releases.*
 
-## Categories
+::: info Current version snapshot
+This triage map was checked against the upstream **5.3.0** stable release and
+the **5.3.1-beta** prerelease on 2026-09-03. The main settings capture above
+comes from **5.3.1-beta**; follow the text and current release notes when labels
+differ.
+:::
 
 ## Find the right branch quickly
 
@@ -25,6 +30,7 @@ collects the information that is actually useful for a diagnosis.
 | --- | --- | --- |
 | **WebView unavailable** | [WebView and protected playback](./webview) | That changing the YouTube endpoint bypasses the WebView check. |
 | Every YouTube video fails; a Google host resolves to `0.0.0.0` or `127.0.0.1` | [DNS filtering and playback](./youtube-playback#every-youtube-video-fails-check-dns-filtering) | That changing endpoint, reinstalling, or updating WebView bypasses DNS filtering. |
+| Only one or a few YouTube videos fail while others play | [Playback, network, and sign-in](./youtube-playback#one-video-or-a-few-fail-while-other-videos-play) | That WebView, DNS, or the whole installation is broken. |
 | `AntiBotException`, `Source error`, buffering, live seek failure | [Playback, network, and sign-in](./youtube-playback) | That a current WebView or a login proves the cause. |
 | No/incorrect search results | [Search and discovery](./search) | That a player fix will fix search. |
 | Link opens in the “wrong” player | [Background, popup, fullscreen, and queue](./player-modes) | That the preferred-open setting controls in-app taps. |

@@ -10,11 +10,16 @@ Esta sección es el mapa para usuarios de los problemas de PipePipe. Parte del s
 2. Repite el problema una vez y anota la hora, la URL o consulta afectada y el endpoint de YouTube seleccionado.
 3. Abre la categoría correspondiente. Mantén síntomas distintos en informes distintos.
 
-![Ajustes PipePipe, 5.2.3 en Android 16](/screenshots/pipepipe-settings-5.2.3-api36.png)
+![Ajustes PipePipe, 5.3.1-beta en Android 16](/screenshots/pipepipe-settings-5.3.1-beta-api36.png)
 
-*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. Las categorías y su orden pueden cambiar.*
+*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. Las categorías y su orden pueden cambiar.*
 
-## Categorías
+::: info Instantánea de versiones
+Este mapa de solución de problemas se comprobó con la release estable **5.3.0**
+y la preversión **5.3.1-beta** el 03/09/2026. La captura principal de arriba
+procede de **5.3.1-beta**; sigue el texto y las notas de la release actual si
+las etiquetas difieren.
+:::
 
 ## Encuentra rápido la rama correcta
 
@@ -22,6 +27,7 @@ Esta sección es el mapa para usuarios de los problemas de PipePipe. Parte del s
 | --- | --- | --- |
 | **WebView unavailable** | [WebView y reproducción protegida](./webview) | Que cambiar endpoint evita la comprobación WebView. |
 | Fallan todos los vídeos de YouTube; un host de Google resuelve a `0.0.0.0` o `127.0.0.1` | [Filtrado DNS y reproducción](./youtube-playback#fallan-todos-los-videos-de-youtube-comprueba-el-filtrado-dns) | Que cambiar endpoint, reinstalar o actualizar WebView evita el filtrado DNS. |
+| Solo falla uno o unos pocos vídeos de YouTube mientras los demás se reproducen | [Reproducción, red e inicio de sesión](./youtube-playback#falla-un-video-o-unos-pocos-mientras-los-demas-funcionan) | Que WebView, el DNS o toda la instalación están rotos. |
 | `AntiBotException`, `Source error`, búfer, seek en directo | [Reproducción, red e inicio de sesión](./youtube-playback) | Que WebView actual o sesión demuestra la causa. |
 | Búsqueda vacía/incorrecta | [Búsqueda y descubrimiento](./search) | Que una corrección del reproductor arregla búsqueda. |
 | Enlace en reproductor «equivocado» | [Segundo plano, emergente, pantalla completa y cola](./player-modes) | Que la acción preferida controla toques internos. |

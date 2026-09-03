@@ -7,7 +7,7 @@ Comparez la version installée aux [GitHub Releases](https://github.com/Infinity
 La recherche de mise à jour intégrée sert à notifier qu'une version existe : elle ne remplace pas silencieusement l'APK installé. Dans **Paramètres → Mises à jour**, vérifiez la recherche de mises à jour et l'option **Afficher les préversions** avant de signaler qu'une bêta attendue n'apparaît pas.
 
 <div class="screenshot-callout" role="img" aria-label="Réglages Mises à jour PipePipe avec préversions et contrôle manuel surlignés">
-  <img src="/screenshots/pipepipe-updates-5.2.3-api36.png" alt="Réglages Mises à jour de PipePipe, 5.2.3 sur Android 16">
+  <img src="/screenshots/pipepipe-updates-5.3.1-beta-api36.png" alt="Réglages Mises à jour de PipePipe, 5.3.1-beta sur Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="555" width="1030" height="235" rx="28" />
     <path class="callout-arrow" d="M 900 470 L 900 535 M 875 510 L 900 535 L 925 510" />
@@ -17,7 +17,7 @@ La recherche de mise à jour intégrée sert à notifier qu'une version existe :
   </svg>
 </div>
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. **1** active les préversions ; **2** lance le contrôle manuel. La vérification ne fait qu'avertir : elle n'installe pas silencieusement un APK.*
+*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. **1** active les préversions ; **2** lance le contrôle manuel. La vérification ne fait qu'avertir : elle n'installe pas silencieusement un APK.*
 
 ::: tip
 Quand une issue annonce « corrigé en bêta » ou « dans la prochaine version », installez précisément cette version, redémarrez PipePipe puis refaites un essai avant d'ouvrir un doublon.
