@@ -1,81 +1,102 @@
 # The request
 
-Part of [SABR in the extractor](./sabr). Here: the binary `VideoPlaybackAbrRequest` that `YoutubeSabrRequestBuilder` encodes, field by field, plus the wire format underneath it.
+Part of [SABR in the extractor](./sabr). `YoutubeSabrRequestHelper` encodes the
+immutable `YoutubeSabrRequest` as the binary `VideoPlaybackAbrRequest` sent to
+YouTube. The wire labels below are the fields emitted by the current encoder.
 
-> Field *names* below are the project's reverse-engineered labels (mostly from `SabrRequestDumper`'s field map). Field *numbers* and wire types are taken verbatim from the encoder.
+## Request lifecycle
 
-## Top-level message
+There are two public request factories:
 
-`buildFirstMediaRequest` (cold start) and `buildFollowUpMediaRequest` write these top-level fields:
+- `YoutubeSabrRequest.preparation(playerTimeMs, preferredFormats)` asks for
+  initialization data and format timelines without declaring active tracks;
+- `YoutubeSabrRequest.playback(playerTimeMs, playbackRate, tracks)` declares the
+  active audio/video tracks and their buffered timeline positions.
 
-| # | Wire | Carries | First req | Follow-up |
-| --- | --- | --- | --- | --- |
-| 1 | message | `clientAbrState` (see below) | yes (playerTime=0) | yes |
-| 2 | message | selected `formatId` (one per selected track) | no | yes |
-| 3 | message | `bufferedRange` (repeated) | no | yes |
-| 4 | varint | top-level `playerTimeMs` | no | yes (gated) |
-| 5 | bytes | ustreamer config (base64-decoded) | yes | yes |
-| 16 | message | preferred **audio** `formatId` (repeated) | yes | yes |
-| 17 | message | preferred **video** `formatId` (repeated) | yes | yes |
-| 19 | message | `streamerContext` (see below) | yes | yes |
+Every request must contain at least one track. It cannot contain two audio tracks,
+two video tracks, or the same itag as both audio and video. A track may carry a
+`YoutubeSabrFormatTimeline` and the last buffered sequence number.
 
-`formatId` is a small sub-message used everywhere a format is named: `#1 itag` (int32), `#2 lastModified` (uint64, only if > 0), `#3 xtags` (string, only if non-empty).
+The HTTP URL is updated by `YoutubeSabrRequestHelper` with `alr=yes`, the session
+CPN, and `rn=<requestNumber>`. `rn` starts at zero and is replaced on every
+request. The body is sent as `application/x-protobuf`; the response must be
+`application/vnd.yt-ump`.
 
-So **cold start vs follow-up** differs by: a cold start has no selected formats, no buffered ranges, no top-level player time, and `playerTimeMs = 0`; it carries no session cookie/PO token yet. The follow-up flag also unlocks the conditional `clientAbrState` fields below. All session progression, player time, buffered ranges, selected formats, cookie, PO token, active contexts, is read from `YoutubeSabrStreamState`.
+## Top-level fields
 
-## `clientAbrState` (field 1)
+| # | Wire | Carries | When emitted |
+| --- | --- | --- | --- |
+| 1 | message | `clientAbrState` | Every request |
+| 2 | message | selected `formatId` | Playback state is included |
+| 3 | message | `bufferedRange` | A track has a timeline and buffered sequence |
+| 4 | varint | top-level `playerTimeMs` | Playback state is included |
+| 5 | bytes | decoded `videoPlaybackUstreamerConfig` | Every request |
+| 16 | message | preferred audio `formatId` | When an audio format is present |
+| 17 | message | preferred video `formatId` | When a video format is present |
+| 19 | message | `streamerContext` | Every request |
 
-The richest sub-message. The always-written core:
+Playback state is included for a follow-up request, a non-zero player position,
+or a request that carries buffered ranges. A preparation request at time zero is
+therefore the minimal cold start; it still carries the ustreamer config and any
+preferred formats.
 
-| # | Wire | Meaning |
-| --- | --- | --- |
-| 28 | uint64 | `playerTimeMs` |
-| 21 | int32 | sticky resolution (`max(videoHeight, 360)` or an override) |
-| 34 | int32 | visibility |
-| 35 | fixed32 | playback rate (default `1.0`) |
-| 40 | int32 | enabled track types bitfield (written only if ≠ 0; `0 = VIDEO_AND_AUDIO`, `1 = AUDIO_ONLY`, `2 = VIDEO_ONLY`) |
-| 46 | bool | DRC enabled (only if the audio format is DRC) |
-| 69 | string | audio track id (if any) |
+`formatId` is the shared nested message used for selected and preferred formats:
+field `1` is the itag, field `2` is `lastModified` when positive, and field `3`
+is `xtags` when non-empty.
 
-Follow-up / "official web" additions include `#16` last manual resolution, `#18`/`#19` viewport width/height, `#23` bandwidth estimate (state value, else `(audioBitrate + videoBitrate) * 2`, else -1). When the profile mimics the official web client, an extra block (`#29` time-since-last-seek, `#36` elapsed wall time, `#39` time-since-last-action, `#58` preferVp9=false, `#59` AV1 quality threshold, `#72` quality constraints, `#79` playback authorization, …) is filled with the web client's characteristic constants so the request is indistinguishable from a real browser.
+## `clientAbrState`
 
-## Buffered ranges (field 3)
+The current encoder writes the following fields:
 
-Each `SabrBufferedRange.toProto()`:
+| # | Meaning |
+| --- | --- |
+| 18 / 19 | video width/height, only when playback state is included |
+| 21 | video resolution, at least 360 when a video format exists |
+| 23 | bandwidth estimate on follow-ups, or an estimate from active bitrates |
+| 28 | `playerTimeMs` |
+| 34 | visibility (`1`) |
+| 35 | playback rate, defaulting to `1.0` |
+| 40 | enabled track mode (`1` audio-only, `2` video-only, `0` both and omitted) |
+| 46 | DRC enabled when the selected audio format is DRC |
+| 69 | selected audio track id, when present |
 
-| # | Wire | Field |
-| --- | --- | --- |
-| 1 | message | `formatId` |
-| 2 | uint64 | `startTimeMs` |
-| 3 | uint64 | `durationMs` |
-| 4 | int32 | `startSegmentIndex` |
-| 5 | int32 | `endSegmentIndex` |
-| 6 | message | time range (only if enabled): `#1 startTimeMs`, `#2 durationMs`, `#3 timescale` |
+The nested client info in `streamerContext` identifies MWEB (client id `2`),
+the client version, and the `en-US`/`US` localization used by the helper.
 
-`SabrBufferedRange.full(format)` is the "I have the whole thing" range (`startTimeMs=0`, everything else `Integer.MAX_VALUE`), used to claim a track is fully buffered. How real ranges are computed is the subject of [the buffered-range model](./sabr-buffered).
+## Buffered ranges
 
-## Streamer context (field 19)
+For a track with a parsed timeline and `bufferedThrough > 0`, the helper writes a
+range containing:
 
-| # | Wire | Carries |
-| --- | --- | --- |
-| 1 | message | `clientInfo` |
-| 2 | bytes | **PO token** (only if present) |
-| 3 | bytes | **playback cookie** (only if present) |
-| 5 | message | active `SabrContextUpdate`s (repeated) |
-| 6 | int32 | unsent SABR context types (repeated) |
+| Field | Value |
+| --- | --- |
+| `formatId` | itag, last-modified value and xtags |
+| `startTimeMs` | `0` |
+| `durationMs` | end time of the last buffered sequence |
+| `startSegmentIndex` / `endSegmentIndex` | `1` / the bounded buffered sequence |
+| time-range timescale | `1000` |
 
-`clientInfo` carries the client id (`#16`), version (`#17`), OS name/version (`#18`/`#19`), and `Accept-Language`/region (`#21`/`#22`); in official-web mode the shape changes slightly (field 1 = `"en_US"`, field 18 = `"X11"`).
+`YoutubeSabrFormatTimeline` is built from initialization bytes with the MP4 or
+WebM segment-index parser. It maps sequence numbers to start/end times and maps
+a requested time back to the first segment whose end is after that time.
 
-## The wire format (`SabrProto`)
+## `streamerContext`
 
-A hand-rolled protobuf writer/reader. Wire types: `VARINT=0`, `FIXED64=1`, `LENGTH_DELIMITED=2`, `FIXED32=5`. A field tag is `varint((fieldNumber << 3) | wireType)`. Varints are standard LEB128 (7 bits/byte, high bit = continue). `writeMessage` is just a length-delimited `writeBytes` (a nested message is bytes). `writeInt32` sign-extends through `writeUInt64`, so a negative int becomes a 10-byte varint. The reader side (`readFields`, `Cursor`) is what every `Sabr*.decode()` is built on.
+The context contains client info, and optionally:
 
-`SabrRequestDumper` re-decodes a finished request body into a sanitized one-line summary for diagnostics, PO token, cookie, ustreamer config and audio-track id are reduced to byte counts, never printed.
+- the current PO token (field `2`);
+- the playback cookie from `NEXT_REQUEST_POLICY` (field `3`);
+- active opaque SABR context values (field `5`);
+- context types not currently sent (field `6`).
 
-## Cold-start PO token
+Token and cookie payloads are never printed by the diagnostic summaries.
 
-`SabrColdStartPoToken` synthesizes a placeholder token for the very first contact: an 8-byte header (2 random key bytes, a client-state byte, a big-endian epoch-seconds timestamp) plus the identifier, length-prefixed as protobuf field 4, then obfuscated with a rolling 2-byte XOR. `MAX_IDENTIFIER_BYTES = 118`. It's a deterministic obfuscation, not an attested token; a real content-bound token still comes from the [PO-token provider](./sabr-session#protection-and-tokens).
+## Wire format
 
----
+`SabrProto` is the small protobuf reader/writer used by the request and response
+paths. It supports varints, fixed32, fixed64 and length-delimited fields. A
+nested message is a length-delimited byte array; field tags use
+`(fieldNumber << 3) | wireType`. Invalid field numbers, unsupported wire types,
+truncated input and oversized lengths raise `SabrProtocolException`.
 
 Next: [UMP and decoding](./sabr-decoding).
