@@ -49,7 +49,7 @@ public interface AsyncCallback {
 }
 ```
 
-`CancellableCall` enveloppe l'appel sous-jacent avec `cancel()`, `isCancelled()`, `isFinished()`. C'est ainsi que `onFetchPage` lance web + android-VR/safari + next en parallèle et recombine les résultats (voir [Flux d'extraction](./extraction-flow)).
+`CancellableCall` enveloppe l'appel sous-jacent avec `cancel()`, `isCancelled()`, `isFinished()`. C'est ainsi que `onFetchPage` lance le player web, le player applicatif sélectionné et `next` en parallèle, puis attend les appels requis avant d'exposer l'extracteur (voir [Flux d'extraction](./extraction-flow)).
 
 ## Qui le fournit
 

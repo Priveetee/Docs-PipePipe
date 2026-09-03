@@ -6,17 +6,34 @@ YouTube est le service le plus gros et le plus volatil, et celui qui a le plus d
 
 ## Les clients InnerTube
 
-Il n'y a pas d'API YouTube publique ici. L'extracteur parle **InnerTube**, le RPC interne de YouTube, en se faisant passer pour des clients officiels. Chaque client est un bloc de contexte (nom, version, plateforme, appareil) plus un endpoint. `YoutubeParsingHelper` les construit :
+Il n'y a pas d'API YouTube publique ici. L'extracteur parle **InnerTube**, le
+RPC interne de YouTube, en envoyant le contexte attendu par un client officiel.
+Ce contexte contient un nom/version de client, des détails de plateforme ou
+d'appareil, la langue, le pays et l'endpoint appelé.
+
+Les chemins de lecture actuels sont sélectionnés dans `YoutubeStreamExtractor` :
 
 ```java
-prepareDesktopJsonBuilder(...)       // WEB
-prepareAndroidVRJsonBuilder(...)     // ANDROID_VR (Oculus Quest)
-prepareIosMobileJsonBuilder(...)     // IOS
-prepareTvHtml5EmbedJsonBuilder(...)  // TVHTML5 embedded
-prepareSafariJsonBuilder(...)        // WEB with a Safari user agent
+fetchVisionOsJsonPlayer(...)       // chemin VisionOS anonyme
+fetchMwebJsonPlayer(...)           // réponse MWEB ; SABR pour une VOD ordinaire
+fetchWebJsonPlayer(...)            // réponse WEB utilisée en interne
+fetchConfiguredJsonPlayer(...)     // fallbacks TVHTML5 internes
 ```
 
-Les ids et versions de client vivent dans `ClientsConstants`. Les requêtes POST vers `youtubei/v1/<endpoint>` (`player`, `next`, `browse`, `search`) passent par `getJsonPostResponse` et ses variantes android/ios. Des clients différents exposent des jeux de flux différents et déclenchent des murs différents, donc une seule récupération interroge souvent plusieurs clients et fusionne les résultats, le fan-out parallèle `CancellableCall` du [Flux d'extraction](./extraction-flow).
+L'application Android expose actuellement **VisionOS** et **MWEB (SABR)** quand
+elle est déconnectée, et maintient les sessions connectées sur **MWEB (SABR)**.
+L'ancien choix Android VR ne fait plus partie du client actuel. `web`,
+`tv_simply` et `tv_downgraded` restent des noms d'implémentation ou de fallback,
+pas des choix visibles ; le chemin TV downgraded possède aussi un traitement
+spécifique des directs/HLS.
+
+Les ids et versions de client vivent dans `ClientsConstants` et les helpers de
+requêtes. Les requêtes POST vers `youtubei/v1/<endpoint>` (`player`, `next`,
+`browse`, `search`) passent par les helpers JSON correspondants. Des clients
+différents exposent des jeux de flux différents et déclenchent des murs
+différents, donc une récupération interroge souvent plusieurs réponses et
+fusionne les résultats, avec le fan-out parallèle `CancellableCall` du [Flux
+d'extraction](./extraction-flow).
 
 ## Signatures et le paramètre `n`
 
@@ -47,4 +64,13 @@ Certains formats YouTube n'arrivent pas sous forme de manifeste prêt à l'emplo
 
 ## SABR
 
-Le chemin de delivery le plus récent est **SABR**, le protocole de session de YouTube, et il a son propre package (`services/youtube/sabr`, des dizaines de classes : `YoutubeSabrSession`, `YoutubeSabrStreamState`, `YoutubeSabrRequestBuilder`, `SabrResponseDecoder`, `UmpReader`, ...). L'extracteur de flux fait remonter les formats SABR ; piloter la session est un sujet à part entière. Le [Guide SABR](/fr/developer-guide/introduction) dédié couvre ce protocole de bout en bout.
+Le chemin de delivery le plus récent est **SABR**, le protocole de session de
+YouTube, et il a son propre package (`services/youtube/sabr`, notamment
+`YoutubeSabrSession`, `YoutubeSabrRequest`, `YoutubeSabrRequestHelper`,
+`YoutubeSabrResponse`, `SabrResponseDecoder` et `UmpReader`). Dans l'extracteur
+actuel, MWEB utilise le constructeur de flux SABR pour les vidéos ordinaires qui
+ne sont pas des directs lorsque la réponse du lecteur contient les données SABR ;
+les directs et post-directs peuvent passer par HLS ou d'autres formats directs.
+L'extracteur de flux expose les formats SABR et le driver de session renvoie des
+segments média terminés. Le [Guide SABR](/fr/developer-guide/introduction) dédié
+couvre ce protocole de bout en bout.

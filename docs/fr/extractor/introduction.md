@@ -6,6 +6,14 @@ PipePipe ne dialogue jamais directement avec YouTube, BiliBili ou SoundCloud. L'
 
 Il a commencé comme un fork de l'extracteur de NewPipe, et le chemin de package (`org.schabi.newpipe.extractor`) en porte encore la trace. Cela mérite d'être dit une fois, puis mis de côté : les deux bases de code ont fortement divergé. Les services, les abstractions, le parsing et le comportement diffèrent suffisamment pour que la documentation, les issues et les patchs de NewPipe se transposent rarement proprement sur PipePipe. Considérez-la comme une base de code à part entière, pas comme un miroir de NewPipe.
 
+::: info État du code vérifié
+Cet aperçu a été vérifié sur `main` de PipePipeExtractor et `dev` de
+PipePipeClient le 03/09/2026. La dernière release PipePipe vérifiée est la
+**5.3.0**, avec **5.3.1-beta** comme préversion actuelle. Le chemin YouTube
+actuel est détaillé dans [Dans YouTube](./youtube-service), et l'implémentation
+SABR dispose de sa propre section ci-dessous.
+:::
+
 Le module est autonome. Il se compile et se teste seul, sans l'application Android autour de lui, face à une petite abstraction `Downloader` fournie par l'hôte.
 
 Services couverts aujourd'hui : YouTube, BiliBili, NicoNico, SoundCloud, Bandcamp, PeerTube et media.ccc.de. Chacun est une implémentation distincte d'un même ensemble d'interfaces partagées. C'est le principe de conception : le reste du code est écrit face aux abstractions, jamais face à un site précis. « Récupérer les flux de cette vidéo » est le même appel que le backend soit YouTube ou SoundCloud ; le désordre propre à chaque service reste derrière l'interface.
