@@ -1,5 +1,10 @@
 # WebView y la reproducción de YouTube
 
+Esta guía se aplica a PipePipe 5.2.4 y posteriores, incluidas las versiones
+estables y preliminares actuales de la serie 5.3.x. Consulta [GitHub
+Releases](https://github.com/InfinityLoop1308/PipePipe/releases) antes de seguir
+una instrucción ligada a una versión.
+
 ## Empieza aquí: comprueba PipePipe antes de sustituir WebView
 
 El requisito de WebView cambió después de PipePipe 5.2.3. Usa la versión de
@@ -7,7 +12,7 @@ PipePipe instalada, no solo la versión de Android, para decidir el siguiente pa
 
 | Versión de PipePipe | Qué necesita | Primera acción |
 | --- | --- | --- |
-| **5.2.4 o posterior** | Un proveedor WebView activo que Android pueda inicializar. La versión mayor 80 ya no es un mínimo obligatorio. | Conserva el proveedor seleccionado por la ROM. No lo sustituyas solo porque sea antiguo. |
+| **5.2.4 o posterior, incluidas 5.3.x** | Un proveedor WebView activo que Android pueda inicializar. La versión mayor 80 ya no es un mínimo obligatorio. | Conserva el proveedor seleccionado por la ROM. No lo sustituyas solo porque sea antiguo. |
 | **5.2.3** | Un proveedor WebView con versión mayor 80 o posterior. | Actualiza PipePipe preferentemente. Si mantienes 5.2.3, consulta las instrucciones históricas más abajo. |
 | Cualquier versión informa que no existe proveedor o que falla la inicialización | Android no está ofreciendo a PipePipe un proveedor utilizable. | Comprueba **Implementación de WebView** y el estado del proveedor. |
 
@@ -15,14 +20,16 @@ PipePipe 5.2.3 aplicaba realmente el requisito indicado en este mensaje:
 
 > **WebView no disponible. Por favor, asegúrese de que su versión de WebView sea superior a 80.**
 
-PipePipe 5.2.4 eliminó ese bloqueo por versión, pero el mismo texto genérico
-sigue utilizándose cuando su motor WebView no está disponible. En 5.2.4, el
+PipePipe 5.2.4 eliminó ese bloqueo por versión, y las versiones 5.3.x actuales
+mantienen ese comportamiento, pero el mismo texto genérico sigue utilizándose
+cuando el motor WebView no está disponible. En 5.2.4 y posteriores, el
 mensaje **no** demuestra que el proveedor sea anterior a la versión 80: Android
 puede no exponer ningún proveedor o el motor seleccionado puede no iniciarse.
 No es una petición para iniciar sesión en YouTube ni una prueba de que el
-teléfono sea demasiado antiguo. Instala la versión estable
-[5.2.4](https://github.com/InfinityLoop1308/PipePipe/releases/tag/v5.2.4) o una
-posterior antes de sustituir el proveedor del sistema.
+teléfono sea demasiado antiguo. Instala la [última versión
+estable](https://github.com/InfinityLoop1308/PipePipe/releases/latest), o la
+versión preliminar concreta que pida la issue, antes de sustituir el proveedor
+del sistema.
 
 ![Cómo interviene WebView en la reproducción de YouTube](/diagrams/webview-playback.png)
 
@@ -34,10 +41,10 @@ datos del reproductor de YouTube mediante EJS y ejecutar BotGuard para obtener
 tokens de sesión y vídeo de corta duración. Google Play Services no participa
 en esta ruta.
 
-PipePipe 5.2.4 incluye recursos EJS compatibles con ES5, polyfills y un
-puente BotGuard compatible con JavaScript antiguo. Se eliminaron tanto el
-bloqueo por versión 80 como la prueba de capacidades JavaScript modernas.
-PipePipe todavía comprueba que Android expone un proveedor y que su motor se
+PipePipe 5.2.4 introdujo recursos EJS compatibles con ES5, polyfills y un
+puente BotGuard compatible con JavaScript antiguo. Las versiones 5.3.x actuales
+no vuelven a introducir el bloqueo por versión 80 ni la comprobación de
+capacidades JavaScript modernas. PipePipe todavía comprueba que Android expone un proveedor y que su motor se
 inicia de verdad; un proveedor ausente, desactivado, bloqueado por el fabricante
 o averiado todavía puede fallar.
 
@@ -67,7 +74,7 @@ ruta de actualización admitida por la ROM.
 
 *Captura de referencia: Android 16/API 36. Nombre y versión son ejemplos: informa los valores de tu propio dispositivo.*
 
-Con PipePipe 5.2.4 o posterior, el proveedor incluido en una ROM antigua
+Con PipePipe 5.2.4 o posterior, incluidas las versiones 5.3.x actuales, el proveedor incluido en una ROM antigua
 puede ser suficiente. Verificamos una reproducción real con los proveedores
 originales de Android 6, 7 y 8. No instales Chrome únicamente porque el teléfono
 use Android 7 a 9.
@@ -384,11 +391,11 @@ funcionales o impedir el arranque.
 
 Que otra aplicación funcione en el mismo dispositivo no demuestra que el
 proveedor WebView seleccionado por Android funcione. Las aplicaciones pueden
-usar otros clientes de YouTube, endpoints o servicios remotos. PipePipe
-5.2.4 todavía ejecuta EJS y la atestación localmente, pero ahora adapta ese
-JavaScript a proveedores antiguos.
+usar otros clientes de YouTube, endpoints o servicios remotos. PipePipe 5.2.4
+ya ejecutaba EJS y la atestación localmente; las versiones actuales conservan
+ese diseño y adaptan el JavaScript a proveedores antiguos.
 
-## Si 5.2.4 o una versión posterior todavía rechaza WebView
+## Si 5.2.4 o una versión posterior (incluidas 5.3.x) todavía rechaza WebView
 
 1. Confirma la versión instalada de PipePipe. En 5.2.3, el mensaje que exige la
    versión 80 identifica el bloqueo antiguo; en 5.2.4 también puede representar

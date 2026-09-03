@@ -1,5 +1,11 @@
 # Reproducción YouTube, red e inicio de sesión
 
+Las rutas de extracción de YouTube de PipePipe cambian cuando YouTube cambia
+sus peticiones. Esta página se comprobó con el código actual de la serie 5.3.x
+y las [últimas versiones estable y preliminares](https://github.com/InfinityLoop1308/PipePipe/releases).
+Si una issue pide una versión preliminar concreta, prueba exactamente esa versión
+e indícala en el informe; no describas una beta antigua como comportamiento actual.
+
 ## Fallan todos los vídeos de YouTube: comprueba el filtrado DNS
 
 Si todos los vídeos públicos de YouTube fallan casi de inmediato, consulta el
@@ -152,7 +158,50 @@ Usa el mismo vídeo público en cada prueba. Anota país/salida de red y si el f
 
 Estos mensajes no identifican una sola causa. Actualiza PipePipe, adjunta el informe generado e incluye URL, endpoint, sesión, país y estado de VPN/proxy. Di si falla al inicio, tras un tiempo fijo, al cambiar calidad, al volver a la app o tras seek.
 
-Web y MWeb usan SABR en reproducción anónima. Probar otro endpoint puede ser un diagnóstico temporal; no prueba que endpoint inicial o WebView sean culpables.
+Para vídeos normales de YouTube que no son directos, **MWEB (SABR)** es la ruta
+actual de reproducción basada en sesión cuando la respuesta MWEB expone datos
+SABR. **VisionOS** es una ruta de extracción anónima separada. Probar otro
+endpoint puede ser un diagnóstico temporal; no prueba que el endpoint inicial o
+WebView sean culpables.
+
+### Falla un vídeo (o unos pocos) mientras los demás funcionan
+
+Este es un punto de partida distinto de «fallan todos los vídeos». Primero
+vuelve a probar la misma URL pública después de actualizar PipePipe y anota el
+resultado. Si el resto de YouTube funciona, no empieces reinstalando WebView ni
+cambiando el DNS.
+
+1. Comprueba si es un directo, un Short, un vídeo restringido por edad, solo
+   para miembros o no disponible en un navegador normal. Anótalo en el informe.
+2. Abre **Ajustes → Avanzado → Endpoint de extracción de YouTube** y anota el
+   valor seleccionado. En las versiones 5.3.x actuales, una cuenta sin sesión
+   puede elegir **VisionOS** o **MWEB (SABR)**; una cuenta con sesión se mantiene
+   en **MWEB (SABR)**. **Android VR** pertenece a una versión antigua y ya no se
+   ofrece en el selector actual.
+3. Vuelve a probar la misma URL una vez sin cambiar calidad, códec, red ni sesión.
+4. Si sigue fallando, cambia solo una variable y vuelve a probar la misma URL.
+   La comparación útil es «mismo vídeo, un cambio», no varios ajustes a la vez.
+5. Adjunta el informe generado y di si los demás vídeos públicos siguen
+   funcionando.
+
+Un fallo aislado puede venir de la respuesta de ese vídeo o de un formato que el
+dispositivo no puede decodificar. Por sí solo no demuestra que PipePipe, WebView
+o toda la red estén rotos. Si el informe contiene `video/av01`, `MediaCodec` o
+un nombre de decodificador, consulta la [guía de
+MediaCodec](./android) como comprobación separada.
+
+::: info Opciones actuales de endpoint
+
+| Estado de la cuenta | Opciones mostradas en las versiones 5.3.x actuales | Predeterminado |
+| --- | --- | --- |
+| Sin sesión | VisionOS, MWEB (SABR) | VisionOS |
+| Con sesión | MWEB (SABR) | MWEB (SABR) |
+| Capturas/issues antiguas | Puede aparecer Android VR | Ya no es una opción actual |
+
+Las etiquetas y los valores predeterminados pueden volver a cambiar tras una
+modificación de YouTube. Informa siempre de lo que muestra realmente la versión
+instalada.
+:::
 
 ### Prueba de reproducción controlada
 
@@ -174,7 +223,7 @@ No publiques cookies, tokens, correo de cuenta ni grabación del flujo de inicio
 
 Un endpoint elige ruta de petición/extracción. Puede hacer aparecer o desaparecer un síntoma y debe anotarse, pero un endpoint que funciona una vez no prueba que los demás estén rotos. Indica endpoint por defecto, los probados y resultado para la misma URL. No mezcles pruebas de endpoint con una issue WebView salvo que aparezca el mensaje WebView exacto.
 
-<div class="screenshot-callout" role="img" aria-label="Selector de endpoint YouTube con MWEB y Android VR resaltados">
+<div class="screenshot-callout" role="img" aria-label="Antiguo selector de endpoint YouTube con MWEB y Android VR resaltados">
   <img src="/screenshots/pipepipe-endpoint-picker-5.2.3-api36.png" alt="Selector de endpoint de extracción YouTube">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="70" y="995" width="940" height="125" rx="24" />
@@ -184,11 +233,30 @@ Un endpoint elige ruta de petición/extracción. Puede hacer aparecer o desapare
   </svg>
 </div>
 
+*Captura histórica: PipePipe 5.2.3 en Android 16/API 36. Muestra un endpoint
+que ya no se ofrece en las versiones 5.3.x actuales; usa la tabla anterior para
+las opciones actuales.*
+
+![Selector de endpoint YouTube actual, PipePipe 5.3.1-beta en Android 16](/screenshots/pipepipe-endpoint-picker-5.3.1-beta-api36.png)
+
+*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. Sin sesión, las
+opciones mostradas son VisionOS y MWEB (SABR); la opción seleccionada se ve en
+la ventana.*
+
 La issue cerrada [#2686](https://github.com/InfinityLoop1308/PipePipe/issues/2686)
-es un ejemplo concreto: para un bloqueo IP informado, el mantenedor preguntó si
-estaba seleccionado **Android VR (DASH)** y aconsejó probar PipePipe 5.2.3 con
-**MWEB (SABR)**. En la captura, **1** es MWEB y **2** Android VR. Es una comparación controlada, no la promesa de que MWEB arregle
-cualquier fallo de red o cuenta.
+es un ejemplo histórico de comparación de endpoints: el mantenedor preguntó si
+estaba seleccionado **Android VR (DASH)** y aconsejó probar **MWEB (SABR)**. En
+la captura, **1** es MWEB y **2** Android VR. Trátalo como evidencia histórica,
+no como una instrucción actual ni como la promesa de que MWEB arregle cualquier
+fallo de red o cuenta.
+
+Los informes recientes muestran por qué importa indicar la fase exacta. En
+[#2901](https://github.com/InfinityLoop1308/PipePipe/issues/2901), la reproducción
+se detenía al apagar la pantalla y el informe incluía un destino `UnknownHost`.
+En [#2905](https://github.com/InfinityLoop1308/PipePipe/issues/2905), la
+reproducción funcionaba pero una descarga SABR fallaba con una VPN. Son dos
+informes «YouTube/SABR», pero necesitan evidencias distintas y no deben reducirse
+a un diagnóstico genérico de WebView o DNS.
 
 ## Informe mínimo de reproducción
 
@@ -198,6 +266,7 @@ Versión PipePipe / Android:
 Endpoint antes y durante el fallo:
 Con sesión o sin sesión:
 País de red / VPN o proxy:
+Tipo de vídeo y calidad/códec seleccionados, si se muestran:
 DNS privado / bloqueador / cortafuegos y host bloqueado, si lo hay:
 Punto del fallo (inicio / tiempo / seek / calidad / volver a app):
 Mensaje visible e informe generado:
