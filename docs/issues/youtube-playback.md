@@ -1,5 +1,11 @@
 # YouTube playback, network, and sign-in
 
+PipePipe's YouTube extraction paths change as YouTube changes its requests. This
+page was checked against the current 5.3.x code and the [latest stable and
+prerelease builds](https://github.com/InfinityLoop1308/PipePipe/releases). If a
+recent issue asks for a specific prerelease, test that exact build and mention
+it in the report; do not describe an older beta as the current behaviour.
+
 ## Every YouTube video fails: check DNS filtering
 
 If every public YouTube video fails almost immediately, inspect the generated
@@ -159,9 +165,48 @@ error report, and include the affected URL, endpoint, login state, country, and
 VPN/proxy state. Say whether the failure is at startup, after a fixed time, on
 quality change, when returning to the app, or after seeking.
 
-Web and MWeb use SABR for anonymous playback. Trying another endpoint can be a
-temporary diagnostic step; it is not proof that the original endpoint or WebView
-is at fault.
+For ordinary non-live YouTube videos, **MWEB (SABR)** is the current
+session-based playback path when the MWEB response exposes SABR data.
+**VisionOS** is a separate anonymous extraction path. Trying another endpoint
+can be a temporary diagnostic step; it is not proof that the original endpoint
+or WebView is at fault.
+
+### One video (or a few) fail while other videos play
+
+This is a different starting point from “every video fails”. First try the same
+public URL again after updating PipePipe, then record the result. Do not begin
+by reinstalling WebView or changing DNS when the rest of YouTube still plays.
+
+1. Check whether the item is a live stream, a Short, age-restricted, members
+   only, or otherwise unavailable in a normal browser. Note that in the report.
+2. Open **Settings → Advanced → YouTube extraction endpoint** and write down the
+   selected value. In current 5.3.x builds, a signed-out account can choose
+   **VisionOS** or **MWEB (SABR)**; a signed-in account is kept on **MWEB
+   (SABR)**. **Android VR** is from an older build and is no longer a current
+   picker option.
+3. Retry the same URL once without changing quality, codec, network, or login.
+4. If it still fails, change only one variable, then retry the same URL. The
+   useful comparison is “same video, one change”, not a list of simultaneous
+   switches.
+5. Attach the generated report and say whether other public videos still work.
+
+An isolated failure can come from the response returned for that particular
+video or from a format the device cannot decode. It does not by itself show that
+PipePipe, WebView, or the whole network is broken. If the report contains
+`video/av01`, `MediaCodec`, or a decoder name, follow the
+[MediaCodec guide](./android) as a separate codec check.
+
+::: info Current endpoint choices
+
+| Account state | Choices shown in current 5.3.x builds | Default |
+| --- | --- | --- |
+| Signed out | VisionOS, MWEB (SABR) | VisionOS |
+| Signed in | MWEB (SABR) | MWEB (SABR) |
+| Older screenshots/issues | Android VR may be shown | Not a current choice |
+
+The labels and defaults may change again after a YouTube change. Always report
+what the installed build actually shows.
+:::
 
 ### A controlled playback test
 
@@ -196,7 +241,7 @@ prove that all other endpoints are broken. Report the default endpoint, each
 endpoint tested, and the result for the same URL. Keep endpoint experiments out
 of an unrelated WebView report unless the exact WebView message is also present.
 
-<div class="screenshot-callout" role="img" aria-label="YouTube extraction endpoint picker with MWEB and Android VR highlighted">
+<div class="screenshot-callout" role="img" aria-label="Historical YouTube extraction endpoint picker with MWEB and Android VR highlighted">
   <img src="/screenshots/pipepipe-endpoint-picker-5.2.3-api36.png" alt="YouTube extraction endpoint picker">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="70" y="995" width="940" height="125" rx="24" />
@@ -206,12 +251,28 @@ of an unrelated WebView report unless the exact WebView message is also present.
   </svg>
 </div>
 
+*Historical capture: PipePipe 5.2.3 on Android 16/API 36. It shows an endpoint
+that is no longer offered by current 5.3.x builds; use the table above for the
+current choices.*
+
+![Current YouTube extraction endpoint picker, PipePipe 5.3.1-beta on Android 16](/screenshots/pipepipe-endpoint-picker-5.3.1-beta-api36.png)
+
+*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. Signed-out builds
+show VisionOS and MWEB (SABR); the selected entry is visible in the dialog.*
+
 Recent closed report [#2686](https://github.com/InfinityLoop1308/PipePipe/issues/2686)
-is a concrete example: for a claimed IP block, the maintainer asked whether
-**Android VR (DASH)** was selected and advised testing PipePipe 5.2.3 with
-**MWEB (SABR)** instead. In the capture, **1** is MWEB and **2** is Android VR.
-Treat that as a controlled endpoint comparison, not a
-promise that MWEB fixes every network or account failure.
+is a concrete example of an older endpoint comparison: the maintainer asked
+whether **Android VR (DASH)** was selected and advised testing **MWEB (SABR)**.
+In the capture, **1** is MWEB and **2** is Android VR. Treat that as historical
+evidence, not as a current instruction or a promise that MWEB fixes every
+network or account failure.
+
+Recent reports show why the exact stage matters. In [#2901](https://github.com/InfinityLoop1308/PipePipe/issues/2901), playback stopped after the
+phone went to sleep and the report included an `UnknownHost` destination. In
+[#2905](https://github.com/InfinityLoop1308/PipePipe/issues/2905), playback
+worked but a SABR download failed on a VPN. They are both “YouTube/SABR”
+reports, but they need different evidence and should not be merged into one
+generic WebView or DNS diagnosis.
 
 ## Minimum playback report
 
@@ -221,6 +282,7 @@ PipePipe version / Android version:
 Endpoint before and during the failure:
 Logged in or out:
 Network country / VPN or proxy state:
+Video type and selected quality/codec, if shown:
 Private DNS / blocker / firewall state and blocked host, if any:
 Failure point (start / time / seek / quality / return to app):
 Exact visible message and generated report:

@@ -1,5 +1,9 @@
 # WebView and YouTube playback
 
+This guide applies to PipePipe 5.2.4 and newer, including the current 5.3.x
+stable and prerelease builds. Check [GitHub Releases](https://github.com/InfinityLoop1308/PipePipe/releases)
+before following a version-specific instruction.
+
 ## Start here: check PipePipe before replacing WebView
 
 The WebView requirement changed after PipePipe 5.2.3. Use the installed
@@ -7,7 +11,7 @@ PipePipe version, not only the Android version, to choose the next action.
 
 | PipePipe version | What it expects | First action |
 | --- | --- | --- |
-| **5.2.4 or newer** | An active WebView provider that Android can initialize. There is no longer a hard minimum major version of 80. | Keep the provider selected by the ROM. Do not replace it only because it is old. |
+| **5.2.4 or newer, including 5.3.x** | An active WebView provider that Android can initialize. There is no longer a hard minimum major version of 80. | Keep the provider selected by the ROM. Do not replace it only because it is old. |
 | **5.2.3** | A WebView provider at major version 80 or newer. | Prefer updating PipePipe. If you stay on 5.2.3, follow the legacy provider instructions below. |
 | Any version reports that no provider exists or initialization fails | Android is not exposing a usable provider to PipePipe. | Check **WebView implementation** and the provider state. |
 
@@ -15,13 +19,15 @@ PipePipe 5.2.3 actively enforced the requirement shown in this message:
 
 > **WebView unavailable. Please make sure your WebView version is higher than 80.**
 
-PipePipe 5.2.4 removed that version gate, but the same generic text is still
-used when its WebView runtime is unavailable. On 5.2.4, the message does
+PipePipe 5.2.4 removed that version gate, and current 5.3.x builds keep that
+behaviour, but the same generic text is still used when the WebView runtime is
+unavailable. On 5.2.4 and newer, the message does
 **not** prove that the provider is below version 80: Android may expose no
 provider, or the selected runtime may have failed to start. It is not a request
 to sign in to YouTube and does not prove that the phone itself is too old.
-Install the stable [5.2.4 release](https://github.com/InfinityLoop1308/PipePipe/releases/tag/v5.2.4)
-or newer before replacing the system provider.
+Install the [latest stable release](https://github.com/InfinityLoop1308/PipePipe/releases/latest)
+or the exact prerelease requested by an issue before replacing the system
+provider.
 
 ![How WebView fits into YouTube playback](/diagrams/webview-playback.png)
 
@@ -32,9 +38,10 @@ Android WebView locally for two JavaScript jobs: decoding YouTube player data
 through EJS and running BotGuard to obtain short-lived session/video tokens.
 Google Play Services are not part of this path.
 
-PipePipe 5.2.4 ships ES5-compatible EJS assets, compatibility polyfills,
-and an older-JavaScript BotGuard bridge. It removed both the major-version-80
-gate and the modern-JavaScript capability probe. PipePipe still checks that
+PipePipe 5.2.4 introduced ES5-compatible EJS assets, compatibility polyfills,
+and an older-JavaScript BotGuard bridge. Current 5.3.x builds do not
+reintroduce the major-version-80 gate or the modern-JavaScript capability
+probe. PipePipe still checks that
 Android exposes a provider and that its runtime actually starts; a missing,
 disabled, vendor-locked, or broken provider can therefore still fail.
 
@@ -64,7 +71,7 @@ is normally fixed by the ROM; check the **Android System WebView** version under
 
 *Reference capture: Android 16/API 36. The provider name and version are examples; report the values shown on your own device.*
 
-With PipePipe 5.2.4 or newer, the provider bundled with an old ROM may be
+With PipePipe 5.2.4 or newer, including current 5.3.x builds, the provider bundled with an old ROM may be
 enough. We verified real playback with the stock providers from Android 6, 7,
 and 8. Do not install Chrome merely because the phone runs Android 7–9.
 
@@ -316,10 +323,11 @@ a generic system replacement can remove every working WebView or prevent boot.
 
 An app working on the same device does not prove that Android's selected WebView
 provider works. Different apps may use different YouTube clients, endpoints, or
-remote services. PipePipe 5.2.4 still performs its EJS and attestation work
-locally, but it now adapts that JavaScript to older providers.
+remote services. PipePipe 5.2.4 performed its EJS and attestation work locally;
+current releases retain that design while adapting the JavaScript to older
+providers.
 
-## If 5.2.4 or newer still rejects WebView
+## If 5.2.4 or newer (including current 5.3.x) still rejects WebView
 
 1. Confirm the installed PipePipe version. On 5.2.3 the version-80 message
    identifies the retired gate; on 5.2.4 it can also represent a missing or
