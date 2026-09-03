@@ -23,19 +23,28 @@ getInfo(url)
 Toma `YoutubeStreamExtractor.onFetchPage` como caso concreto. Lee el `videoId` de `getId()` y dispara varias peticiones InnerTube en paralelo a través de la API asíncrona del downloader (`CancellableCall`):
 
 - una respuesta del player **web**,
-- una respuesta del player **android-VR** o **safari**, elegida según si hay tokens configurados,
+- la respuesta del player seleccionada, **VisionOS** por defecto sin cookies y **MWEB** cuando la cuenta tiene cookies,
 - el endpoint **next** para los metadatos,
-- llamadas laterales en el mejor de los casos (return-dislike, y SponsorBlock en su propio hilo).
+- llamadas laterales en el mejor de los casos (return-dislike, SponsorBlock y una respuesta Android Reel usada solo como fallback para algunos fallos).
+
+El endpoint seleccionado no está codificado directamente en este método. `NewPipe.getYoutubePlayerClient()` acepta `visionos`, `mweb` o el valor interno `tv_downgraded`. El cliente Android expone actualmente VisionOS y MWEB en los ajustes avanzados; el antiguo endpoint Android-VR ya no es una opción actual.
 
 ```java
 public void onFetchPage(@Nonnull final Downloader downloader) {
     final String videoId = getId();
     ...
     CancellableCall webPageCall = YoutubeParsingHelper.getWebPlayerResponse(...);
-    if (StringUtils.isBlank(ServiceList.YouTube.getTokens())) {
-        androidCall = fetchAndroidVRJsonPlayer(...);
-    } else {
-        safariCall = fetchSafariJsonPlayer(...);
+    final CancellableCall jsonPlayerCall;
+    switch (NewPipe.getYoutubePlayerClient()) {
+        case "visionos": case "tv_simply": case "tv_downgraded":
+            jsonPlayerCall = fetchConfiguredJsonPlayer(...);
+            break;
+        case "web":
+            jsonPlayerCall = fetchWebJsonPlayer(...);
+            break;
+        default:
+            jsonPlayerCall = fetchMwebJsonPlayer(...);
+            break;
     }
     CancellableCall nextDataCall = getJsonPostResponseAsync(NEXT, body, ...);
     ...

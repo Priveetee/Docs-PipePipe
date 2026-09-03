@@ -1,42 +1,75 @@
 # SABR en el extractor
 
-SABR es el protocolo de delivery basado en sesión de YouTube. El protocolo *en sí*, el porqué, UMP, BotGuard, la atestación, es la [Guía SABR](/es/developer-guide/introduction). Esta sección es el **mapa del lado del extractor**: las ~47 clases de `services/youtube/sabr`, qué hace cada una, y cómo se conduce una sesión de reproducción de principio a fin. Se asume que leíste la guía.
+SABR es el protocolo de entrega de YouTube basado en sesiones. El protocolo,
+su motivación, UMP, BotGuard y la atestación se describen en la [guía de
+SABR](/es/developer-guide/introduction). Esta página muestra el paquete actual
+`services/youtube/sabr` de PipePipeExtractor y separa extracción, peticiones,
+decodificación y ensamblaje de medios.
 
 ## Dónde encaja
 
-Cuando YouTube devuelve formatos SABR, el extractor de flujo los expone con `DeliveryMethod.SABR` (ver [Flujos y delivery](./streams-and-delivery)). A diferencia de progressive o DASH, no hay una URL por-formato que entregar al player. Los bytes viven detrás de un endpoint, `serverAbrStreamingUrl`, que solo habla el baile petición/respuesta de SABR: POSTeas un `VideoPlaybackAbrRequest` binario, recibes un body UMP, lo decodificas, avanzas, repites.
+Cuando la respuesta del player MWEB contiene formatos SABR,
+`YoutubeStreamExtractor.buildSabrStreams()` los expone con
+`DeliveryMethod.SABR`. No hay una URL de medios por formato. El flujo lleva
+`serverAbrStreamingUrl` como referencia común, mientras el cliente selecciona
+formatos y conduce la sesión con `YoutubeSabrRequest`.
 
-El reparto de tareas:
+La división actual es:
 
-- **El extractor posee el protocolo.** Hace el probe de la respuesta del player, abre la sesión, construye cada petición binaria, la POSTea, decodifica el UMP, sigue el estado bufferizado por-track, reensambla los segmentos, y acota cada modo de fallo.
-- **El cliente posee el ritmo y la pantalla.** Su pump decide *cuándo* pedir más, cachea los segmentos, alimenta el decodificador, conduce los seeks, y suministra lo único que el extractor no puede producir: un PO token (minteado en una WebView).
+- `YoutubeStreamExtractor` analiza `streamingData`, resuelve en un solo lote los
+  parámetros JavaScript `n` y las firmas, y crea `YoutubeSabrInfo` y los
+  metadatos de los flujos SABR;
+- `YoutubeSabrSession` y `YoutubeSabrRequestHelper` codifican y envían cada
+  transacción, siguen redirecciones y políticas, conservan cookies, contextos y
+  metadatos de directo, y aplican recuperación limitada;
+- `SabrStreamingResponseReader` y `SabrMediaSegmentCollector` decodifican la
+  envoltura UMP y ensamblan segmentos terminados, con un archivo de spool
+  opcional para segmentos grandes sin compresión;
+- la capa de aplicación consume los segmentos y proporciona un PO token cuando
+  YouTube lo solicita. El extractor no acuña ese token ni renderiza medios.
 
-El extractor nunca forja un token y nunca decodifica un píxel.
+En PipePipeClient, `SabrSessionHelper` valida los metadatos del extractor y crea
+la sesión, `SabrMediaBridge` convierte las peticiones de segmentos de Media3 en
+peticiones preparation/playback, y `SabrRequestCoordinator` serializa reintentos,
+backoff y recuperación de atestación. Las descargas reutilizan la misma sesión
+mediante `SabrDownloader` y después remultiplexan los archivos de audio/vídeo.
+El proveedor DOM local suministra el PO token; no es una segunda implementación
+de SABR.
 
-## Leer en este orden
+## Orden recomendado
 
-1. **[Iniciar una sesión](./sabr-probe)** — el probe: respuesta del player, `serverAbrStreamingUrl`, los client profiles, los formatos.
-2. **[La petición](./sabr-request)** — el proto `VideoPlaybackAbrRequest`, campo por campo, y el wire format.
-3. **[UMP y decodificación](./sabr-decoding)** — el framing UMP, la tabla completa de part-types, la respuesta decodificada.
-4. **[Medio, segmentos e índice](./sabr-media)** — cómo los bytes de medio se vuelven segmentos reproducibles, y cómo un tiempo se mapea a un número de segmento.
-5. **[El modelo buffered y el seek](./sabr-buffered)** — el modelo contiguo-vs-max que evita la starvation, y cómo funciona el seek.
-6. **[El driver de sesión](./sabr-session)** — el bucle de pump, la caché, la evicción, y cada retry acotado.
-7. **[Referencia de control parts](./sabr-control-parts)** — cada instrucción del servidor y su efecto.
+1. **[Iniciar una sesión](./sabr-probe)** — análisis de la respuesta del player,
+   `YoutubeSabrInfo`, creación de peticiones y estado entre llamadas.
+2. **[La petición](./sabr-request)** — `VideoPlaybackAbrRequest`, formatos
+   preferidos y seleccionados, rangos almacenados y wire format protobuf.
+3. **[UMP y decodificación](./sabr-decoding)** — framing, identificadores de
+   partes y el `YoutubeSabrResponse` producido por el decodificador.
+4. **[Medios, segmentos e índice](./sabr-media)** — headers, payloads
+   comprimidos, ensamblaje y líneas temporales de inicialización.
+5. **[El driver de sesión](./sabr-session)** — semántica de una transacción,
+   redirecciones, backoff, atestación y límites de recuperación.
+6. **[Referencia de control parts](./sabr-control-parts)** — partes de control
+   que reconoce `SabrResponseDecoder`.
 
-## Mapa de clases
+## Mapa actual de clases
 
-| Área | Clases |
+| Área | Clases actuales |
 | --- | --- |
-| Ciclo de vida de la sesión | `YoutubeSabrProbe`, `YoutubeSabrProbeResult`, `YoutubeSabrInfo`, `YoutubeSabrSession`, `YoutubeSabrStreamState`, `YoutubeSabrClientProfile` |
-| Formatos | `YoutubeSabrFormat`, `SabrSelectableFormats`, `SabrFormatSelectionConfig`, `SabrFormatInitializationMetadata` |
-| Petición | `YoutubeSabrRequestBuilder`, `SabrSegmentRequest`, `SabrRequestIdentifier`, `SabrColdStartPoToken`, `SabrProto`, `SabrRequestDumper` |
-| UMP + decodificación | `UmpReader`, `UmpPart`, `SabrResponseDecoder`, `SabrDecodedResponse` |
-| Medio + segmentos | `SabrMediaHeader`, `SabrMediaSegment`, `SabrMediaSegmentCollector`, `SabrSegmentIndex`, `SabrMp4SegmentIndexParser`, `SabrWebmSegmentIndexParser`, `SabrOnesieData`, `SabrOnesieHeader`, `SabrOnesieInnertubeResponse` |
-| Control parts | `SabrNextRequestPolicy`, `SabrStreamProtectionStatus`, `SabrRedirect`, `SabrSeek`, `SabrReloadPlayerResponse`, `SabrPlaybackStartPolicy`, `SabrContextSendingPolicy`, `SabrContextUpdate`, `SabrContextValue`, `SabrRequestCancellationPolicy`, `SabrPrewarmConnection`, `SabrLiveMetadata`, `SabrError`, `SabrSnackbarMessage` |
-| Estado de buffer | `SabrBufferedRange`, `SabrPlaybackCookie` |
-| Tokens | `SabrPoTokenProvider` |
-| Errores | `SabrProtocolException` |
+| Respuesta del player | `YoutubeStreamExtractor`, `YoutubeSabrInfo`, `YoutubeSabrInfo.Format` |
+| Sesión y peticiones | `YoutubeSabrSession`, `YoutubeSabrRequest`, `YoutubeSabrRequest.Track`, `YoutubeSabrRequestHelper` |
+| Respuesta y UMP | `YoutubeSabrResponse`, `SabrResponseDecoder`, `SabrStreamingResponseReader`, `UmpReader`, `SabrProto` |
+| Ensamblaje de medios | `SabrMediaSegment`, `SabrMediaSegmentCollector`, `SabrMediaHeader`, `SabrFormatInitializationMetadata` |
+| Líneas temporales | `YoutubeSabrFormatTimeline`, `SabrSegmentIndex`, `SabrMp4SegmentIndexParser`, `SabrWebmSegmentIndexParser` |
+| Diagnóstico | `YoutubeSabrSessionDiagnostics`, `YoutubeSabrSession.TraceSnapshot` |
+| Errores | `SabrProtocolException`, `SabrRecoverableException`, `SabrAttestationException` |
+
+El mapa solo enumera clases que existen en el código actual de
+PipePipeExtractor. La documentación antigua citaba clases de probe, perfiles y
+estado de flujo que ya no forman parte de este paquete.
 
 ## La frontera
 
-El extractor entiende y conduce el protocolo; no forja tokens y no renderiza el medio. Para el protocolo en sí, las shapes de petición y respuesta, el modelo de sesión, BotGuard y la atestación, lee la [Guía SABR](/es/developer-guide/introduction).
+El extractor sabe describir y conducir una transacción SABR, pero no convierte la
+respuesta en audio o vídeo decodificados. Para las formas de las peticiones y
+respuestas, BotGuard y la atestación, continúa con la [guía de
+SABR](/es/developer-guide/introduction).
