@@ -1,81 +1,106 @@
 # La requête
 
-Partie de [SABR dans l'extracteur](./sabr). Ici : le `VideoPlaybackAbrRequest` binaire qu'encode `YoutubeSabrRequestBuilder`, champ par champ, plus le wire format en dessous.
+Partie de [SABR dans l'extracteur](./sabr). `YoutubeSabrRequestHelper` encode la
+`YoutubeSabrRequest` immuable en `VideoPlaybackAbrRequest` binaire envoyé à
+YouTube. Les libellés ci-dessous sont les champs produits par l'encodeur actuel.
 
-> Les *noms* de champs ci-dessous sont les libellés reverse-engineered du projet (surtout via la field map de `SabrRequestDumper`). Les *numéros* de champs et les wire types sont pris tels quels dans l'encodeur.
+## Cycle de la requête
 
-## Le message top-level
+Deux fabriques publiques existent :
 
-`buildFirstMediaRequest` (cold start) et `buildFollowUpMediaRequest` écrivent ces champs top-level :
+- `YoutubeSabrRequest.preparation(playerTimeMs, preferredFormats)` demande les
+  données d'initialisation et les timelines sans déclarer de pistes actives ;
+- `YoutubeSabrRequest.playback(playerTimeMs, playbackRate, tracks)` déclare les
+  pistes audio/vidéo actives et leur position dans le buffer.
 
-| # | Wire | Porte | 1re req | Follow-up |
-| --- | --- | --- | --- | --- |
-| 1 | message | `clientAbrState` (voir plus bas) | oui (playerTime=0) | oui |
-| 2 | message | `formatId` sélectionné (un par track) | non | oui |
-| 3 | message | `bufferedRange` (répété) | non | oui |
-| 4 | varint | `playerTimeMs` top-level | non | oui (gated) |
-| 5 | bytes | ustreamer config (base64-décodé) | oui | oui |
-| 16 | message | `formatId` **audio** préférés (répété) | oui | oui |
-| 17 | message | `formatId` **vidéo** préférés (répété) | oui | oui |
-| 19 | message | `streamerContext` (voir plus bas) | oui | oui |
+Chaque requête doit contenir au moins une piste. Elle ne peut pas contenir deux
+pistes audio, deux pistes vidéo, ni le même itag à la fois en audio et en vidéo.
+Une piste peut porter une `YoutubeSabrFormatTimeline` et le dernier numéro de
+segment bufferisé.
 
-`formatId` est un petit sous-message utilisé partout où un format est nommé : `#1 itag` (int32), `#2 lastModified` (uint64, seulement si > 0), `#3 xtags` (string, seulement si non-vide).
+`YoutubeSabrRequestHelper` ajoute à l'URL HTTP `alr=yes`, le CPN de session et
+`rn=<requestNumber>`. `rn` commence à zéro et est remplacé à chaque requête. Le
+body est envoyé en `application/x-protobuf` ; la réponse doit être en
+`application/vnd.yt-ump`.
 
-Donc **cold start vs follow-up** diffère par : un cold start n'a pas de formats sélectionnés, pas de buffered ranges, pas de player time top-level, et `playerTimeMs = 0` ; il ne porte pas encore de cookie de session ni de jeton PO. Le flag follow-up débloque aussi les champs `clientAbrState` conditionnels ci-dessous. Toute la progression de session, player time, buffered ranges, formats sélectionnés, cookie, jeton PO, contextes actifs, est lue depuis `YoutubeSabrStreamState`.
+## Champs de premier niveau
 
-## `clientAbrState` (champ 1)
+| # | Wire | Transporte | Émis quand |
+| --- | --- | --- | --- |
+| 1 | message | `clientAbrState` | Toutes les requêtes |
+| 2 | message | `formatId` sélectionnés | L'état de lecture est inclus |
+| 3 | message | `bufferedRange` | Une piste a une timeline et un segment bufferisé |
+| 4 | varint | `playerTimeMs` de premier niveau | L'état de lecture est inclus |
+| 5 | bytes | `videoPlaybackUstreamerConfig` décodée | Toutes les requêtes |
+| 16 | message | `formatId` audio préféré | Si un format audio existe |
+| 17 | message | `formatId` vidéo préféré | Si un format vidéo existe |
+| 19 | message | `streamerContext` | Toutes les requêtes |
 
-Le sous-message le plus riche. Le cœur toujours écrit :
+L'état de lecture est inclus pour une requête de suivi, une position non nulle
+ou une requête qui porte des plages bufferisées. Une préparation à la position
+zéro est donc le cold start minimal ; elle contient tout de même la configuration
+ustreamer et les formats préférés éventuels.
 
-| # | Wire | Sens |
-| --- | --- | --- |
-| 28 | uint64 | `playerTimeMs` |
-| 21 | int32 | sticky resolution (`max(videoHeight, 360)` ou un override) |
-| 34 | int32 | visibility |
-| 35 | fixed32 | playback rate (défaut `1.0`) |
-| 40 | int32 | enabled track types bitfield (écrit seulement si ≠ 0 ; `0 = VIDEO_AND_AUDIO`, `1 = AUDIO_ONLY`, `2 = VIDEO_ONLY`) |
-| 46 | bool | DRC enabled (seulement si le format audio est DRC) |
-| 69 | string | audio track id (si présent) |
+`formatId` est le message imbriqué partagé par les formats sélectionnés et
+préférés : le champ `1` est l'itag, le champ `2` est `lastModified` s'il est
+positif et le champ `3` est `xtags` s'il n'est pas vide.
 
-Les ajouts follow-up / "official web" incluent `#16` dernière résolution manuelle, `#18`/`#19` largeur/hauteur viewport, `#23` estimation de bande passante (valeur d'état, sinon `(audioBitrate + videoBitrate) * 2`, sinon -1). Quand le profile mime le client web officiel, un bloc supplémentaire (`#29` time-since-last-seek, `#36` elapsed wall time, `#39` time-since-last-action, `#58` preferVp9=false, `#59` AV1 quality threshold, `#72` quality constraints, `#79` playback authorization, …) est rempli avec les constantes caractéristiques du client web pour que la requête soit indistinguable d'un vrai navigateur.
+## `clientAbrState`
 
-## Buffered ranges (champ 3)
+L'encodeur actuel écrit ces champs :
 
-Chaque `SabrBufferedRange.toProto()` :
+| # | Signification |
+| --- | --- |
+| 18 / 19 | largeur/hauteur vidéo, uniquement avec l'état de lecture |
+| 21 | résolution vidéo, au moins 360 si un format vidéo existe |
+| 23 | estimation de bande passante sur les follow-ups, ou calculée depuis les débits actifs |
+| 28 | `playerTimeMs` |
+| 34 | visibilité (`1`) |
+| 35 | vitesse de lecture, par défaut `1.0` |
+| 40 | mode de piste (`1` audio seul, `2` vidéo seule, `0` les deux et omis) |
+| 46 | DRC activé si le format audio sélectionné est DRC |
+| 69 | id de piste audio sélectionnée, s'il existe |
 
-| # | Wire | Champ |
-| --- | --- | --- |
-| 1 | message | `formatId` |
-| 2 | uint64 | `startTimeMs` |
-| 3 | uint64 | `durationMs` |
-| 4 | int32 | `startSegmentIndex` |
-| 5 | int32 | `endSegmentIndex` |
-| 6 | message | time range (seulement si activé) : `#1 startTimeMs`, `#2 durationMs`, `#3 timescale` |
+Les informations client dans `streamerContext` identifient MWEB (client id `2`),
+la version client et la localisation `en-US`/`US` utilisée par le helper.
 
-`SabrBufferedRange.full(format)` est la range "j'ai tout" (`startTimeMs=0`, tout le reste à `Integer.MAX_VALUE`), pour déclarer un track entièrement bufferisé. Comment les vraies ranges sont calculées, c'est l'objet du [modèle buffered](./sabr-buffered).
+## Plages bufferisées
 
-## Streamer context (champ 19)
+Pour une piste dont la timeline est parsée et dont `bufferedThrough > 0`, le
+helper écrit une plage contenant :
 
-| # | Wire | Porte |
-| --- | --- | --- |
-| 1 | message | `clientInfo` |
-| 2 | bytes | **jeton PO** (seulement si présent) |
-| 3 | bytes | **playback cookie** (seulement si présent) |
-| 5 | message | `SabrContextUpdate` actifs (répété) |
-| 6 | int32 | types de contexte SABR non envoyés (répété) |
+| Champ | Valeur |
+| --- | --- |
+| `formatId` | itag, last-modified et xtags |
+| `startTimeMs` | `0` |
+| `durationMs` | fin du dernier segment bufferisé |
+| `startSegmentIndex` / `endSegmentIndex` | `1` / le segment bufferisé borné |
+| timescale de la time-range | `1000` |
 
-`clientInfo` porte le client id (`#16`), la version (`#17`), nom/version d'OS (`#18`/`#19`), et `Accept-Language`/région (`#21`/`#22`) ; en mode official-web la forme change un peu (champ 1 = `"en_US"`, champ 18 = `"X11"`).
+`YoutubeSabrFormatTimeline` est construite depuis les octets d'initialisation
+par le parseur d'index MP4 ou WebM. Elle associe numéros de séquence et temps de
+début/fin, puis associe un temps demandé au premier segment qui se termine après
+ce temps.
 
-## Le wire format (`SabrProto`)
+## `streamerContext`
 
-Un writer/reader protobuf fait main. Wire types : `VARINT=0`, `FIXED64=1`, `LENGTH_DELIMITED=2`, `FIXED32=5`. Un tag de champ est `varint((fieldNumber << 3) | wireType)`. Les varints sont du LEB128 standard (7 bits/octet, bit de poids fort = continuer). `writeMessage` est juste un `writeBytes` length-delimited (un sous-message est des bytes). `writeInt32` passe par `writeUInt64` avec extension de signe, donc un int négatif devient un varint de 10 octets. Le côté lecture (`readFields`, `Cursor`) est ce sur quoi chaque `Sabr*.decode()` est bâti.
+Le contexte contient les informations client et, éventuellement :
 
-`SabrRequestDumper` re-décode un body de requête fini en un résumé une-ligne sanitisé pour le diagnostic, jeton PO, cookie, ustreamer config et audio-track id sont réduits à des compteurs d'octets, jamais imprimés.
+- le jeton PO courant (champ `2`) ;
+- le cookie de lecture issu de `NEXT_REQUEST_POLICY` (champ `3`) ;
+- les valeurs SABR opaques actives (champ `5`) ;
+- les types de contexte non envoyés actuellement (champ `6`).
 
-## Cold-start PO token
+Les payloads de jeton et de cookie ne sont jamais imprimés dans les résumés de
+diagnostic.
 
-`SabrColdStartPoToken` synthétise un jeton placeholder pour le tout premier contact : un header de 8 octets (2 octets de clé aléatoire, un octet d'état client, un timestamp epoch-secondes big-endian) plus l'identifiant, length-préfixé en champ protobuf 4, puis obfusqué par un XOR roulant à clé de 2 octets. `MAX_IDENTIFIER_BYTES = 118`. C'est une obfuscation déterministe, pas un jeton attesté ; un vrai jeton lié au contenu vient toujours du [provider de jeton PO](./sabr-session#protection-et-jetons).
+## Wire format
 
----
+`SabrProto` est le petit lecteur/écrivain protobuf utilisé par les chemins de
+requête et de réponse. Il prend en charge les varints, fixed32, fixed64 et les
+champs délimités par longueur. Un message imbriqué est un tableau d'octets
+délimité par longueur ; les tags utilisent `(fieldNumber << 3) | wireType`. Les
+numéros de champ invalides, wire types non pris en charge, entrées tronquées et
+longueurs trop grandes lèvent `SabrProtocolException`.
 
 Suite : [UMP et décodage](./sabr-decoding).
