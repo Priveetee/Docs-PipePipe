@@ -1,59 +1,38 @@
-# Le modèle buffered et le seek
+# Plages bufferisées et seeks
 
-Partie de [SABR dans l'extracteur](./sabr). C'est la pièce la plus subtile de l'extracteur, et celle qu'on rate le plus souvent. Elle vit dans `YoutubeSabrStreamState`, un `FormatProgress` par track.
+Partie de [SABR dans l'extracteur](./sabr). Le PipePipeExtractor actuel ne
+possède ni buffer de lecture ni `YoutubeSabrStreamState` ; ces politiques vivent
+dans la couche applicative qui construit les `YoutubeSabrRequest`.
 
-## Pourquoi deux valeurs "max"
+## Ce que fournit l'extracteur
 
-Le serveur n'envoie que ce que le client dit manquer, donc les buffered ranges de chaque requête doivent être *honnêtes*. Le piège, ce sont les trous. Supposons que les segments 1, 2, 3, 5, 6 soient arrivés mais que le 4 ait été perdu :
+`YoutubeSabrRequest.Track` peut porter deux éléments d'état gérés par l'appelant :
 
-![Modèle de tête bufferisée](/diagrams/sabr-buffered-model.png)
+- une `YoutubeSabrFormatTimeline`, parsée depuis les données d'initialisation ;
+- `bufferedThrough`, le dernier numéro de séquence contigu que l'appelant veut
+  déclarer.
 
-Si le client rapportait `maxSegment = 6`, le serveur supposerait que 1–6 sont tous détenus et enverrait le segment 7, et le segment 4 ne serait jamais rempli, le reader séquentiel cale au trou pour toujours.
+Quand les deux sont présents et que `bufferedThrough > 0`,
+`YoutubeSabrRequestHelper` écrit une `bufferedRange` qui commence au temps zéro
+et se termine à la fin de la timeline de cette séquence. Les index de segments
+commencent à un et la timescale vaut `1000`. Sans timeline, aucune plage
+bufferisée n'est émise pour cette piste.
 
-Donc `FormatProgress` suit deux têtes :
+C'est volontairement conservateur : l'appelant ne doit jamais déclarer une plage
+au-delà d'un trou. Annoncer une séquence plus loin alors qu'un segment précédent
+manque peut faire sauter ce média par le serveur et bloquer le lecteur.
 
-- **`contiguousMaxSegment`** — le plus haut segment **sans trou depuis le début**. C'est ce qui est rapporté au serveur, pour qu'il envoie toujours le segment séquentiel exact dont un reader a besoin.
-- **`maxSegment`** — le plus haut segment vu tout court (peut être au-delà d'un trou).
-- **`aheadOfContiguous`** — un set de segments hors-ordre reçus au-delà de l'edge contigu, en attente d'être intégrés.
+## Seeks
 
-`observeHeader(seq)` les maintient : si `seq == contiguousMaxSegment + 1`, avance l'edge contigu et draine `aheadOfContiguous` aussi loin qu'il s'étend ; si `seq` est plus loin, le range dans `aheadOfContiguous`. Ce split contigu-vs-max est le mécanisme anti-starvation central.
+Pour un seek, la couche applicative peut obtenir la séquence avec
+`YoutubeSabrFormatTimeline.getSequenceAt(timeMs)`, gérer son cache puis créer une
+nouvelle `YoutubeSabrRequest.playback` avec le temps cible et des plages
+contiguës honnêtes. SABR ne fournit pas d'API de cache client dans l'extracteur.
 
-## La fenêtre observed-timing
-
-À côté des numéros de segment, `FormatProgress` enregistre une fenêtre temporelle à partir des headers réellement vus : `firstObservedSegment`, `lastObservedSegment`, `observedStartMs`, `observedEndMs`, `observedMaxSegment`, `lastObservedDurationMs`. Plus `endSegment` et `averageDurationMs` (de la metadata d'init) et le `segmentIndex` parsé.
-
-## Construire les ranges
-
-`getBufferedRanges()` émet une `SabrBufferedRange` par track (ou `SabrBufferedRange.full(...)` si un track est flaggé entièrement bufferisé, ou un override manuel). La décision intéressante dans `addBufferedRange` est de savoir s'il faut faire confiance au timing observé :
-
-```
-canUseObservedTiming =
-       observedStartMs >= 0
-    && observedEndMs > observedStartMs
-    && observedMaxSegment >= maxSegment
-    && firstObservedSegment > 0
-    && contiguousMaxSegment >= maxSegment   // le garde no-hole
-```
-
-Cette dernière clause est la clé : le timing observé n'est cru que s'il n'y a **pas de trou** (contigu a rattrapé max). Sinon la fin observée surévaluerait la couverture au-delà du trou. Quand on lui fait confiance, la range utilise `observedStartMs` / `observedEndMs - observedStartMs` et `firstObservedSegment` ; sinon elle retombe sur `startTime = 0`, `duration = getBufferedEndMs()`, `startIndex = 1`. **Dans les deux cas `endSegmentIndex = contiguousMaxSegment`**, jamais `maxSegment`. Et `getBufferedEndMs()` est calculé depuis `contiguousMaxSegment` aussi (un trou signifie qu'on n'est pas vraiment bufferisé au-delà).
-
-## Le seek
-
-![Tête bufferisée et seek](/diagrams/sabr-extractor-seek.png)
-
-Les seeks **avant** à portée sont faciles parce que le modèle a un biais avant. `assumeBufferedUntil(format, seq)` ne fait jamais que *relever* `maxSegment` ; les `prepareForMediaSegment` / `maybePrepareForDistantMediaSegment` de la session l'utilisent pour faire sauter le bookkeeping en avant et laisser `SabrSeek` / le player time aligner.
-
-Mais un seek **avant lointain** (un seek à froid loin au-delà de la tête bufferisée : un skip SponsorBlock, une reprise depuis l'historique) n'est *pas* gratuit. `prepareForMediaSegment` ne fait que relever `maxSegment` ; il laisse `contiguousMaxSegment` (le segment où la range rapportée se *termine* réellement) en arrière à l'ancienne tête. Du coup la requête continue d'annoncer l'ancien span comme bufferisé, le serveur continue de le remplir, le pump fait du ping-pong entre l'ancienne tête et la cible, et le reader peut attendre indéfiniment le segment lointain. `prepareForForwardJump` → `jumpBufferedTo(fromSegment)` est le pendant symétrique du rewind ci-dessous : il déplace `contiguousMaxSegment` sur la cible (en repliant les segments de la zone cible déjà arrivés dans le désordre, en droppant la fenêtre observée), pour que le serveur streame depuis là et que le rythme piloté par la tête suive. Un seek arrière ultérieur dans le span sauté passe honnêtement par `prepareForRewind`.
-
-Les seeks **arrière** sont le cas dur. Après lecture en avant, la tête bufferisée est haute ; un seek arrière sur un segment déjà reçu laisserait la requête annoncer cette range comme bufferisée, le serveur n'envoie rien, le reader cale. `prepareForRewind` → `rewindBufferedTo(fromSegment)` répare l'état précisément :
-
-1. `last = max(0, fromSegment - 1)`.
-2. Garde : si `last >= contiguousMaxSegment`, ce n'est pas un rewind pour ce track, return.
-3. Sinon **shrink** : `maxSegment = last`, `contiguousMaxSegment = last`, `observedMaxSegment = min(observedMaxSegment, last)`.
-4. **Drop de la fenêtre observée** : `firstObservedSegment`, `lastObservedSegment`, `observedStartMs`, `observedEndMs` tous remis à `-1`.
-
-L'étape 4 compte autant que l'étape 3 : si la fenêtre observée survivait, `canUseObservedTiming` pourrait encore rapporter une fin au-delà de la cible et la re-requête reviendrait vide. Les deux têtes et la fenêtre observée ramenées en arrière, la requête suivante demande honnêtement la cible et le serveur la renvoie. La session fait ça pour le track seeké et son compagnon (audio/vidéo bougent ensemble), puis pose le player time.
-
----
+La recherche renvoie la séquence `1` pour les temps non positifs, la première
+entrée dont la fin dépasse le temps demandé, ou une séquence après la dernière si
+le temps dépasse l'index. Les index MP4 et WebM sont parsés depuis les octets
+d'initialisation ; il faut attendre une timeline valide avant d'annoncer une
+couverture de seek précise.
 
 Suite : [Le driver de session](./sabr-session).

@@ -1,69 +1,96 @@
 # Démarrer une session
 
-Partie de [SABR dans l'extracteur](./sabr). Ici : comment une session est amorcée à partir d'une réponse du lecteur, les identités client qu'elle peut porter, et le modèle de formats.
+Partie de [SABR dans l'extracteur](./sabr). Dans le PipePipeExtractor actuel,
+le parsing de la réponse player et le driver de session média sont séparés. Il
+n'existe plus de `YoutubeSabrProbe` autonome ni d'enum de profils client dans le
+code courant.
 
-## Deux points d'entrée
+## De la réponse player à `YoutubeSabrInfo`
 
-Il y a deux chemins de code SABR distincts, et ça vaut le coup de les séparer d'emblée :
+`YoutubeStreamExtractor.buildSabrInfoFromPlayerResponse(...)` est le point
+d'entrée utilisé après le fetch de la réponse player **MWEB** sélectionnée. Il
+construit l'objet immuable `YoutubeSabrInfo` consommé par
+`YoutubeSabrSession` :
 
-- **Le listing de flux de l'extracteur.** `YoutubeStreamExtractor.buildSabrStreams()` lit `streamingData`, et pour chaque format adaptatif émet un `AudioStream` / `VideoStream` en `DeliveryMethod.SABR` (content = `serverAbrStreamingUrl`, `isUrl=false`). C'est ce que renvoie `getStreams()`. L'`ItagItem` de chaque flux porte l'init range et l'index range. Un flag temporaire `FORCE_SABR_FOR_TESTING` route toute vidéo non-live par SABR ; désactivé, SABR ne sert que pour les réponses SABR-only sans manifeste HLS.
-- **Le driver de session.** `YoutubeSabrProbe` + `YoutubeSabrSession` + compagnie forment un driver autonome qui *joue* réellement un flux SABR. C'est le client qui le construit et le pompe ; le job de l'extracteur est juste d'exposer que les flux existent et de fournir un `SabrPoTokenProvider`.
+1. Lire `streamingData`. Une réponse qui ne le contient pas est rejetée comme
+   une erreur de protocole SABR.
+2. Lire `serverAbrStreamingUrl`, `videoPlaybackUstreamerConfig`, les données
+   visiteur et `adaptiveFormats`.
+3. Rassembler les signatures et paramètres `n` des URLs de formats adaptatifs
+   et de l'endpoint SABR. S'il y en a, `YoutubeJavaScriptPlayerManager` effectue
+   une seule déobfuscation par lot, puis les valeurs résolues sont réinjectées
+   dans les URLs.
+4. Convertir les formats adaptatifs en `YoutubeSabrInfo.Format` et conserver le
+   jeton PO player optionnel si l'appelant en a fourni un.
 
-Le reste de cette section concerne le second chemin.
+`YoutubeSabrInfo` contient l'id de la vidéo, le CPN, la version client, les
+données visiteur, l'endpoint SABR résolu, la configuration ustreamer, le jeton
+PO optionnel et la liste de formats. Un format conserve son `ItagItem` parsé,
+son type MIME, ses métadonnées de codec, l'identité de sa piste audio, le flag
+DRC, l'URL/plage d'initialisation et la durée approximative. Cette classe
+n'expose volontairement ni état HTTP ni état de décodeur.
 
-## Le probe
+## Créer les requêtes
 
-`YoutubeSabrProbe` est une utility statique. `fetchSabrInfo(...)` construit un `YoutubeSabrInfo` :
+La session se crée ainsi :
 
-1. Générer un `cpn` (content-playback nonce).
-2. POST de la requête InnerTube `player` (`fetchPlayerResponse`) pour le `YoutubeSabrClientProfile` choisi.
-3. Lire `streamingData` ; throw `SabrProtocolException` si absent.
-4. Prendre `serverAbrStreamingUrl` et **déobfusquer son paramètre `n`** via le player JS (`maybeDeobfuscateNParameter`), en gérant les formes `?n=` et `/n/`.
-5. Extraire la **ustreamer config** (`playerConfig.mediaCommonConfig.mediaUstreamerRequestConfig.videoPlaybackUstreamerConfig`), un blob opaque renvoyé dans chaque requête.
-6. Extraire `visitorData` (override ou `responseContext.visitorData`).
-7. Construire les `YoutubeSabrFormat` à partir de `streamingData.adaptiveFormats`.
+```java
+YoutubeSabrSession session = new YoutubeSabrSession(info);
+```
 
-Le body de la requête player (`createPlayerBody`) est un appel InnerTube normal avec quelques pièces SABR : `playbackContext.contentPlaybackContext.signatureTimestamp` (du player JS), `cpn`, `videoId`, `contentCheckOk`, et, si dispo, un jeton PO *player* dans `serviceIntegrityDimensions.poToken` (distinct du jeton PO *média* utilisé ensuite).
+Un dossier de spool optionnel permet d'assembler sur disque les gros segments
+média non compressés. L'appelant crée les requêtes immuables avec
+`YoutubeSabrRequest` :
 
-### `YoutubeSabrInfo`
+```java
+YoutubeSabrRequest preparation = YoutubeSabrRequest.preparation(
+    playerTimeMs, preferredFormats);
+YoutubeSabrRequest playback = YoutubeSabrRequest.playback(
+    playerTimeMs, playbackRate, tracks);
+```
 
-Immuable, l'état racine de la session : `profile`, `videoId`, `cpn`, `clientVersion`, `visitorData`, `serverAbrStreamingUrl`, `videoPlaybackUstreamerConfig`, et la liste `formats`. Helpers de sélection : `findBestAudioFormat()` (débit max), `findBestVideoFormat()` (hauteur max), `findFormatByItag(itag)`. (Pas de champ durée, la durée est par-format via `approxDurationMs` ; pas de champ jeton PO, il vient du provider.)
+`preparation` demande les timelines de formats sans déclarer de pistes
+sélectionnées. `playback` déclare une piste audio, une piste vidéo, ou une seule
+des deux, et peut porter une `YoutubeSabrFormatTimeline` ainsi que le dernier
+numéro de segment bufferisé pour chaque piste. Une requête ne peut pas contenir
+deux pistes audio, deux pistes vidéo, ni le même itag à la fois en audio et en
+vidéo.
 
-## Les client profiles
+## Envoyer une requête
 
-`YoutubeSabrClientProfile` est l'identité InnerTube sous laquelle la requête part. Le serveur adapte formats, headers et comportement.
+`YoutubeSabrSession.requestOnce(request, consumer)` effectue au plus une
+transaction HTTP. Il renvoie le nombre de segments média terminés, le backoff
+du serveur et indique si l'appel a été différé parce qu'un backoff précédent est
+encore actif. La session n'incrémente le numéro de requête qu'après avoir lu la
+réponse. `YoutubeSabrRequestHelper` :
 
-| Profile | clientName | id | clientVersion | web-like |
-| --- | --- | --- | --- | --- |
-| `WEB` | WEB | 1 | 2.20250122.04.00 (résolu live) | non |
-| `WEB_EMBEDDED` | WEB_EMBEDDED_PLAYER | 56 | 1.20250121.00.00 | oui |
-| `ANDROID` | ANDROID | 3 | 21.03.36 | non |
-| `ANDROID_VR` | ANDROID_VR | 28 | 1.65.10 | non |
-| `IOS` | IOS | 5 | 19.45.4 | non |
-| `TVHTML5` | TVHTML5 | 7 | 7.20250923.13.00 | oui |
-| `SAFARI_WEB` | WEB | 1 | 2.20260114.08.00 | non* |
+- ajoute `alr=yes`, le `cpn` et le numéro de requête (commençant à zéro) à
+  l'endpoint SABR ;
+- encode la requête en `VideoPlaybackAbrRequest` ;
+- envoie le User-Agent et la localisation MWEB ;
+- exige une réponse `application/vnd.yt-ump` ;
+- lit les parts UMP en streaming via `SabrStreamingResponseReader`, afin de ne
+  pas garder tout le corps HTTP en mémoire pour les gros médias ;
+- renvoie un `YoutubeSabrResponse` avec les contrôles, les statistiques média et
+  les objets `SabrMediaSegment` terminés.
 
-Chaque profile porte aussi un nom/version d'OS et un User-Agent là où c'est pertinent. `WEB` résout sa version live (`YoutubeParsingHelper.getClientVersion()`), avec fallback sur la constante. `SAFARI_WEB` réutilise le nom/id `WEB` mais est traité comme web-like via des checks explicites `WEB || SAFARI_WEB`. Android/iOS passent par le host InnerTube gapis et ajoutent `X-Goog-Api-Format-Version: 2` ; les profils web-like ajoutent `Origin`/`Referer`/`X-YouTube-Client-*` et les cookies.
+Le consumer reçoit un segment dès qu'une part `MEDIA_END` le termine. Avec un
+dossier de spool, les gros segments peuvent être lus depuis un fichier, y
+compris progressivement pendant son écriture, via
+`SabrMediaSegment.openStream()`.
 
-## Poster une requête média
+## L'état conservé entre les requêtes
 
-`postMediaRequest` est le vrai POST SABR :
+`YoutubeSabrSession` ne conserve que l'état du protocole : numéro de requête,
+URL SABR courante après redirection, cookie de lecture, contextes SABR actifs,
+jeton PO, estimation de bande passante, métadonnées live et compteurs de
+diagnostic bornés. Une `NEXT_REQUEST_POLICY` peut mettre à jour le cookie et le
+backoff. Les mises à jour de contexte et la politique d'envoi déterminent quels
+contextes opaques seront renvoyés dans les requêtes suivantes.
 
-- URL = `withSabrSessionParameters(serverAbrStreamingUrl, cpn, requestNumber)`, qui garantit `alr=yes` et `cpn=...` et pose `rn=<requestNumber + 1>` (le `rn` de l'URL est 1-based).
-- Headers (`buildSabrHeaders`) : `Accept: application/vnd.yt-ump`, User-Agent du profile ; non-web ajoute `X-Goog-Visitor-Id` ; web-like bascule sur `Accept: */*` + `Origin`/`Referer` navigateur.
-- Le body est le protobuf `VideoPlaybackAbrRequest` (voir [La requête](./sabr-request)).
-- La réponse **doit** avoir `Content-Type: application/vnd.yt-ump`, sinon `SabrProtocolException`. Elle est décodée par `SabrResponseDecoder` en un `SabrDecodedResponse`, wrappé dans un `YoutubeSabrProbeResult` (info + decoded + code HTTP + longueur body + content type).
-
-## Les formats
-
-`YoutubeSabrFormat` est un format adaptatif : `itag`, `lastModified`, `xtags`, `mimeType` (le codec est dedans), `audioTrackId`, `qualityLabel`, `audioQuality`, `drc`, `width`, `height`, `bitrate`, `contentLength`, `approxDurationMs`. `isAudio()`/`isVideo()` testent le mime type. `fromAdaptiveFormats` parse le tableau JSON (les champs longs comme `contentLength` sont sérialisés en strings, donc `parseLong` est tolérant).
-
-Deux control parts envoyées par le serveur affinent la sélection au runtime : `SabrSelectableFormats` (les `FormatId` vidéo/audio que le serveur servira, y compris les variantes "wrapped") et `SabrFormatSelectionConfig` (les itags + une résolution que le serveur veut voir demandés).
-
-## Onesie
-
-Les parts "onesie" (`SabrOnesieHeader` / `SabrOnesieData` / `SabrOnesieInnertubeResponse`) permettent au serveur d'inliner une réponse player InnerTube entière (type `0 = ONESIE_PLAYER_RESPONSE`) ou du média/des clés dans le flux SABR, pour qu'un client puisse sauter un appel `player` séparé. Le décodeur ici les lit prudemment (clair, gzip-ou-brut, sans matériel de chiffrement) et surtout pour le diagnostic, mais c'est le mécanisme qui rend une réponse SABR auto-suffisante.
-
----
+La session valide les redirections avant de les accepter : elles doivent être en
+HTTPS et rester sur `googlevideo.com` ou un de ses sous-domaines. Une réponse
+contenant du média remet à zéro le compteur de redirections ; les médias
+malformés ou incomplets sont classés pour une récupération bornée.
 
 Suite : [La requête](./sabr-request).

@@ -1,82 +1,79 @@
-# Média, segments et l'index
+# Médias, segments et index
 
-Partie de [SABR dans l'extracteur](./sabr). Ici : comment des octets média éparpillés deviennent un segment jouable, et comment un temps de lecture se mappe à un numéro de segment.
+Partie de [SABR dans l'extracteur](./sabr). Une réponse SABR transporte les
+médias dans des parts UMP séparées. L'extracteur les corrèle avec un identifiant
+de header sur un octet, vérifie les longueurs, décompresse si nécessaire et
+expose des objets `SabrMediaSegment` terminés.
 
-## Les parts média
+## Parts média
 
-Le média arrive en trois types de part qui travaillent ensemble, corrélés par un **header id** d'un octet :
+- **`MEDIA_HEADER` (20)** porte un `SabrMediaHeader` et ouvre un segment ;
+- **`MEDIA` (21)** commence par l'octet d'id du header, puis ses octets sont
+  ajoutés au segment ;
+- **`MEDIA_END` (22)** commence par l'id du header et ferme le segment.
 
-- **MEDIA_HEADER (20)** porte un `SabrMediaHeader` et un `headerId`. Il ouvre un buffer.
-- **MEDIA (21)** : les payloads commencent par cet octet `headerId` ; le reste est ajouté au buffer correspondant.
-- **MEDIA_END (22)** : le premier octet du payload est le `headerId` ; il finalise le buffer en un segment.
-
-Comme le routage se fait par id, **audio et vidéo s'entrelacent librement** dans une même réponse, chaque id accumule indépendamment.
+Audio et vidéo peuvent être entrelacés librement : chaque header ouvert possède
+son propre accumulateur.
 
 ### `SabrMediaHeader`
 
-Décodé depuis le payload MEDIA_HEADER (numéros de champs proto) :
+Le décodeur actuel lit ces champs :
 
 | # | Champ |
-| --- | --- |
-| 1 | `headerId` (corrèle MEDIA/MEDIA_END) |
-| 3 | `itag` |
-| 4 | `lastModified` |
-| 6 | `startRange` (offset octet) |
-| 7 | `compressionAlgorithm` (0 aucun, 1 gzip, 2 brotli) |
-| 8 | `isInitSegment` |
-| 9 | `sequenceNumber` |
-| 11 / 12 | `startMs` / `durationMs` |
-| 13 | `FormatId` imbriqué (fallback pour itag/lastModified/xtags) |
-| 14 | `contentLength` (longueur d'octets attendue sur le fil) |
-| 15 | `TimeRange` imbriqué (`startTicks`, `durationTicks`, `timescale`) |
+| ---: | --- |
+| 1 | id du header |
+| 2 | id de la vidéo |
+| 3–5 | itag, last-modified, xtags |
+| 6 | offset de départ |
+| 7 | compression (`0` aucune, `1` gzip, `2` brotli) |
+| 8 | flag de segment d'initialisation |
+| 9 | numéro de séquence |
+| 10 | débit en bits par seconde |
+| 11–12 | début et durée en millisecondes |
+| 13 | `FormatId` imbriqué de secours |
+| 14 | longueur attendue sur le wire |
+| 15 | time range imbriquée (ticks et timescale) |
+| 16 | last-modified de la séquence |
 
-Si `startMs`/`durationMs` sont absents mais qu'un `TimeRange` est présent, ils sont dérivés : `ms = ticks · 1000 / timescale`.
+Si les valeurs en millisecondes manquent mais que la time range possède une
+timescale positive, le décodeur les calcule avec `ticks * 1000 / timescale`.
 
-## Le collector
+## Assemblage et décompression
 
-`SabrMediaSegmentCollector.collect(response)` rejoue les parts dans l'ordre, en gardant une `Map<headerId, OpenSegment>` :
+`SabrMediaSegmentCollector.collect(response)` rejoue une réponse déjà en
+mémoire. Le chemin streaming utilise `Incremental`, qui reçoit les parts au fil
+de l'eau et émet un segment dans `onMediaEnd`. Le média d'un header inconnu ou
+déjà fermé est jeté ; un header sans `MEDIA_END` n'est pas émis.
 
-- MEDIA_HEADER → `openSegments.put(id, new OpenSegment(header))`.
-- MEDIA → ajoute les octets (offset 1..fin) au segment ouvert pour cet id ; **les octets d'un id inconnu/fermé sont silencieusement jetés**.
-- MEDIA_END → retire l'id, finalise, et émet, dans l'ordre de fermeture.
+Avant décompression, le collector compare `contentLength` au nombre d'octets
+reçus sur le wire. Il applique ensuite gzip ou brotli selon le header. Les
+algorithmes inconnus, dépassements, payloads tronqués et échecs de décompression
+sont signalés comme erreurs de protocole ou récupérables.
 
-Cas limites : un header qui n'obtient jamais de MEDIA_END **reste ouvert et n'est jamais émis** (il ressort en `missing-media-end` dans le contrôle d'intégrité, pas en segment partiel). Le média orphelin (sans header) est jeté.
+`SabrMediaSegment` peut garder les octets décompressés en mémoire ou utiliser un
+fichier de spool. Pour les gros segments non compressés, le collector incrémental
+peut fournir un segment progressif adossé à un fichier ; il faut alors utiliser
+`openStream()` plutôt que recopier le contenu avec `getData()`.
 
-**Length check, puis décompression.** À la finalisation, si `contentLength >= 0` et que le compte d'octets accumulé diffère, ça throw `SabrProtocolException` (length mismatch). Ce contrôle tourne sur les octets **compressés**, `contentLength` est la longueur sur le fil. Ensuite `maybeDecompress` applique gzip (`GZIPInputStream`) ou brotli (`BrotliInputStream`) selon `compressionAlgorithm` ; tout autre que 0/1/2 throw.
+## Initialisation et timelines
 
-`SabrMediaSegment` tient le header et les octets (décompressés). Délibérément, le tableau d'octets **n'est pas** cloné défensivement à la construction ni dans `getData()`, cloner des segments 4K de plusieurs Mo doublait le pic mémoire et causait des OOM lors de changements rapides de format, donc le tableau est immuable par contrat.
+`FORMAT_INITIALIZATION_METADATA` (part 42) décrit les plages d'initialisation et
+d'index d'un format. Le client récupère la plage d'initialisation avec
+`YoutubeSabrRequestHelper.fetchInitializationData(...)`, puis parse les octets
+avec `YoutubeSabrFormatTimeline.parse(...)` :
 
-`find(response, request)` lance `collect` puis renvoie le premier segment dont le header matche la requête. `SabrSegmentRequest.matches` se base sur **(itag, flag init, numéro de séquence)**, ce qui est distinct du header-id interne utilisé pour le stitching d'octets.
+- `SabrMp4SegmentIndexParser` lit une boîte ISO-BMFF `sidx` et convertit chaque
+  durée de sous-segment en millisecondes ;
+- `SabrWebmSegmentIndexParser` lit les `Cues` Matroska/EBML et déduit la durée
+  de chaque segment depuis le cue suivant ou la durée du format.
 
-## L'index de segments
+`SabrSegmentIndex` est une liste 1-based d'entrées avec numéro de séquence,
+début, durée et fin calculée. `YoutubeSabrFormatTimeline` associe une séquence à
+sa plage temporelle et un temps demandé au premier segment dont la fin le
+dépasse.
 
-Pour seeker, l'extracteur doit mapper un temps à un numéro de séquence. L'index du conteneur du segment init donne le timing exact par-segment. `SabrFormatInitializationMetadata` (part type 42) fournit le nécessaire : `endSegmentNumber` (total segments), `mimeType` (sélectionne le parser), `initRange`, `indexRange`, et `durationUnits`/`durationTimescale`.
+L'extracteur actuel ne contient plus les anciennes classes `SabrSegmentRequest`
+ou `YoutubeSabrStreamState`. La sélection des segments et la politique de plage
+bufferisée appartiennent à l'appelant qui construit `YoutubeSabrRequest`.
 
-### MP4 : `SabrMp4SegmentIndexParser`
-
-Parse la box ISO-BMFF **`sidx`** dans l'index range :
-
-1. Cherche la box `"sidx"` dans `[indexRangeStart, indexRangeEnd]`.
-2. Lit la version FullBox (0 ou 1), saute les flags, saute le reference id.
-3. Lit `timescale` (doit être > 0).
-4. Lit `earliest_presentation_time` (32-bit en v0, 64-bit en v1).
-5. Boucle `referenceCount` fois, chaque référence de 12 octets : prend `subsegment_duration` ; accumule le start courant ; émet `Entry(seq=i+1, startMs, durationMs)` avec `ms = ticks · 1000 / timescale` (arrondi). Les références sidx imbriquées throw (non supporté).
-
-Note : seul le **temps** est dérivé. La taille référencée 31-bit est lue mais jetée, aucun offset d'octet par-segment n'est produit ici.
-
-### WebM : `SabrWebmSegmentIndexParser`
-
-Parse Matroska/EBML : trouve `Segment`, lit `TimecodeScale` (ns/tick, défaut 1 000 000) depuis `Info`, puis parcourt `Cues` → `CuePoint` → `CueTime` dans l'index range. Chaque cue time devient un start de segment (scalé en ms) ; chaque durée est l'écart au cue suivant (ou la durée totale / une extrapolation pour le dernier). `CueTrackPositions` (offsets d'octets) est ignoré, là encore, temps uniquement.
-
-### Lookup
-
-`SabrSegmentIndex` est une liste 1-based d'`Entry(sequenceNumber, startMs, durationMs)` avec `getEndMs()`. Le lookup temps→séquence vit dans le `FormatProgress` par-track de `YoutubeSabrStreamState` :
-
-- `getSegmentStartMs(seq)` / `getSegmentEndMs(seq)` — entrée d'index si présente, sinon arithmétique sur `averageDurationMs`.
-- `getSegmentNumberAtOrAfterTimeMs(timeMs)` — scan linéaire de la première entrée dont `endMs >= timeMs` ; sans index, `ceil(timeMs / averageDurationMs)`.
-
-Ce fallback (`averageDurationMs`, dérivé de durée totale / nombre de segments) est pourquoi le seek marche encore approximativement même avant qu'un segment init ait été parsé.
-
----
-
-Suite : [Le modèle buffered et le seek](./sabr-buffered).
+Suite : [Le driver de session](./sabr-session).
