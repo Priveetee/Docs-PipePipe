@@ -49,4 +49,7 @@ enum DeliveryMethod { PROGRESSIVE_HTTP, DASH, HLS, SS, TORRENT, SABR }
 
 For every delivery method except SABR, the player ends up with either a URL or a manifest, and ExoPlayer takes it from there. SABR is the exception. A SABR stream is not something you download once; it is a conversation you maintain, request, UMP response, segments, follow-up request, with attestation gating the protected media.
 
-The extractor's job stops at marking the stream `SABR` and handing over the pieces a session needs. Driving that session is a topic of its own: the whole [SABR Guide](/developer-guide/introduction).
+The extractor exposes the `SABR` stream metadata and also provides the
+`YoutubeSabrSession` driver used to turn requests into completed segments. The
+application still owns the Media3 bridge, buffering policy and token provider;
+the complete protocol explanation is in the [SABR Guide](/developer-guide/introduction).

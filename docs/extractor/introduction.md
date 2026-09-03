@@ -6,6 +6,14 @@ PipePipe never talks to YouTube, BiliBili or SoundCloud directly. Service access
 
 It started as a fork of NewPipe's extractor, and the package path (`org.schabi.newpipe.extractor`) still shows it. That is worth stating once and then setting aside: the two codebases have diverged heavily. Services, abstractions, parsing, and behavior differ enough that NewPipe's documentation, issues, and patches rarely map cleanly onto PipePipe. Treat this as its own codebase, not a NewPipe mirror.
 
+::: info Current source snapshot
+This overview was checked against PipePipeExtractor `main` and PipePipeClient
+`dev` on 2026-09-03. The latest PipePipe release checked is **5.3.0**, with
+**5.3.1-beta** as the current prerelease. YouTube's current extraction path is
+covered in [Inside YouTube](./youtube-service), and the SABR implementation has
+its own section below.
+:::
+
 The module is self-contained. It builds and tests on its own, without the Android app around it, against a small `Downloader` abstraction the host supplies.
 
 Services covered today: YouTube, BiliBili, NicoNico, SoundCloud, Bandcamp, PeerTube, and media.ccc.de. Each is a separate implementation of one shared set of interfaces. That is the design: the rest of the code is written against the abstractions, never against a specific site. "Get the streams of this video" is the same call whether the backend is YouTube or SoundCloud; the per-service mess stays behind the interface.

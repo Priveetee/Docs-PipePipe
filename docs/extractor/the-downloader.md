@@ -49,7 +49,7 @@ public interface AsyncCallback {
 }
 ```
 
-`CancellableCall` wraps the underlying call with `cancel()`, `isCancelled()`, `isFinished()`. This is how `onFetchPage` launches web + android-VR/safari + next concurrently and stitches the results back together (see [Extraction flow](./extraction-flow)).
+`CancellableCall` wraps the underlying call with `cancel()`, `isCancelled()`, `isFinished()`. This is how `onFetchPage` launches the web player, the selected app player, and `next` concurrently, then waits for the required calls before exposing the extractor (see [Extraction flow](./extraction-flow)).
 
 ## Who provides it
 

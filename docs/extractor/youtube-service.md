@@ -6,17 +6,32 @@ YouTube is the largest and most volatile service, and the one most likely to sen
 
 ## InnerTube clients
 
-There is no public YouTube API here. The extractor speaks **InnerTube**, YouTube's own internal RPC, by impersonating official clients. Each client is a context block (name, version, platform, device) plus an endpoint. `YoutubeParsingHelper` builds them:
+There is no public YouTube API here. The extractor speaks **InnerTube**, YouTube's
+own internal RPC, by sending the context expected by an official client. A
+context contains a client name/version, platform or device details, locale, and
+the endpoint being called.
+
+The current player paths are selected in `YoutubeStreamExtractor`:
 
 ```java
-prepareDesktopJsonBuilder(...)       // WEB
-prepareAndroidVRJsonBuilder(...)     // ANDROID_VR (Oculus Quest)
-prepareIosMobileJsonBuilder(...)     // IOS
-prepareTvHtml5EmbedJsonBuilder(...)  // TVHTML5 embedded
-prepareSafariJsonBuilder(...)        // WEB with a Safari user agent
+fetchVisionOsJsonPlayer(...)       // anonymous VisionOS path
+fetchMwebJsonPlayer(...)           // MWEB player response; SABR for ordinary VOD
+fetchWebJsonPlayer(...)            // WEB response used by internal paths
+fetchConfiguredJsonPlayer(...)     // TVHTML5 fallbacks used internally
 ```
 
-Client ids and versions live in `ClientsConstants`. Requests POST to `youtubei/v1/<endpoint>` (`player`, `next`, `browse`, `search`) through `getJsonPostResponse` and its android/ios variants. Different clients expose different stream sets and trip different walls, so a single fetch often queries several and merges them, the parallel `CancellableCall` fan-out from [Extraction flow](./extraction-flow).
+The Android app currently exposes **VisionOS** and **MWEB (SABR)** while signed
+out, and keeps signed-in sessions on **MWEB (SABR)**. The old Android VR picker
+option is no longer part of the current client. `web`, `tv_simply`, and
+`tv_downgraded` remain implementation/fallback names rather than user-facing
+choices; the TV downgraded path also has special live/HLS handling.
+
+Client ids and versions live in `ClientsConstants` and the request helpers.
+Requests POST to `youtubei/v1/<endpoint>` (`player`, `next`, `browse`, `search`)
+through the corresponding JSON helpers. Different clients expose different
+stream sets and trip different walls, so a single fetch often queries several
+responses and merges them, using the parallel `CancellableCall` fan-out from
+[Extraction flow](./extraction-flow).
 
 ## Signatures and the `n` parameter
 
@@ -47,4 +62,12 @@ Some YouTube formats do not arrive as a ready manifest, so the `dashmanifestcrea
 
 ## SABR
 
-The newest delivery path is **SABR**, YouTube's session protocol, and it has its own package (`services/youtube/sabr`, dozens of classes: `YoutubeSabrSession`, `YoutubeSabrStreamState`, `YoutubeSabrRequestBuilder`, `SabrResponseDecoder`, `UmpReader`, ...). The stream extractor surfaces SABR formats; driving the session is a topic of its own. The dedicated [SABR Guide](/developer-guide/introduction) covers that protocol end to end.
+The newest delivery path is **SABR**, YouTube's session protocol, and it has its
+own package (`services/youtube/sabr`, including `YoutubeSabrSession`,
+`YoutubeSabrRequest`, `YoutubeSabrRequestHelper`, `YoutubeSabrResponse`,
+`SabrResponseDecoder`, and `UmpReader`). In the current extractor, MWEB uses the
+SABR stream builder for ordinary non-live videos when the player response
+contains SABR data; live and post-live paths can use HLS or other direct formats.
+The stream extractor exposes SABR formats and the session driver returns
+completed media segments. The dedicated [SABR Guide](/developer-guide/introduction)
+covers that protocol end to end.
