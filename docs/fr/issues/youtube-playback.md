@@ -1,5 +1,12 @@
 # Lecture YouTube, réseau et connexion
 
+Les chemins d'extraction YouTube de PipePipe évoluent lorsque YouTube modifie
+ses requêtes. Cette page a été vérifiée avec le code actuel de la série 5.3.x et
+les [dernières versions stable et préversion](https://github.com/InfinityLoop1308/PipePipe/releases).
+Si une issue demande une préversion précise, testez exactement cette version et
+indiquez-la dans le rapport ; ne présentez pas une ancienne bêta comme le
+comportement actuel.
+
 ## Toutes les vidéos YouTube échouent : vérifiez le filtrage DNS
 
 Si toutes les vidéos YouTube publiques échouent presque immédiatement, consultez
@@ -157,7 +164,52 @@ Utilisez la même vidéo publique à chaque essai. Notez pays/sortie réseau et 
 
 Ces messages n'identifient pas une cause unique. Mettez PipePipe à jour, joignez le rapport d'erreur généré et indiquez l'URL, l'endpoint, l'état de connexion, le pays et l'état VPN/proxy. Précisez si l'échec arrive au démarrage, après une durée fixe, au changement de qualité, au retour dans l'app ou après un seek.
 
-Web et MWeb utilisent SABR pour la lecture YouTube anonyme. Essayer un autre endpoint peut être une étape de diagnostic temporaire ; cela ne prouve pas que l'endpoint initial ou WebView est responsable.
+Pour les vidéos YouTube ordinaires qui ne sont pas des directs, **MWEB (SABR)**
+est actuellement le chemin de lecture basé sur une session lorsque la réponse
+MWEB expose les données SABR. **VisionOS** est un autre chemin d'extraction
+anonyme. Essayer un autre endpoint peut être une étape de diagnostic temporaire ;
+cela ne prouve pas que l'endpoint initial ou WebView est responsable.
+
+### Une seule vidéo (ou quelques-unes) échoue alors que les autres fonctionnent
+
+C'est un point de départ différent de « toutes les vidéos échouent ». Relancez
+d'abord la même URL publique après avoir mis PipePipe à jour, puis notez le
+résultat. Si le reste de YouTube fonctionne, ne commencez pas par réinstaller
+WebView ou modifier le DNS.
+
+1. Vérifiez si le contenu est un direct, un Short, une vidéo limitée par l'âge,
+   réservée aux membres ou indisponible dans un navigateur normal. Notez-le dans
+   le rapport.
+2. Ouvrez **Paramètres → Avancé → Point de terminaison d'extraction YouTube** et
+   notez la valeur sélectionnée. Dans les versions 5.3.x actuelles, un compte
+   déconnecté peut choisir **VisionOS** ou **MWEB (SABR)** ; un compte connecté
+   reste sur **MWEB (SABR)**. **Android VR** appartient à une ancienne version et
+   n'est plus proposé dans le sélecteur actuel.
+3. Relancez la même URL une fois sans changer qualité, codec, réseau ou état de
+   connexion.
+4. Si l'échec reste présent, ne changez qu'une variable puis retestez la même
+   URL. La comparaison utile est « même vidéo, un seul changement », pas une
+   liste de réglages modifiés en même temps.
+5. Joignez le rapport généré et précisez si les autres vidéos publiques
+   fonctionnent encore.
+
+Un échec isolé peut venir de la réponse renvoyée pour cette vidéo ou d'un format
+que l'appareil ne sait pas décoder. Il ne prouve pas à lui seul que PipePipe,
+WebView ou tout le réseau est cassé. Si le rapport contient `video/av01`,
+`MediaCodec` ou un nom de décodeur, consultez séparément le [guide
+MediaCodec](./android).
+
+::: info Choix d'endpoint actuels
+
+| État du compte | Choix affichés dans les versions 5.3.x actuelles | Défaut |
+| --- | --- | --- |
+| Déconnecté | VisionOS, MWEB (SABR) | VisionOS |
+| Connecté | MWEB (SABR) | MWEB (SABR) |
+| Anciennes captures/issues | Android VR peut apparaître | Ce n'est plus un choix actuel |
+
+Les libellés et les défauts peuvent encore changer après une modification de
+YouTube. Signalez toujours ce que la version installée affiche réellement.
+:::
 
 ### Test de lecture contrôlé
 
@@ -179,7 +231,7 @@ Ne publiez ni cookies, ni jetons, ni e-mail de compte, ni capture du flux de con
 
 Un endpoint choisit un chemin de requête/extraction. Il peut faire apparaître ou disparaître un symptôme et doit être noté, mais un endpoint qui réussit une fois ne prouve pas que tous les autres sont cassés. Donnez l'endpoint par défaut, ceux testés et le résultat pour la même URL. Gardez les essais d'endpoint hors d'une issue WebView sauf si le message WebView exact est aussi présent.
 
-<div class="screenshot-callout" role="img" aria-label="Sélecteur d'endpoint YouTube avec MWEB et Android VR surlignés">
+<div class="screenshot-callout" role="img" aria-label="Ancien sélecteur d'endpoint YouTube avec MWEB et Android VR surlignés">
   <img src="/screenshots/pipepipe-endpoint-picker-5.2.3-api36.png" alt="Sélecteur d'endpoint d'extraction YouTube">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="70" y="995" width="940" height="125" rx="24" />
@@ -189,11 +241,27 @@ Un endpoint choisit un chemin de requête/extraction. Il peut faire apparaître 
   </svg>
 </div>
 
+*Capture historique : PipePipe 5.2.3 sur Android 16/API 36. Elle montre un
+endpoint qui n'est plus proposé dans les versions 5.3.x actuelles ; utilisez le
+tableau ci-dessus pour les choix actuels.*
+
+![Sélecteur d'endpoint YouTube actuel, PipePipe 5.3.1-beta sur Android 16](/screenshots/pipepipe-endpoint-picker-5.3.1-beta-api36.png)
+
+*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. Hors connexion,
+les choix affichés sont VisionOS et MWEB (SABR) ; l'option sélectionnée est
+visible dans la fenêtre.*
+
 L'issue résolue [#2686](https://github.com/InfinityLoop1308/PipePipe/issues/2686)
-est un exemple concret : pour un blocage IP signalé, le mainteneur a demandé si
-**Android VR (DASH)** était choisi et conseillé de tester PipePipe 5.2.3 avec
-**MWEB (SABR)**. Dans la capture, **1** est MWEB et **2** Android VR. C'est une comparaison contrôlée, pas la promesse que MWEB
-résout chaque problème de réseau ou de compte.
+est un exemple historique de comparaison d'endpoints : le mainteneur a demandé
+si **Android VR (DASH)** était choisi et conseillé de tester **MWEB (SABR)**.
+Dans la capture, **1** est MWEB et **2** Android VR. C'est un élément historique,
+pas une instruction actuelle ni la promesse que MWEB résout chaque problème de
+réseau ou de compte.
+
+Les issues récentes montrent pourquoi il faut préciser l'étape concernée. Dans
+[#2901](https://github.com/InfinityLoop1308/PipePipe/issues/2901), la lecture
+s'arrêtait après la mise en veille du téléphone et le rapport contenait une
+destination `UnknownHost`. Dans [#2905](https://github.com/InfinityLoop1308/PipePipe/issues/2905), la lecture fonctionnait mais un téléchargement SABR échouait avec un VPN. Ce sont deux rapports « YouTube/SABR », mais ils ne demandent pas les mêmes éléments et ne doivent pas être réduits à un diagnostic WebView ou DNS générique.
 
 ## Rapport minimal de lecture
 
@@ -203,6 +271,7 @@ Version PipePipe / Android :
 Endpoint avant et pendant l'échec :
 Connecté ou déconnecté :
 Pays réseau / VPN ou proxy :
+Type de vidéo et qualité/codec choisi, si affiché :
 DNS privé / bloqueur / pare-feu et domaine bloqué, le cas échéant :
 Moment de l'échec (début / temps / seek / qualité / retour app) :
 Message visible et rapport généré :
