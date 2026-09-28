@@ -12,7 +12,7 @@ device reset, migration, or a risky test build.
 4. Copy the resulting file to storage outside the device if the backup matters.
 
 <div class="screenshot-callout" role="img" aria-label="PipePipe Backup screen with Import database and Export database highlighted">
-  <img src="/screenshots/pipepipe-backup-5.3.1-beta-api36.png" alt="PipePipe Backup settings, 5.3.1-beta on Android 16">
+  <img src="/screenshots/pipepipe-backup-5.3.1-beta-api36.png" alt="PipePipe Backup settings on Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="300" width="1030" height="225" rx="28" />
     <circle class="callout-number" cx="990" cy="330" r="42" /><text x="990" y="330">1</text>
@@ -21,7 +21,7 @@ device reset, migration, or a risky test build.
   </svg>
 </div>
 
-*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. **1** imports and can replace local data; **2** creates the recovery export first.*
+*Reference capture: Android 16/API 36. **1** imports and can replace local data; **2** creates the recovery export first.*
 
 ::: warning A backup can contain personal viewing data
 Treat the export like any other private archive. Do not attach it to a public

@@ -2,11 +2,10 @@
 
 Cette section contrôle le comportement général de l'application, comme ce qui se passe lorsque vous ouvrez un contenu ou changez d'application.
 
-::: info Emplacement actuel
-Dans les versions 5.3.x actuelles, les contrôles documentés ici se trouvent dans
-**Paramètres → Lecteur**. Le regroupement peut évoluer dans une version
-ultérieure ; utilisez la recherche des réglages si un libellé n'est plus à
-l'endroit indiqué.
+::: info Où trouver ces réglages
+Ces réglages se trouvent généralement dans **Paramètres → Lecteur**. Leur
+regroupement peut changer ; utilisez la recherche des réglages si un libellé
+n'est pas à l'endroit indiqué.
 :::
 
 ### Action préférée 'ouvrir'
@@ -18,9 +17,9 @@ Définit l'action utilisée **lorsque PipePipe reçoit un lien vidéo depuis une
 
 Si l'option semble ignorée, testez avec un lien partagé depuis une autre application et indiquez laquelle. Un appui ordinaire dans PipePipe n'est pas un échec de ce réglage : il est hors de son périmètre.
 
-![Réglages Lecteur de PipePipe, 5.3.1-beta sur Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
+![Réglages Lecteur de PipePipe sur Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. Vos valeurs et l'apparence Android peuvent différer.*
+*Capture de référence : Android 16/API 36. Vos réglages et l'apparence Android peuvent différer.*
 
 ::: tip Ma Préférence
 Je règle ceci sur **Lecteur vidéo** pour commencer immédiatement à regarder le contenu sans étapes supplémentaires.
@@ -50,6 +49,16 @@ Ce réglage concerne seulement la sortie du lecteur principal vers une autre app
 Évite le mini-lecteur et ouvre les vidéos directement en mode plein écran. Vous pouvez toujours accéder au mini-lecteur en balayant vers le bas pour quitter le plein écran.
 
 - **Défaut :** Désactivé
+
+### Glisser vers le bas pour réduire le lecteur
+
+**Chemin :** **Paramètres → Lecteur → Paramètres des gestes → Glisser vers le bas pour réduire**
+
+Choisissez si un glissement vers le bas réduit la vidéo dans le mini-lecteur :
+désactivez le geste, gardez-le hors plein écran, ou utilisez-le aussi en plein
+écran. En plein écran, ce geste prend la place des glissements qui changent le
+mode plein écran ou la vitesse de lecture. Gardez **Hors plein écran uniquement**
+si vous voulez conserver ces deux autres gestes.
 
 ### Lecture automatique
 

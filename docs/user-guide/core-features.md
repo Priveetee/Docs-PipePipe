@@ -1,36 +1,50 @@
-# Core Features
+# What you can do with PipePipe
 
-PipePipe is an open-source Android client that allows you to browse YouTube, NicoNico, and BiliBili without advertisements or tracking.
+PipePipe brings several video and audio services into one Android app. What you
+can watch or download depends on the service and on what it currently makes
+available.
 
-## Privacy and Anonymity
-The application is designed to function without a Google account.
-*   **No Data Collection:** No personal data is collected or sent to third-party servers.
-*   **Local Subscriptions:** Your subscriptions and history are stored exclusively on your device.
-*   **Open Source:** The entire source code is available for audit and contribution.
+## Privacy, in plain terms
 
-## Multi-Platform Support
-Unlike the original NewPipe, PipePipe integrates several services into a single interface:
-*   **YouTube:** Video, shorts, and livestreams.
-*   **NicoNico & BiliBili:** Full support for these platforms, including specific features like Danmaku.
+You do not need a PipePipe account, and PipePipe does not sync your library to a
+PipePipe cloud. Subscriptions, history, local playlists, and settings are kept
+on your device.
 
-## Playback Capabilities
-*   **Background Play:** Audio continues to play when the screen is off or when using other apps.
-*   **Popup Mode:** Videos can be played in a floating window (Picture-in-Picture).
-*   **Codecs:** Support for AV1 and VP9 for better quality at lower bitrates.
-*   **Danmaku:** Scrolling overlay for live chat comments on supported platforms.
+That does not make network use anonymous: when you search, open, or play content,
+PipePipe has to contact the service you chose. That service can see the requests
+coming from your connection. Optional sign-in and features such as WebView-based
+playback also involve their own requests. See [WebView and protected
+playback](/issues/webview) for what that means for YouTube.
 
-## Content Modifications
-PipePipe includes several integrated modules to modify the viewing experience:
-*   **SponsorBlock:** Automatically skips segments like intros, outros, and non-content reminders.
-*   **YouTube Dislikes:** Restores the visibility of the dislike count.
-*   **Title Localization:** Option to show original video titles instead of forced translations.
+## Services
 
-## Filtering and Organization
-*   **Content Filters:** Ability to hide YouTube Shorts, paid content, or videos containing specific keywords.
-*   **Subscription Groups:** Organize your feed by creating local categories for your subscriptions.
-*   **Local Playlists:** Create and manage an unlimited number of offline playlists.
+The app currently includes YouTube, NicoNico, BiliBili, SoundCloud, Bandcamp,
+PeerTube, and media.ccc.de. YouTube supports videos, Shorts, and live streams;
+NicoNico and BiliBili also have service-specific live and comment features.
+Menus and features are not identical across services, and a change on one site
+can affect that service without breaking the others.
 
-## Media Downloads
-*   **Format Selection:** Download streams in video or audio formats (MPEG-4, WebM, M4A, Opus).
-*   **Batch Processing:** Support for downloading entire playlists or channel content.
-*   **Storage Management:** Custom download paths, including SD card support.
+## Watching and listening
+
+- Keep audio playing in the background or watch in a floating popup window.
+- Pick a quality for supported live streams when the service offers more than
+  one. See [Player settings](./settings-player) for the live quality control.
+- Available video formats depend on the service and your device. Enabling AV1,
+  VP9, or another advanced format does not guarantee that Android can decode it;
+  the [player settings guide](./settings-player) explains what to try if video
+  stutters or fails.
+- Show scrolling live comments (danmaku) on services that provide them.
+
+## Make the app yours
+
+- Use SponsorBlock to skip submitted segments such as sponsor messages.
+- Choose whether YouTube titles should use the original title or a translation.
+- Hide Shorts, paid items, or videos that match your content filters.
+- Sort subscriptions into local groups and build local playlists.
+
+## Downloads and your library
+
+Download available audio or video formats, choose a storage location, and save
+playlists or channel content where the service supports it. Download controls
+and available formats can differ from ordinary playback; see the
+[downloads guide](/issues/downloads) if a download fails.

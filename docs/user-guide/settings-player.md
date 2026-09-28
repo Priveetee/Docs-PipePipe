@@ -2,9 +2,9 @@
 
 This section covers all settings related to the video and audio player.
 
-![PipePipe Player settings, 5.3.1-beta on Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
+![PipePipe Player settings on Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. Settings and their order can change between releases.*
+*Reference capture: Android 16/API 36. Settings and their order can change; use Settings search if yours differ.*
 
 ## Default resolution
 
@@ -27,6 +27,13 @@ Sets the preferred video quality for videos played in the popup player.
 ::: info
 A lower resolution is often sufficient for the small popup window and consumes fewer resources.
 :::
+
+## Quality during a live stream
+
+Some live streams offer several video qualities. While one is playing, tap the
+quality control and choose a resolution, or choose **Auto** to let PipePipe
+adapt. The control appears only when the stream provides multiple choices. It
+does not change the default resolution for ordinary videos.
 
 ## Enable advanced formats
 

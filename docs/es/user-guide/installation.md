@@ -1,23 +1,24 @@
 # Instalación y actualizaciones
 
-PipePipe se distribuye fuera de Google Play. Elige una fuente de actualización fiable y mantenla para poder identificar con precisión la versión instalada al informar de un problema.
+PipePipe se distribuye fuera de Google Play. Elige una fuente de actualización fiable y úsala siempre, porque cada fuente puede publicar las releases en momentos distintos.
 
 ## Requisitos del sistema
 
-La aplicación actual requiere **Android 6.0 (API 23) o posterior**. Los APK de publicación existen para `arm64-v8a`, `armeabi-v7a`, `x86_64` y `x86`; usa el APK universal si no conoces el ABI del dispositivo.
+PipePipe requiere **Android 6.0 (API 23) o posterior**. Las releases pueden ofrecer APK distintos para `arm64-v8a`, `armeabi-v7a`, `x86_64` y `x86`. La mayoría de los teléfonos usan `arm64-v8a`; `armeabi-v7a` es para dispositivos ARM de 32 bits y las versiones x86 se usan sobre todo en emuladores Android. Elige el APK que corresponda al ABI de tu dispositivo; no siempre hay un APK universal.
 
 Ese es el mínimo para instalar el APK, no una garantía de que la WebView incluida en una ROM antigua aún pueda reproducir los flujos actuales de YouTube. La reproducción protegida también necesita un proveedor WebView activo y compatible. Consulta [WebView y la reproducción de YouTube](/es/issues/webview), incluidos los resultados de Android 6, 7 y 8 sin servicios de Google.
 
 ## Elegir una fuente de actualización
 
-Cuando se comprobó esta página, GitHub mostraba **5.3.0** como última versión
-estable y **5.3.1-beta** como última preversión. Esos números son una instantánea:
-abre siempre la página de releases antes de instalar, porque puede haber
-cambiado.
+Consulta [GitHub Releases](https://github.com/InfinityLoop1308/PipePipe/releases)
+para comparar versiones estables y preliminares y leer las notas de cada release.
+Una versión preliminar no siempre es más reciente que la versión estable
+instalada. Para el uso diario, usa una estable salvo que estés probando un
+cambio concreto.
 
 ### Ajustes de actualización de PipePipe
 
-PipePipe incluye sus propios ajustes de actualización. Permiten comprobar actualizaciones manualmente y, si lo activas, mostrar versiones preliminares. Prefiere las versiones estables salvo que estés probando una corrección y puedas informar regresiones con logs.
+PipePipe tiene ajustes de actualización en **Ajustes → Actualizaciones**. Puedes buscar actualizaciones manualmente y activar los avisos de preversiones. La app te avisa cuando hay una versión disponible, pero no instala el APK por su cuenta. Usa versiones estables salvo que estés probando una corrección concreta y puedas contar qué ha pasado.
 
 ### GitHub Releases
 

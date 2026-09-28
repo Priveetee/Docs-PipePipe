@@ -1,23 +1,24 @@
 # Installation et mises à jour
 
-PipePipe est distribué hors de Google Play. Choisissez une source de mise à jour fiable et gardez-la cohérente afin de pouvoir identifier précisément la version installée lors d'un rapport.
+PipePipe est distribué hors de Google Play. Choisissez une source de mise à jour fiable et gardez-la, car les releases peuvent y apparaître à des moments différents.
 
 ## Prérequis système
 
-L'application actuelle nécessite **Android 6.0 (API 23) ou plus récent**. Les APK de publication existent pour `arm64-v8a`, `armeabi-v7a`, `x86_64` et `x86` ; utilisez l'APK universel si vous ne connaissez pas l'ABI de l'appareil.
+PipePipe nécessite **Android 6.0 (API 23) ou plus récent**. Les releases peuvent fournir des APK distincts pour `arm64-v8a`, `armeabi-v7a`, `x86_64` et `x86`. La plupart des téléphones utilisent `arm64-v8a` ; `armeabi-v7a` est destiné aux appareils ARM 32 bits et les versions x86 servent surtout aux émulateurs Android. Choisissez l'APK qui correspond à l'ABI de votre appareil ; un APK compatible avec tous les appareils n'est pas toujours proposé.
 
 Il s'agit du minimum pour installer l'APK, pas de la garantie que la WebView fournie par une ancienne ROM puisse encore lire les flux YouTube actuels. La lecture protégée exige aussi un fournisseur WebView actif et compatible. Consultez [WebView et lecture YouTube](/fr/issues/webview), notamment les résultats Android 6, 7 et 8 sans services Google.
 
 ## Choisir une source de mise à jour
 
-Lors de la vérification de cette page, GitHub indiquait **5.3.0** comme dernière
-version stable et **5.3.1-beta** comme dernière préversion. Ces numéros sont un
-instantané : ouvrez toujours la page des releases avant d'installer, car elle
-peut avoir changé.
+Consultez les [GitHub Releases](https://github.com/InfinityLoop1308/PipePipe/releases)
+pour comparer les versions stables et les préversions, et lire les notes de
+chaque release. Une préversion n'est pas forcément plus récente que la version
+stable installée. Pour un usage quotidien, préférez les versions stables sauf
+si vous testez un changement précis.
 
 ### Réglages de mise à jour de PipePipe
 
-PipePipe propose ses propres réglages de mise à jour. Ils permettent de vérifier manuellement les mises à jour et, si vous l'activez, d'afficher les préversions. Préférez les versions stables, sauf si vous testez un correctif et êtes prêt à signaler les régressions avec des logs.
+PipePipe propose des réglages de mise à jour dans **Paramètres → Mises à jour**. Vous pouvez lancer une vérification manuelle et activer les notifications de préversion. L'application vous prévient quand un build est disponible, mais elle ne l'installe pas toute seule. Gardez la version stable au quotidien, sauf si vous testez un correctif précis et pouvez faire un retour sur le résultat.
 
 ### GitHub Releases
 

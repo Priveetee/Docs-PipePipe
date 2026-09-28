@@ -1,36 +1,54 @@
-# Funciones Principales
+# Qué puedes hacer con PipePipe
 
-PipePipe es un cliente de Android de código abierto que te permite navegar por YouTube, NicoNico y BiliBili sin anuncios ni rastreo.
+PipePipe reúne varios servicios de vídeo y audio en una sola app Android. Lo
+que puedes ver o descargar depende del servicio y de lo que ofrezca en ese
+momento.
 
-## Privacidad y Anonimato
-La aplicación está diseñada para funcionar sin una cuenta de Google.
-*   **Sin Recopilación de Datos:** No se recopila ningún dato personal ni se envía a servidores de terceros.
-*   **Suscripciones Locales:** Tus suscripciones y tu historial se almacenan exclusivamente en tu dispositivo.
-*   **Código Abierto:** Todo el código fuente está disponible para auditoría y contribución.
+## Privacidad, explicado sin rodeos
 
-## Soporte Multiplataforma
-A diferencia del NewPipe original, PipePipe integra varios servicios en una única interfaz:
-*   **YouTube:** Vídeos, shorts y directos.
-*   **NicoNico y BiliBili:** Soporte completo para estas plataformas, incluyendo funciones específicas como Danmaku.
+No necesitas una cuenta de PipePipe y PipePipe no sincroniza tu biblioteca con
+una nube propia. Las suscripciones, el historial, las listas locales y los
+ajustes se guardan en tu dispositivo.
 
-## Capacidades de Reproducción
-*   **Reproducción en Segundo Plano:** El audio sigue sonando cuando la pantalla está apagada o cuando usas otras apps.
-*   **Modo Popup:** Los vídeos se pueden reproducir en una ventana flotante (Picture-in-Picture).
-*   **Códecs:** Soporte para AV1 y VP9 para mejor calidad a menor bitrate.
-*   **Danmaku:** Superposición de comentarios de chat en directo que se desplazan por la pantalla en las plataformas compatibles.
+Eso no hace anónima la conexión: al buscar, abrir o reproducir algo, PipePipe
+tiene que contactar con el servicio que elegiste. Ese servicio puede ver las
+peticiones que llegan desde tu conexión. El inicio de sesión opcional y las
+funciones que usan WebView también generan sus propias peticiones. Consulta
+[WebView y la reproducción protegida](/es/issues/webview) para el caso de
+YouTube.
 
-## Modificaciones de Contenido
-PipePipe incluye varios módulos integrados para modificar la experiencia de visualización:
-*   **SponsorBlock:** Salta automáticamente segmentos como intros, outros y recordatorios sin contenido.
-*   **Dislikes de YouTube:** Restaura la visibilidad del recuento de dislikes.
-*   **Localización de Títulos:** Opción para mostrar los títulos originales de los vídeos en lugar de traducciones forzadas.
+## Servicios
 
-## Filtrado y Organización
-*   **Filtros de Contenido:** Posibilidad de ocultar los YouTube Shorts, el contenido de pago o los vídeos que contengan palabras clave concretas.
-*   **Grupos de Suscripciones:** Organiza tu feed creando categorías locales para tus suscripciones.
-*   **Listas de Reproducción Locales:** Crea y gestiona un número ilimitado de listas de reproducción sin conexión.
+La app incluye YouTube, NicoNico, BiliBili, SoundCloud, Bandcamp, PeerTube y
+media.ccc.de. YouTube ofrece vídeos, Shorts y directos; NicoNico y BiliBili
+también tienen funciones propias para directos y comentarios. Los menús y las
+funciones varían según el servicio: un cambio en una web puede afectar a uno sin
+romper los demás.
 
-## Descargas de Medios
-*   **Selección de Formato:** Descarga flujos en formatos de vídeo o audio (MPEG-4, WebM, M4A, Opus).
-*   **Procesamiento por Lotes:** Soporte para descargar listas de reproducción enteras o el contenido de un canal.
-*   **Gestión de Almacenamiento:** Rutas de descarga personalizadas, incluido el soporte de tarjeta SD.
+## Ver y escuchar
+
+- Sigue escuchando en segundo plano o mira el vídeo en una ventana flotante.
+- Elige la calidad en los directos compatibles cuando el servicio ofrece más de
+  una. La guía de [ajustes del reproductor](./settings-player) explica dónde
+  encontrar este control.
+- Los formatos de vídeo disponibles dependen del servicio y de tu dispositivo.
+  Activar AV1, VP9 u otro formato avanzado no garantiza que Android pueda
+  decodificarlo; la [guía de ajustes del reproductor](./settings-player) explica
+  qué probar si la imagen va a tirones o no arranca.
+- Muestra comentarios en directo que se desplazan por la pantalla (danmaku) en
+  los servicios que los ofrecen.
+
+## Personaliza la app
+
+- Usa SponsorBlock para saltar segmentos enviados por la comunidad, como los
+  mensajes patrocinados.
+- Elige si los vídeos de YouTube muestran el título original o una traducción.
+- Oculta Shorts, contenido de pago o vídeos que coincidan con tus filtros.
+- Organiza tus suscripciones en grupos locales y crea listas locales.
+
+## Descargas y biblioteca
+
+Descarga los formatos de audio o vídeo disponibles, elige dónde guardarlos y
+descarga listas o contenido de un canal cuando el servicio lo permita. Las
+opciones de descarga pueden ser distintas de las de reproducción normal; si
+falla una descarga, consulta la [guía de descargas](/es/issues/downloads).

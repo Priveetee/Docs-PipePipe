@@ -1,14 +1,15 @@
 # Installation and updates
 
-PipePipe is distributed outside Google Play. Choose one trusted update path and
-keep it consistent so that you can identify the installed version when reporting
-a problem.
+PipePipe is distributed outside Google Play. Choose a trusted update source and
+keep using it; release timing can differ between sources.
 
 ## System requirements
 
-The current application requires **Android 6.0 (API 23) or newer**. Release APKs
-are available for `arm64-v8a`, `armeabi-v7a`, `x86_64`, and `x86`; use the
-universal APK when you are unsure which ABI your device uses.
+PipePipe requires **Android 6.0 (API 23) or newer**. Release assets may include
+separate APKs for `arm64-v8a`, `armeabi-v7a`, `x86_64`, and `x86`. Most phones
+use `arm64-v8a`; `armeabi-v7a` is for 32-bit ARM devices, and x86 builds are
+mainly for Android emulators. Choose the APK matching your device's ABI; one
+APK for every device is not always available.
 
 That is the APK installation floor, not a guarantee that the WebView bundled by
 an old ROM can still play current YouTube streams. Protected playback also needs
@@ -17,16 +18,19 @@ including the Android 6, 7, and 8 results without Google services.
 
 ## Choose an update path
 
-At the time this page was checked, GitHub listed **5.3.0** as the latest stable
-release and **5.3.1-beta** as the latest prerelease. Treat those labels as a
-snapshot, not a promise that they will still be the newest versions when you
-read this page; always open the release page before installing.
+Use the [GitHub Releases page](https://github.com/InfinityLoop1308/PipePipe/releases)
+to compare stable builds with prereleases and read the notes attached to each
+one. A prerelease is not necessarily newer than the installed stable build.
+For everyday use, stick with stable releases unless you are testing a specific
+change.
 
 ### PipePipe's update settings
 
-PipePipe includes update settings. They let you check for updates manually and,
-if you opt in, show prerelease builds. Prefer stable releases unless you are
-testing a fix and are prepared to report regressions with logs.
+PipePipe includes update settings under **Settings → Updates**. You can check
+manually and opt in to prerelease notifications. The checker tells you when a
+build is available; it does not install an APK for you. Stick with stable
+releases unless you are trying a specific fix and are ready to report what
+happened.
 
 ### GitHub Releases
 

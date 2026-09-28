@@ -2,9 +2,9 @@
 
 Esta sección cubre todos los ajustes relacionados con el reproductor de vídeo y audio.
 
-![Ajustes de reproductor PipePipe, 5.3.1-beta en Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
+![Ajustes de reproductor PipePipe en Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. El orden y valores pueden cambiar según versión.*
+*Captura de referencia: Android 16/API 36. El orden y las opciones pueden cambiar; usa la búsqueda de Ajustes si tu pantalla es distinta.*
 
 ## Resolución por defecto
 
@@ -27,6 +27,14 @@ Establece la calidad de vídeo preferida para los vídeos reproducidos en el rep
 ::: info
 Una resolución más baja suele bastar para la pequeña ventana del popup y consume menos recursos.
 :::
+
+## Calidad durante un directo
+
+Algunos directos ofrecen varias calidades de vídeo. Mientras se reproduce uno,
+toca el control de calidad para elegir una resolución o **Auto** para que
+PipePipe se adapte. El control solo aparece cuando el directo ofrece varias
+opciones. Este ajuste no cambia la resolución por defecto de los vídeos
+normales.
 
 ## Activar formatos avanzados
 

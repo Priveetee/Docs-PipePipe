@@ -1,36 +1,56 @@
-# Fonctionnalités Clés
+# Ce que PipePipe vous permet de faire
 
-PipePipe est un client Android open-source qui vous permet de consulter YouTube, NicoNico et BiliBili sans publicité ni pistage.
+PipePipe réunit plusieurs services vidéo et audio dans une seule application
+Android. Ce que vous pouvez regarder ou télécharger dépend du service et de ce
+qu'il met à disposition à ce moment-là.
 
-## Confidentialité et Anonymat
-L'application est conçue pour fonctionner sans compte Google.
-*   **Aucune collecte de données :** Aucune donnée personnelle n'est collectée ou envoyée à des serveurs tiers.
-*   **Abonnements locaux :** Votre liste d'abonnements et votre historique sont stockés exclusivement sur votre appareil.
-*   **Open Source :** L'intégralité du code source est disponible pour audit et contribution.
+## La confidentialité, concrètement
 
-## Support Multi-Plateforme
-Contrairement à NewPipe, PipePipe intègre plusieurs services dans une interface unique :
-*   **YouTube :** Vidéos, shorts et flux en direct.
-*   **NicoNico & BiliBili :** Support complet de ces plateformes, incluant les fonctionnalités spécifiques comme le Danmaku.
+Vous n'avez pas besoin de compte PipePipe, et PipePipe ne synchronise pas votre
+bibliothèque avec un cloud PipePipe. Vos abonnements, votre historique, vos
+playlists locales et vos réglages restent sur l'appareil.
 
-## Capacités de Lecture
-*   **Lecture en arrière-plan :** L'audio continue de jouer lorsque l'écran est éteint ou lors de l'utilisation d'autres applications.
-*   **Mode Popup :** Les vidéos peuvent être lues dans une fenêtre flottante (Picture-in-Picture).
-*   **Codecs :** Support de l'AV1 et du VP9 pour une meilleure qualité avec un débit réduit.
-*   **Danmaku :** Superposition de commentaires défilants pour les chats en direct sur les plateformes compatibles.
+Ça ne rend pas la navigation anonyme pour autant : pour rechercher, ouvrir ou
+lire un contenu, PipePipe doit contacter le service choisi. Celui-ci voit donc
+les requêtes provenant de votre connexion. Une connexion facultative ou les
+fonctions qui utilisent la WebView génèrent aussi leurs propres requêtes. La
+page [WebView et lecture protégée](/fr/issues/webview) explique le cas de
+YouTube.
 
-## Modifications du Contenu
-PipePipe inclut plusieurs modules intégrés pour modifier l'expérience de visionnage :
-*   **SponsorBlock :** Passe automatiquement les segments comme les intros, outros et rappels non liés au contenu.
-*   **YouTube Dislikes :** Restaure la visibilité du compteur de "Je n'aime pas".
-*   **Titres originaux :** Option pour afficher les titres originaux des vidéos au lieu des traductions forcées.
+## Services
 
-## Filtrage et Organisation
-*   **Filtres de contenu :** Possibilité de masquer les YouTube Shorts, le contenu payant ou les vidéos contenant certains mots-clés.
-*   **Groupes d'abonnements :** Organisez votre flux en créant des catégories locales pour vos abonnements.
-*   **Playlists locales :** Créez et gérez un nombre illimité de listes de lecture hors ligne.
+L'application propose actuellement YouTube, NicoNico, BiliBili, SoundCloud,
+Bandcamp, PeerTube et media.ccc.de. YouTube propose des vidéos, des Shorts et
+des directs ; NicoNico et BiliBili ont aussi leurs fonctions propres pour les
+directs et les commentaires. Les menus et fonctions varient selon le service :
+un changement sur un site peut en affecter un sans casser les autres.
 
-## Téléchargement de Médias
-*   **Sélection du format :** Téléchargement des flux en formats vidéo ou audio (MPEG-4, WebM, M4A, Opus).
-*   **Traitement par lot :** Possibilité de télécharger des listes de lecture entières ou le contenu d'une chaîne.
-*   **Gestion du stockage :** Chemins de téléchargement personnalisés, incluant le support des cartes SD.
+## Regarder et écouter
+
+- Continuez à écouter en arrière-plan ou regardez dans une fenêtre flottante.
+- Choisissez la qualité de certains directs lorsque le service en propose
+  plusieurs. Le [guide des réglages du lecteur](./settings-player) explique où
+  trouver ce réglage.
+- Les formats vidéo disponibles dépendent du service et de votre appareil.
+  Activer AV1, VP9 ou un autre format avancé ne garantit pas qu'Android saura le
+  décoder ; le [guide des réglages du lecteur](./settings-player) explique quoi
+  essayer si l'image saccade ou ne démarre pas.
+- Affichez les commentaires de direct défilants (danmaku) sur les services qui
+  les proposent.
+
+## Personnaliser l'application
+
+- Utilisez SponsorBlock pour passer les segments signalés, comme les messages
+  sponsorisés.
+- Choisissez d'afficher le titre original d'une vidéo YouTube ou sa traduction.
+- Masquez les Shorts, le contenu payant ou les vidéos correspondant à vos
+  filtres.
+- Classez vos abonnements dans des groupes locaux et créez des playlists
+  locales.
+
+## Téléchargements et bibliothèque
+
+Téléchargez les formats audio ou vidéo proposés, choisissez où les enregistrer
+et téléchargez des playlists ou le contenu d'une chaîne lorsque le service le
+permet. Les options de téléchargement peuvent différer de la lecture normale ;
+en cas d'échec, consultez le [guide des téléchargements](/fr/issues/downloads).

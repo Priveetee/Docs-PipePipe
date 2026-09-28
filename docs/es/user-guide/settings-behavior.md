@@ -2,10 +2,10 @@
 
 Esta sección controla el comportamiento general de la aplicación, como lo que ocurre cuando abres contenido o cambias entre apps.
 
-::: info Ubicación actual
-En las versiones 5.3.x actuales, estos controles están en **Ajustes →
-Reproductor**. La agrupación puede cambiar en una versión futura; usa la
-búsqueda de ajustes si una etiqueta no está donde indica esta guía.
+::: info Dónde encontrar estos ajustes
+Estos controles suelen estar en **Ajustes → Reproductor**. La agrupación puede
+cambiar; usa la búsqueda de ajustes si una etiqueta no está donde indica esta
+guía.
 :::
 
 ### Acción 'abrir' preferida
@@ -17,9 +17,9 @@ Define la acción usada **cuando PipePipe recibe un enlace de vídeo desde otra 
 
 Si parece que se ignora, pruébalo con un enlace compartido desde otra aplicación e indica cuál era. Un toque normal dentro de PipePipe no es un fallo de este ajuste: queda fuera de su alcance.
 
-![Ajustes de reproductor PipePipe, 5.3.1-beta en Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
+![Ajustes de reproductor PipePipe en Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. Los valores y apariencia Android pueden variar.*
+*Captura de referencia: Android 16/API 36. Tus ajustes y la apariencia de Android pueden variar.*
 
 ::: tip Mi Preferencia
 Yo lo configuro en **Reproductor de vídeo** para empezar a ver el contenido de inmediato sin pasos adicionales.
@@ -49,6 +49,16 @@ Solo controla la salida del reproductor principal hacia otra aplicación. Es ind
 Omite el mini-reproductor y abre los vídeos directamente en modo pantalla completa. Aún puedes acceder al mini-reproductor deslizando hacia abajo para salir de la pantalla completa.
 
 - **Por defecto:** Desactivado
+
+### Deslizar hacia abajo para minimizar
+
+**Ruta:** **Ajustes → Reproductor → Ajustes de gestos → Deslizar hacia abajo para minimizar**
+
+Elige si deslizar hacia abajo reduce el vídeo al mini-reproductor: puedes
+desactivar el gesto, usarlo solo fuera de pantalla completa o también dentro de
+ella. En pantalla completa, este gesto ocupa la zona que se usa para los gestos
+de pantalla completa y velocidad de reproducción. Si quieres conservarlos,
+elige **Solo fuera de pantalla completa**.
 
 ### Reproducción automática
 

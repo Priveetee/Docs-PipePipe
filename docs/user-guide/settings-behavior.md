@@ -2,10 +2,9 @@
 
 This section controls the general behavior of the application, such as what happens when you open content or switch between apps.
 
-::: info Current location
-In the current 5.3.x builds, the controls documented on this page are found in
-**Settings → Player**. The grouping can change in a later release; use Settings
-search if a label is not where this guide shows it.
+::: info Where to find these settings
+These controls are usually found in **Settings → Player**. The grouping can
+change; use Settings search if a label is not where this guide shows it.
 :::
 
 ### Preferred 'open' action
@@ -17,9 +16,9 @@ Defines the action used **when PipePipe receives a video link from another Andro
 
 If this option appears to be ignored, test with a shared YouTube link from another app and say which sending app you used. Do not report an ordinary in-app tap as a failure of this setting; it is outside this setting's scope.
 
-![PipePipe Player settings, 5.3.1-beta on Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
+![PipePipe Player settings on Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. Your chosen values and Android appearance can differ.*
+*Reference capture: Android 16/API 36. Your settings and Android appearance may differ.*
 
 ::: tip My Preference
 I set this to **Video player** to immediately start watching content without extra steps.
@@ -49,6 +48,16 @@ This only governs leaving the main player for another app. It is separate from t
 Bypasses the mini-player and opens videos directly in fullscreen mode. You can still access the mini-player by swiping down to exit fullscreen.
 
 - **Default:** Disabled
+
+### Swipe down to minimize
+
+**Path:** **Settings → Player → Gesture settings → Swipe down to minimize**
+
+Choose whether swiping down collapses the player into the mini-player: turn the
+gesture off, use it only outside fullscreen, or use it both inside and outside
+fullscreen. The fullscreen option takes over the swipe area used for fullscreen
+and playback-speed gestures, so leave it on **Outside fullscreen only** if you
+still want those gestures while watching fullscreen.
 
 ### Autoplay
 

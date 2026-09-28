@@ -2,9 +2,9 @@
 
 Cette section couvre tous les paramètres liés au lecteur vidéo et audio.
 
-![Réglages Lecteur de PipePipe, 5.3.1-beta sur Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
+![Réglages Lecteur de PipePipe sur Android 16](/screenshots/pipepipe-player-5.3.1-beta-api36.png)
 
-*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. L'ordre et les valeurs peuvent évoluer selon la version.*
+*Capture de référence : Android 16/API 36. L'ordre et les options peuvent changer ; utilisez la recherche des paramètres si votre écran diffère.*
 
 ## Résolution par défaut
 
@@ -27,6 +27,13 @@ Définit la qualité vidéo préférée pour les vidéos lues dans le lecteur po
 ::: info
 Une résolution plus basse est souvent suffisante pour la petite fenêtre du popup et consomme moins de ressources.
 :::
+
+## Qualité pendant un direct
+
+Certains directs proposent plusieurs qualités vidéo. Pendant la lecture, touchez
+le bouton de qualité pour choisir une résolution, ou **Auto** pour laisser
+PipePipe s'adapter. Le bouton n'apparaît que si le direct propose plusieurs
+choix. Ce réglage ne change pas la résolution par défaut des vidéos classiques.
 
 ## Activer les formats avancés
 
