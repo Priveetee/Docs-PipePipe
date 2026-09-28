@@ -12,16 +12,14 @@ les éléments réellement utiles au diagnostic.
 2. Reproduisez le problème une fois et notez l'heure, l'URL ou la requête, ainsi que l'endpoint YouTube sélectionné.
 3. Ouvrez la catégorie correspondante ci-dessous. Gardez les symptômes distincts dans des rapports distincts.
 
-![Réglages PipePipe, 5.3.1-beta sur Android 16](/screenshots/pipepipe-settings-5.3.1-beta-api36.png)
+![Réglages PipePipe sur Android 16](/screenshots/pipepipe-settings-5.3.1-beta-api36.png)
 
-*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. Les catégories et leur ordre peuvent évoluer.*
+*Capture de référence : Android 16/API 36. Les catégories et leur ordre peuvent évoluer ; fiez-vous au texte et utilisez la recherche des paramètres si l'écran diffère.*
 
-::: info Instantané des versions
-Cette carte de dépannage a été vérifiée avec la release stable amont **5.3.0**
-et la préversion **5.3.1-beta** le 03/09/2026. La capture principale ci-dessus
-vient de la **5.3.1-beta** ; suivez le texte et les notes de release actuelles
-si les libellés diffèrent.
-:::
+Les captures servent de repères et ne garantissent pas que chaque menu ait
+exactement la même disposition. Consultez les
+[GitHub Releases](https://github.com/InfinityLoop1308/PipePipe/releases) pour
+les changements récents, puis partez du symptôme ci-dessous.
 
 ## Trouver rapidement la bonne branche
 
@@ -30,6 +28,7 @@ si les libellés diffèrent.
 | **WebView unavailable** | [WebView et lecture protégée](./webview) | Qu'un changement d'endpoint contourne WebView. |
 | Toutes les vidéos YouTube échouent ; un domaine Google pointe vers `0.0.0.0` ou `127.0.0.1` | [Filtrage DNS et lecture](./youtube-playback#toutes-les-videos-youtube-echouent-verifiez-le-filtrage-dns) | Qu'un changement d'endpoint, une réinstallation ou une mise à jour WebView contourne le filtrage DNS. |
 | Une seule vidéo YouTube (ou quelques-unes) échoue alors que les autres fonctionnent | [Lecture, réseau et connexion](./youtube-playback#une-seule-video-ou-quelques-unes-echoue-alors-que-les-autres-fonctionnent) | Que WebView, le DNS ou toute l'installation est cassé. |
+| Une vidéo très longue échoue avec `Invalid exact SABR segment count` | [Lecture, réseau et connexion](./youtube-playback) | Qu'elle est incompatible juste à cause de sa durée, ou qu'un changement de WebView/codec corrige cette erreur de comptage. |
 | `AntiBotException`, `Source error`, tampon, seek live | [Lecture, réseau et connexion](./youtube-playback) | Qu'un WebView à jour ou une connexion prouve la cause. |
 | Recherche vide/incorrecte | [Recherche et découverte](./search) | Qu'un correctif lecteur corrige la recherche. |
 | Lien dans le « mauvais » lecteur | [Arrière-plan, popup, plein écran et file](./player-modes) | Que l'action préférée contrôle les appuis internes. |

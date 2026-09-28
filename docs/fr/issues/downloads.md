@@ -11,9 +11,9 @@ Notez le service et l'URL, format/résolution choisi, dossier ou fournisseur de 
 - Un échec de stockage demande Android et destination : interne, SD ou fournisseur de documents.
 - Une demande de miniature pour un audio est une fonctionnalité, pas un bug de lecture.
 
-![Réglages Téléchargement PipePipe, 5.2.3 sur Android 16](/screenshots/pipepipe-download-5.2.3-api36.png)
+![Réglages Téléchargement PipePipe sur Android 16](/screenshots/pipepipe-download-5.2.3-api36.png)
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. Les dossiers vidéo/audio sont les destinations finales ; ils ne représentent pas l'espace de travail interne temporaire.*
+*Capture de référence : Android 16/API 36. Les dossiers vidéo/audio sont les destinations finales ; ils ne représentent pas l'espace de travail interne temporaire.*
 
 Le dossier configuré est la destination **finale**. Les fichiers de travail temporaires peuvent néanmoins utiliser le stockage interne de PipePipe puis être supprimés à la fin. « Ma carte SD est sélectionnée » ne prouve donc pas que l'espace interne temporaire suffisait. Relevez l'espace libre interne *et* celui de destination, et dites si l'échec survient avant l'apparition du fichier final.
 

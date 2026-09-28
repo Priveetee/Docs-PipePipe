@@ -30,7 +30,7 @@ before sharing it publicly.
 
 ![PipePipe generated error report](/screenshots/pipepipe-error-report-5.2.3-api36.png)
 
-*Reference captures: PipePipe 5.2.3 · Android 16/API 36. The concrete error is
+*Reference captures: Android 16/API 36. The concrete error is
 only an example; report the fields shown by your own failure.*
 
 ## Write steps that another person can run

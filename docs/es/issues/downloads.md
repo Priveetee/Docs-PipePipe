@@ -11,9 +11,9 @@ Anota servicio y URL, formato/resolución, carpeta o proveedor de documentos, es
 - Un fallo de almacenamiento necesita Android y destino: interno, SD o proveedor de documentos.
 - Pedir miniatura para un audio es una función, no un bug de reproducción.
 
-![Ajustes de descarga PipePipe, 5.2.3 en Android 16](/screenshots/pipepipe-download-5.2.3-api36.png)
+![Ajustes de descarga PipePipe en Android 16](/screenshots/pipepipe-download-5.2.3-api36.png)
 
-*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. Las carpetas de vídeo/audio son destinos finales; no representan espacio temporal interno.*
+*Captura de referencia: Android 16/API 36. Las carpetas de vídeo/audio son destinos finales; no representan espacio temporal interno.*
 
 La carpeta configurada es la ubicación **final**. Los archivos temporales de trabajo pueden usar todavía el almacenamiento interno de PipePipe y se eliminan al completar. Por tanto, «está seleccionada mi SD» no demuestra que hubiese almacenamiento interno temporal suficiente. Informa espacio libre interno *y* de destino, y si el fallo ocurre antes de aparecer el archivo final.
 

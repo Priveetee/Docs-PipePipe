@@ -8,9 +8,9 @@ Les commandes ne suppriment pas les mêmes données. Un rapport sur **Effacer le
 
 Avant tout effacement, notez le symptôme et le service. Effacer les cookies déconnecte ou retire un état de challenge : c'est une remise à zéro de diagnostic, pas un remède universel. Retestez ensuite exactement la même URL.
 
-![Réglages Compte PipePipe, 5.2.3 sur Android 16](/screenshots/pipepipe-account-5.2.3-api36.png)
+![Réglages Compte PipePipe sur Android 16](/screenshots/pipepipe-account-5.2.3-api36.png)
 
-*Capture de référence : PipePipe 5.2.3 · Android 16/API 36. Elle distingue les entrées de services et l'action **Effacer les cookies WebView**.*
+*Capture de référence : Android 16/API 36. Elle distingue les entrées de services et l'action **Effacer les cookies WebView**.*
 
 ## Rapports spécifiques à un service
 

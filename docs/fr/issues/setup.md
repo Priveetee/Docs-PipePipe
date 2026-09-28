@@ -4,10 +4,14 @@
 
 Comparez la version installée aux [GitHub Releases](https://github.com/InfinityLoop1308/PipePipe/releases). Les catalogues peuvent être en retard. Utilisez les versions stables au quotidien ; testez une préversion seulement pour un correctif identifié et si vous pouvez faire un retour.
 
+Si une issue mentionne une préversion, vérifiez sa date et ses notes sur la page
+des releases avant de l'installer ; une préversion peut être plus ancienne que
+la dernière version stable.
+
 La recherche de mise à jour intégrée sert à notifier qu'une version existe : elle ne remplace pas silencieusement l'APK installé. Dans **Paramètres → Mises à jour**, vérifiez la recherche de mises à jour et l'option **Afficher les préversions** avant de signaler qu'une bêta attendue n'apparaît pas.
 
 <div class="screenshot-callout" role="img" aria-label="Réglages Mises à jour PipePipe avec préversions et contrôle manuel surlignés">
-  <img src="/screenshots/pipepipe-updates-5.3.1-beta-api36.png" alt="Réglages Mises à jour de PipePipe, 5.3.1-beta sur Android 16">
+  <img src="/screenshots/pipepipe-updates-5.3.1-beta-api36.png" alt="Réglages Mises à jour de PipePipe sur Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="555" width="1030" height="235" rx="28" />
     <path class="callout-arrow" d="M 900 470 L 900 535 M 875 510 L 900 535 L 925 510" />
@@ -17,7 +21,7 @@ La recherche de mise à jour intégrée sert à notifier qu'une version existe :
   </svg>
 </div>
 
-*Capture actuelle : PipePipe 5.3.1-beta · Android 16/API 36. **1** active les préversions ; **2** lance le contrôle manuel. La vérification ne fait qu'avertir : elle n'installe pas silencieusement un APK.*
+*Capture de référence : Android 16/API 36. **1** active les préversions ; **2** lance le contrôle manuel. La vérification vous avertit, elle n'installe pas un APK toute seule.*
 
 ::: tip
 Quand une issue annonce « corrigé en bêta » ou « dans la prochaine version », installez précisément cette version, redémarrez PipePipe puis refaites un essai avant d'ouvrir un doublon.

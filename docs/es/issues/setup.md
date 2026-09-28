@@ -4,10 +4,14 @@
 
 Compara la versión instalada con [GitHub Releases](https://github.com/InfinityLoop1308/PipePipe/releases). Los catálogos pueden retrasarse. Usa versiones estables normalmente; prueba una preliminar solo para una corrección identificada y si puedes informar el resultado.
 
+Si una issue menciona una versión preliminar, comprueba su fecha y sus notas en
+la página de releases antes de instalarla; puede ser anterior a la última
+versión estable.
+
 La comprobación integrada de actualizaciones es un mecanismo de aviso: indica que hay una versión disponible, no sustituye silenciosamente el APK instalado. En **Ajustes → Actualizaciones**, comprueba la búsqueda de actualizaciones y **Mostrar actualizaciones preliminares** antes de informar que no aparece una beta esperada.
 
 <div class="screenshot-callout" role="img" aria-label="Ajustes de actualizaciones PipePipe con preliminares y comprobación manual resaltados">
-  <img src="/screenshots/pipepipe-updates-5.3.1-beta-api36.png" alt="Ajustes de actualizaciones PipePipe, 5.3.1-beta en Android 16">
+  <img src="/screenshots/pipepipe-updates-5.3.1-beta-api36.png" alt="Ajustes de actualizaciones PipePipe en Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
     <rect class="callout-box" x="25" y="555" width="1030" height="235" rx="28" />
     <path class="callout-arrow" d="M 900 470 L 900 535 M 875 510 L 900 535 L 925 510" />
@@ -17,7 +21,7 @@ La comprobación integrada de actualizaciones es un mecanismo de aviso: indica q
   </svg>
 </div>
 
-*Captura actual: PipePipe 5.3.1-beta · Android 16/API 36. **1** activa versiones preliminares; **2** ejecuta comprobación manual. La comprobación solo avisa y no instala un APK silenciosamente.*
+*Captura de referencia: Android 16/API 36. **1** activa las preversiones; **2** inicia la comprobación manual. La app solo avisa, no instala el APK por su cuenta.*
 
 ::: tip
 Cuando una issue diga «corregido en beta» o «en la próxima versión», instala exactamente esa compilación, reinicia PipePipe y vuelve a probar una vez antes de abrir un duplicado.

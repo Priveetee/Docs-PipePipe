@@ -51,7 +51,7 @@ Podrás seguir viendo los mismos vídeos; PipePipe solo evitará su versión AV1
    porque la aplicación utilizada para esta guía está configurada en inglés.
 
 <div class="screenshot-callout" role="img" aria-label="Pantalla principal de PipePipe con el botón del menú resaltado">
-  <img src="/screenshots/pipepipe-home-5.3.1-beta-api36.png" alt="Pantalla principal de PipePipe 5.3.1-beta mostrando el botón del menú en la esquina superior izquierda en Android 16">
+  <img src="/screenshots/pipepipe-home-5.3.1-beta-api36.png" alt="Pantalla principal de PipePipe mostrando el botón del menú en la esquina superior izquierda en Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="8" y="58" width="142" height="158" rx="24" />
     <path class="callout-arrow" d="M 280 285 L 120 185 M 183 195 L 120 185 L 151 240" />
@@ -62,7 +62,7 @@ Podrás seguir viendo los mismos vídeos; PipePipe solo evitará su versión AV1
 2. Se abre el menú lateral. Pulsa **Ajustes**, al final de la lista.
 
 <div class="screenshot-callout" role="img" aria-label="Menú lateral de PipePipe con Ajustes resaltado">
-  <img src="/screenshots/pipepipe-drawer-settings-5.3.1-beta-api36.png" alt="Menú lateral de PipePipe 5.3.1-beta mostrando Settings en Android 16">
+  <img src="/screenshots/pipepipe-drawer-settings-5.3.1-beta-api36.png" alt="Menú lateral de PipePipe mostrando Settings en Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="1205" width="720" height="190" rx="28" />
     <path class="callout-arrow" d="M 820 1320 L 710 1310 M 762 1275 L 710 1310 L 770 1340" />
@@ -73,7 +73,7 @@ Podrás seguir viendo los mismos vídeos; PipePipe solo evitará su versión AV1
 3. En la pantalla Ajustes, pulsa **Reproductor** o **Player**.
 
 <div class="screenshot-callout" role="img" aria-label="Pantalla Ajustes de PipePipe con Reproductor resaltado">
-  <img src="/screenshots/pipepipe-settings-5.3.1-beta-api36.png" alt="Pantalla Ajustes de PipePipe 5.3.1-beta mostrando Player en Android 16">
+  <img src="/screenshots/pipepipe-settings-5.3.1-beta-api36.png" alt="Pantalla Ajustes de PipePipe mostrando Player en Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="205" width="1056" height="155" rx="28" />
     <path class="callout-arrow" d="M 900 450 L 980 350 M 930 380 L 980 350 L 968 410" />
@@ -85,7 +85,7 @@ Podrás seguir viendo los mismos vídeos; PipePipe solo evitará su versión AV1
    fila no parezca un interruptor.
 
 <div class="screenshot-callout" role="img" aria-label="Ajustes del Reproductor con Activar formatos avanzados resaltado">
-  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="Ajustes del Reproductor de PipePipe 5.3.1-beta mostrando Enable advanced formats en Android 16">
+  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="Ajustes del Reproductor de PipePipe mostrando Enable advanced formats en Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="580" width="1056" height="435" rx="28" />
     <path class="callout-arrow" d="M 890 1090 L 990 1000 M 932 1020 L 990 1000 L 968 1058" />
@@ -98,7 +98,7 @@ Podrás seguir viendo los mismos vídeos; PipePipe solo evitará su versión AV1
    la primera prueba.
 
 <div class="screenshot-callout" role="img" aria-label="Ventana Formatos avanzados con AV01 activado y resaltado">
-  <img src="/screenshots/pipepipe-advanced-formats-av01-on-5.3.1-beta-api36.png" alt="Ventana Formatos avanzados de PipePipe 5.3.1-beta con AV01 marcado en Android 16">
+  <img src="/screenshots/pipepipe-advanced-formats-av01-on-5.3.1-beta-api36.png" alt="Ventana Formatos avanzados de PipePipe con AV01 marcado en Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="100" y="1015" width="860" height="155" rx="24" />
     <path class="callout-arrow" d="M 935 1235 L 900 1150 M 889 1198 L 900 1150 L 930 1190" />
@@ -110,7 +110,7 @@ Podrás seguir viendo los mismos vídeos; PipePipe solo evitará su versión AV1
    **Cancelar** o **Cancel**, porque descartaría el cambio.
 
 <div class="screenshot-callout" role="img" aria-label="Ventana Formatos avanzados con AV01 desactivado y OK resaltado">
-  <img src="/screenshots/pipepipe-advanced-formats-av01-off-5.3.1-beta-api36.png" alt="Ventana Formatos avanzados de PipePipe 5.3.1-beta con AV01 desmarcado y el botón OK en Android 16">
+  <img src="/screenshots/pipepipe-advanced-formats-av01-off-5.3.1-beta-api36.png" alt="Ventana Formatos avanzados de PipePipe con AV01 desmarcado y el botón OK en Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="100" y="1015" width="860" height="155" rx="24" />
     <path class="callout-arrow" d="M 940 970 L 900 1040 M 940 1010 L 900 1040 L 910 992" />

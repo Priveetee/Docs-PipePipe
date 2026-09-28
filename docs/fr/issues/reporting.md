@@ -24,7 +24,7 @@ avant tout partage public.
 
 ![Rapport d'erreur PipePipe généré](/screenshots/pipepipe-error-report-5.2.3-api36.png)
 
-*Captures de référence : PipePipe 5.2.3 · Android 16/API 36. L'erreur affichée
+*Captures de référence : Android 16/API 36. L'erreur affichée
 est un exemple ; signalez les champs fournis par votre propre échec.*
 
 ## Écrire des étapes exécutables

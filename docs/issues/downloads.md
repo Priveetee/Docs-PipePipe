@@ -11,9 +11,9 @@ Record the service and URL, selected format/resolution, download directory or do
 - A storage-provider failure needs the Android version and whether the destination is internal storage, SD card, or a document provider.
 - An audio download without artwork or a thumbnail is a feature request, not a playback bug.
 
-![PipePipe Download settings, 5.2.3 on Android 16](/screenshots/pipepipe-download-5.2.3-api36.png)
+![PipePipe Download settings on Android 16](/screenshots/pipepipe-download-5.2.3-api36.png)
 
-*Reference capture: PipePipe 5.2.3 · Android 16/API 36. The video/audio folder controls define final destinations; they do not show temporary internal working storage.*
+*Reference capture: Android 16/API 36. The video/audio folder controls define final destinations; they do not show temporary internal working storage.*
 
 The configured directory is the **final** location. Temporary download work files may still use PipePipe's internal app storage and are removed on successful completion. Therefore “my SD card is selected” does not prove that temporary internal storage was sufficient. Report both free internal storage and free destination storage, plus whether the failure happens before the final file appears.
 

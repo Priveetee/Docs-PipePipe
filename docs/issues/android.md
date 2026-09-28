@@ -50,7 +50,7 @@ AV1 version.
    tap it.
 
 <div class="screenshot-callout" role="img" aria-label="PipePipe main screen with the menu button highlighted">
-  <img src="/screenshots/pipepipe-home-5.3.1-beta-api36.png" alt="PipePipe 5.3.1-beta main screen showing the menu button in the top-left corner on Android 16">
+  <img src="/screenshots/pipepipe-home-5.3.1-beta-api36.png" alt="PipePipe main screen showing the menu button in the top-left corner on Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="8" y="58" width="142" height="158" rx="24" />
     <path class="callout-arrow" d="M 280 285 L 120 185 M 183 195 L 120 185 L 151 240" />
@@ -61,7 +61,7 @@ AV1 version.
 2. The side menu opens. Tap **Settings** at the bottom of the list.
 
 <div class="screenshot-callout" role="img" aria-label="PipePipe side menu with Settings highlighted">
-  <img src="/screenshots/pipepipe-drawer-settings-5.3.1-beta-api36.png" alt="PipePipe 5.3.1-beta side menu showing Settings on Android 16">
+  <img src="/screenshots/pipepipe-drawer-settings-5.3.1-beta-api36.png" alt="PipePipe side menu showing Settings on Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="1205" width="720" height="190" rx="28" />
     <path class="callout-arrow" d="M 820 1320 L 710 1310 M 762 1275 L 710 1310 L 770 1340" />
@@ -72,7 +72,7 @@ AV1 version.
 3. On the Settings screen, tap **Player**.
 
 <div class="screenshot-callout" role="img" aria-label="PipePipe Settings screen with Player highlighted">
-  <img src="/screenshots/pipepipe-settings-5.3.1-beta-api36.png" alt="PipePipe 5.3.1-beta Settings screen showing Player on Android 16">
+  <img src="/screenshots/pipepipe-settings-5.3.1-beta-api36.png" alt="PipePipe Settings screen showing Player on Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="205" width="1056" height="155" rx="28" />
     <path class="callout-arrow" d="M 900 450 L 980 350 M 930 380 L 980 350 L 968 410" />
@@ -84,7 +84,7 @@ AV1 version.
    though it does not look like a switch.
 
 <div class="screenshot-callout" role="img" aria-label="PipePipe Player settings with Enable advanced formats highlighted">
-  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="PipePipe 5.3.1-beta Player settings showing Enable advanced formats on Android 16">
+  <img src="/screenshots/pipepipe-player-5.3.1-beta-api36.png" alt="PipePipe Player settings showing Enable advanced formats on Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="12" y="580" width="1056" height="435" rx="28" />
     <path class="callout-arrow" d="M 890 1090 L 990 1000 M 932 1020 L 990 1000 L 968 1058" />
@@ -96,7 +96,7 @@ AV1 version.
    that its box becomes empty. Leave **VP9** checked for the first retest.
 
 <div class="screenshot-callout" role="img" aria-label="Advanced formats dialog with AV01 enabled and highlighted">
-  <img src="/screenshots/pipepipe-advanced-formats-av01-on-5.3.1-beta-api36.png" alt="PipePipe 5.3.1-beta advanced formats dialog with a red check beside AV01 on Android 16">
+  <img src="/screenshots/pipepipe-advanced-formats-av01-on-5.3.1-beta-api36.png" alt="PipePipe advanced formats dialog with a red check beside AV01 on Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="100" y="1015" width="860" height="155" rx="24" />
     <path class="callout-arrow" d="M 935 1235 L 900 1150 M 889 1198 L 900 1150 L 930 1190" />
@@ -108,7 +108,7 @@ AV1 version.
    **Cancel**, because that discards the change.
 
 <div class="screenshot-callout" role="img" aria-label="Advanced formats dialog with AV01 disabled and OK highlighted">
-  <img src="/screenshots/pipepipe-advanced-formats-av01-off-5.3.1-beta-api36.png" alt="PipePipe 5.3.1-beta advanced formats dialog with an empty box beside AV01 and the OK button on Android 16">
+  <img src="/screenshots/pipepipe-advanced-formats-av01-off-5.3.1-beta-api36.png" alt="PipePipe advanced formats dialog with an empty box beside AV01 and the OK button on Android 16">
   <svg viewBox="0 0 1080 2400" aria-hidden="true">
     <rect class="callout-box" x="100" y="1015" width="860" height="155" rx="24" />
     <path class="callout-arrow" d="M 940 970 L 900 1040 M 940 1010 L 900 1040 L 910 992" />

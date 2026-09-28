@@ -8,9 +8,9 @@ Los controles no borran los mismos datos. Un informe sobre **Borrar cookie reCAP
 
 Antes de borrar nada, anota el síntoma y el servicio. Borrar cookies cierra sesión o elimina estado de desafío: es un reinicio de diagnóstico, no una solución universal. Después prueba exactamente la misma URL.
 
-![Ajustes de cuenta PipePipe, 5.2.3 en Android 16](/screenshots/pipepipe-account-5.2.3-api36.png)
+![Ajustes de cuenta PipePipe en Android 16](/screenshots/pipepipe-account-5.2.3-api36.png)
 
-*Captura de referencia: PipePipe 5.2.3 · Android 16/API 36. Distingue entradas de servicios y la acción **Borrar cookies WebView**.*
+*Captura de referencia: Android 16/API 36. Distingue entradas de servicios y la acción **Borrar cookies WebView**.*
 
 ## Informes específicos por servicio
 

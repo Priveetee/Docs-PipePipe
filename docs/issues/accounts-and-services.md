@@ -8,9 +8,9 @@ The controls do not clear the same data. A report about **Clear reCAPTCHA cookie
 
 Before clearing anything, note the symptom and the service. Clearing cookies signs you out or removes challenge state and is a diagnostic/reset step, not a universal fix. Retest the exact same URL after the action.
 
-![PipePipe Account settings, 5.2.3 on Android 16](/screenshots/pipepipe-account-5.2.3-api36.png)
+![PipePipe Account settings on Android 16](/screenshots/pipepipe-account-5.2.3-api36.png)
 
-*Reference capture: PipePipe 5.2.3 · Android 16/API 36. It illustrates the separate service entries and the distinct **Clear WebView cookies** action.*
+*Reference capture: Android 16/API 36. It illustrates the separate service entries and the distinct **Clear WebView cookies** action.*
 
 ## Service-specific reports
 

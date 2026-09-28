@@ -1,10 +1,10 @@
 # YouTube playback, network, and sign-in
 
-PipePipe's YouTube extraction paths change as YouTube changes its requests. This
-page was checked against the current 5.3.x code and the [latest stable and
-prerelease builds](https://github.com/InfinityLoop1308/PipePipe/releases). If a
-recent issue asks for a specific prerelease, test that exact build and mention
-it in the report; do not describe an older beta as the current behaviour.
+YouTube's requests and PipePipe's extraction paths change over time. Check the
+[release list](https://github.com/InfinityLoop1308/PipePipe/releases) before
+troubleshooting, and include the exact installed build in a report. If an issue
+asks you to test a particular prerelease, use that build and say so; do not
+assume an older beta behaves like the current app.
 
 ## Every YouTube video fails: check DNS filtering
 
@@ -37,9 +37,8 @@ a local note, then search that text:
   </svg>
 </div>
 
-*These screens show PipePipe 5.2.4 on Android 16. The controlled network failure
-was created only to show where the buttons are; diagnose the text from your own
-report.*
+*Reference screens from Android 16. The controlled network failure only shows
+where the buttons are; diagnose the text from your own report.*
 
 Search the report for `googleapis.com` and `google.com`. These forms identify a
 local DNS or network block:
@@ -180,15 +179,32 @@ by reinstalling WebView or changing DNS when the rest of YouTube still plays.
 1. Check whether the item is a live stream, a Short, age-restricted, members
    only, or otherwise unavailable in a normal browser. Note that in the report.
 2. Open **Settings → Advanced → YouTube extraction endpoint** and write down the
-   selected value. In current 5.3.x builds, a signed-out account can choose
-   **VisionOS** or **MWEB (SABR)**; a signed-in account is kept on **MWEB
-   (SABR)**. **Android VR** is from an older build and is no longer a current
-   picker option.
+   selected value. Available choices can depend on the installed build and
+   sign-in state. Older screenshots or reports may mention **Android VR**;
+   trust the options shown in your own settings.
 3. Retry the same URL once without changing quality, codec, network, or login.
 4. If it still fails, change only one variable, then retry the same URL. The
    useful comparison is “same video, one change”, not a list of simultaneous
    switches.
 5. Attach the generated report and say whether other public videos still work.
+
+### Very long videos and SABR segment counts
+
+A video is not unsupported just because it is long. In
+[issue #2973](https://github.com/InfinityLoop1308/PipePipe/issues/2973), a
+36-hour video failed with `Invalid exact SABR segment count`: its MWEB/SABR
+timeline contained 23,954 segments while the Android client's then-current
+limit was 10,000. This is a player-side count check, not a decoder or WebView
+error. [PipePipeClient PR #99](https://github.com/InfinityLoop1308/PipePipeClient/pull/99)
+tracks a proposed change; use the issue and PR pages to check their current
+status and whether a fix has reached a published build. A higher ceiling still
+cannot guarantee playback for every extreme timeline YouTube may return.
+
+If this exact error appears, check the linked issue and release notes for the
+current status. Include the exact error line, video URL and duration, installed
+build, selected endpoint, and quality in your report.
+Another app may use a different YouTube extraction path, so playback there does
+not prove PipePipe received the same stream data.
 
 An isolated failure can come from the response returned for that particular
 video or from a format the device cannot decode. It does not by itself show that
@@ -196,16 +212,10 @@ PipePipe, WebView, or the whole network is broken. If the report contains
 `video/av01`, `MediaCodec`, or a decoder name, follow the
 [MediaCodec guide](./android) as a separate codec check.
 
-::: info Current endpoint choices
-
-| Account state | Choices shown in current 5.3.x builds | Default |
-| --- | --- | --- |
-| Signed out | VisionOS, MWEB (SABR) | VisionOS |
-| Signed in | MWEB (SABR) | MWEB (SABR) |
-| Older screenshots/issues | Android VR may be shown | Not a current choice |
-
-The labels and defaults may change again after a YouTube change. Always report
-what the installed build actually shows.
+::: info Endpoint choices
+Endpoint names, availability, and defaults can change with the app build,
+YouTube's responses, and sign-in state. Use the picker in your own installation
+as the source of truth, and report exactly what it shows.
 :::
 
 ### A controlled playback test
@@ -251,23 +261,22 @@ of an unrelated WebView report unless the exact WebView message is also present.
   </svg>
 </div>
 
-*Historical capture: PipePipe 5.2.3 on Android 16/API 36. It shows an endpoint
-that is no longer offered by current 5.3.x builds; use the table above for the
-current choices.*
+*Historical capture from Android 16. It includes a legacy endpoint that may no
+longer appear in the picker; use the options in your own installation.*
 
-![Current YouTube extraction endpoint picker, PipePipe 5.3.1-beta on Android 16](/screenshots/pipepipe-endpoint-picker-5.3.1-beta-api36.png)
+![Reference YouTube extraction endpoint picker on Android 16](/screenshots/pipepipe-endpoint-picker-5.3.1-beta-api36.png)
 
-*Current capture: PipePipe 5.3.1-beta · Android 16/API 36. Signed-out builds
-show VisionOS and MWEB (SABR); the selected entry is visible in the dialog.*
+*Reference capture: Android 16/API 36. It shows where to find the picker; the
+available choices can differ in your installation.*
 
-Recent closed report [#2686](https://github.com/InfinityLoop1308/PipePipe/issues/2686)
-is a concrete example of an older endpoint comparison: the maintainer asked
+[#2686](https://github.com/InfinityLoop1308/PipePipe/issues/2686) is a concrete
+example of an older endpoint comparison: the maintainer asked
 whether **Android VR (DASH)** was selected and advised testing **MWEB (SABR)**.
 In the capture, **1** is MWEB and **2** is Android VR. Treat that as historical
 evidence, not as a current instruction or a promise that MWEB fixes every
 network or account failure.
 
-Recent reports show why the exact stage matters. In [#2901](https://github.com/InfinityLoop1308/PipePipe/issues/2901), playback stopped after the
+The issue history shows why the exact stage matters. In [#2901](https://github.com/InfinityLoop1308/PipePipe/issues/2901), playback stopped after the
 phone went to sleep and the report included an `UnknownHost` destination. In
 [#2905](https://github.com/InfinityLoop1308/PipePipe/issues/2905), playback
 worked but a SABR download failed on a VPN. They are both “YouTube/SABR”

@@ -23,7 +23,7 @@ URL privada, cookie, token, cuenta u otro dato sensible antes de compartirlo.
 
 ![Informe de error PipePipe generado](/screenshots/pipepipe-error-report-5.2.3-api36.png)
 
-*Capturas de referencia: PipePipe 5.2.3 · Android 16/API 36. El error mostrado
+*Capturas de referencia: Android 16/API 36. El error mostrado
 es solo un ejemplo; informa los campos de tu propio fallo.*
 
 ## Escribe pasos ejecutables
