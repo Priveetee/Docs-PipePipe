@@ -1,18 +1,24 @@
 # El extractor
 
-PipePipe nunca habla directamente con YouTube, BiliBili o SoundCloud. El acceso a los servicios vive en el **extractor**, una biblioteca Java autónoma de la que depende la app. Le das un enlace o una consulta de búsqueda y te devuelve objetos de modelo estructurados: un vídeo con sus flujos, un channel con sus pestañas, una playlist, una página de resultados, un hilo de comentarios. En la app no ocurre ningún parseo de HTML ni ninguna llamada a las API de los servicios.
+La aplicación Android y el **extractor** tienen funciones distintas. El
+extractor es una biblioteca Java autónoma que gestiona las peticiones
+específicas de cada servicio, su análisis y los resultados estructurados: un
+vídeo con sus flujos, un canal con sus pestañas, una lista, una página de
+resultados o un hilo de comentarios. La aplicación proporciona el descargador
+de red y convierte esos resultados en pantallas, reproducción y descargas.
 
 ![Vista general del extractor](/diagrams/extractor-overview.png)
 
 Empezó como un fork del extractor de NewPipe, y la ruta del paquete (`org.schabi.newpipe.extractor`) todavía lo delata. Vale la pena decirlo una vez y luego dejarlo de lado: las dos bases de código han divergido mucho. Los servicios, las abstracciones, el parseo y el comportamiento difieren lo suficiente como para que la documentación, los issues y los parches de NewPipe rara vez encajen limpiamente en PipePipe. Trátalo como su propia base de código, no como un espejo de NewPipe.
 
-::: info Estado del código comprobado
-Esta visión general se comprobó contra `main` de PipePipeExtractor y `dev` de
-PipePipeClient el 03/09/2026. La última release de PipePipe comprobada es la
-**5.3.0**, y **5.3.1-beta** es la preversión actual. El flujo actual de YouTube
-se detalla en [Dentro de YouTube](./youtube-service), y la implementación SABR
-tiene su propia sección más abajo.
-:::
+El repositorio de la aplicación PipePipe integra revisiones concretas de los
+dos componentes en cada build publicado. Consulta el
+[repositorio de la app PipePipe](https://github.com/InfinityLoop1308/PipePipe)
+para saber qué revisiones incluye una compilación, y el
+[código de PipePipeExtractor](https://github.com/InfinityLoop1308/PipePipeExtractor)
+para ver la biblioteca. La extracción de YouTube se explica en
+[YouTube](./youtube-service); SABR atraviesa el extractor y el reproductor
+Android, como se describe en la [guía de SABR](/es/developer-guide/introduction).
 
 El módulo es autocontenido. Se compila y se prueba por sí solo, sin la app Android alrededor, contra una pequeña abstracción `Downloader` que el host proporciona.
 

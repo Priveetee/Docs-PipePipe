@@ -8,7 +8,7 @@ Pendant longtemps, la lecture YouTube était simple à extraire. On résolvait u
 
 Quelques signalements représentatifs :
 
-- [#2330 — Content Not Yet Supported (SABR) after 5.1.0](https://github.com/InfinityLoop1308/PipePipe/issues/2330)
+- [#2330 — Content Not Yet Supported (SABR)](https://github.com/InfinityLoop1308/PipePipe/issues/2330)
 - [#2272 — « This content is not yet supported » quand un lien YouTube est envoyé](https://github.com/InfinityLoop1308/PipePipe/issues/2272)
 - [#2318 — la plupart des vidéos ne se lancent plus, au hasard](https://github.com/InfinityLoop1308/PipePipe/issues/2318)
 

@@ -8,7 +8,7 @@ Durante mucho tiempo, la reproducción de YouTube era fácil de extraer. Resolv�
 
 Algunos reportes representativos:
 
-- [#2330 — Content Not Yet Supported (SABR) after 5.1.0](https://github.com/InfinityLoop1308/PipePipe/issues/2330)
+- [#2330 — Content Not Yet Supported (SABR)](https://github.com/InfinityLoop1308/PipePipe/issues/2330)
 - [#2272 — «This content is not yet supported» cuando se envía un enlace de YouTube](https://github.com/InfinityLoop1308/PipePipe/issues/2272)
 - [#2318 — la mayoría de los vídeos no se reproducen, al azar](https://github.com/InfinityLoop1308/PipePipe/issues/2318)
 

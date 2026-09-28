@@ -4,12 +4,25 @@ This part of the wiki is about SABR, the protocol YouTube now uses to deliver me
 
 SABR, short for Server Adaptive BitRate, is the delivery protocol YouTube increasingly uses in place of plain media URLs. If you build or maintain a YouTube extractor, it matters, because it changes how the whole thing works.
 
-::: info Current implementation snapshot
-The protocol pages were checked against PipePipeExtractor `main` and
-PipePipeClient `dev` on 2026-09-03. PipePipe's latest stable release checked is
-**5.3.0**, and **5.3.1-beta** is the current prerelease. Version-specific
-details belong in the extractor pages, because YouTube can change this flow.
-:::
+The implementation is split between two repositories. The
+[extractor](https://github.com/InfinityLoop1308/PipePipeExtractor) builds
+service requests and interprets service responses, including SABR/UMP data.
+The [Android client](https://github.com/InfinityLoop1308/PipePipeClient)
+coordinates playback, manages the SABR session, and connects parsed formats to
+the media player. The app repository chooses which revisions are combined in a
+published build. For a specific behaviour or limit, inspect the linked source
+and issue history rather than assuming that an extractor change alone changes
+playback. For example, [issue #2973](https://github.com/InfinityLoop1308/PipePipe/issues/2973)
+and [client PR #99](https://github.com/InfinityLoop1308/PipePipeClient/pull/99)
+document a long-video segment-count case; their pages show the current status.
+YouTube changes this flow over time, so this guide focuses on its architecture
+and links to live source for implementation details.
+
+Useful entry points in the code are the extractor's
+[`SabrResponseDecoder.java`](https://github.com/InfinityLoop1308/PipePipeExtractor/blob/main/extractor/src/main/java/org/schabi/newpipe/extractor/services/youtube/sabr/protocol/SabrResponseDecoder.java)
+and [`YoutubeSabrSession.java`](https://github.com/InfinityLoop1308/PipePipeExtractor/blob/main/extractor/src/main/java/org/schabi/newpipe/extractor/services/youtube/sabr/YoutubeSabrSession.java),
+plus the client's
+[`SabrDashMediaSource.java`](https://github.com/InfinityLoop1308/PipePipeClient/blob/dev/app/src/main/java/org/schabi/newpipe/player/datasource/SabrDashMediaSource.java).
 
 The old way was mostly stateless. You resolved a URL or a manifest and downloaded the bytes. SABR is a conversation instead. The client opens a session and keeps talking to the server, sending its current playback state and receiving media in small pieces, until playback is done.
 

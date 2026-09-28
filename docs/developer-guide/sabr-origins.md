@@ -8,7 +8,7 @@ For a long time YouTube playback was simple to extract. You resolved a media URL
 
 A few reports that captured it:
 
-- [#2330 — Content Not Yet Supported (SABR) after 5.1.0](https://github.com/InfinityLoop1308/PipePipe/issues/2330)
+- [#2330 — Content Not Yet Supported (SABR)](https://github.com/InfinityLoop1308/PipePipe/issues/2330)
 - [#2272 — "This content is not yet supported" when a YouTube link is pushed in](https://github.com/InfinityLoop1308/PipePipe/issues/2272)
 - [#2318 — most videos won't play for no reason randomly](https://github.com/InfinityLoop1308/PipePipe/issues/2318)
 
