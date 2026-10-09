@@ -27,6 +27,34 @@ Android VR ya no forma parte del cliente actual. `web`, `tv_simply` y
 visibles; la ruta TV downgraded también tiene un tratamiento especial para
 directos/HLS.
 
+### La retirada de VisionOS
+
+**VisionOS** es el endpoint por defecto en modo anónimo. El cliente Android lo
+elige cuando no hay cookies guardadas, y **MWEB (SABR)** en cuanto existe una
+sesión (`App.reconcileYoutubePlayerClient` en PipePipeClient). Durante mucho
+tiempo fue la ruta que funcionaba sin cuenta; YouTube está retirándola.
+
+Lo que falla son las peticiones de medios, no la extracción. La respuesta del
+player se sigue leyendo y sigue listando formatos; es un chunk de medios más
+tarde en la reproducción el que vuelve con HTTP 403. En los informes de
+usuarios aparece como **Source error**, `ERROR_CODE_IO_BAD_HTTP_STATUS` y, casi
+siempre, una parada hacia 0:59.
+
+Las respuestas de los mantenedores desde septiembre de 2026 dan la misma
+indicación: cambiar **Ajustes → Avanzado → Endpoint de extracción de YouTube** a
+**MWEB (SABR)**
+([#2931](https://github.com/InfinityLoop1308/PipePipe/issues/2931),
+[#2935](https://github.com/InfinityLoop1308/PipePipe/issues/2935),
+[#2992](https://github.com/InfinityLoop1308/PipePipe/issues/2992)). MWEB es
+además la única ruta que construye flujos SABR, así que es la que sigue
+recibiendo trabajo. No es gratis: MWEB necesita que `googleapis.com` y
+`google.com` sean accesibles para el token proof-of-origin, así que un filtrado
+DNS lo rompe de otra forma.
+
+Un detalle útil al leer el código: `NewPipe.setYoutubePlayerClient()` solo acepta
+`mweb`, `visionos` y el valor interno `tv_downgraded`. Cualquier otro valor,
+incluida una preferencia que dejó una versión antigua, recae en `visionos`.
+
 Los ids y versiones de cliente viven en `ClientsConstants` y los helpers de
 peticiones. Las peticiones hacen POST a `youtubei/v1/<endpoint>` (`player`,
 `next`, `browse`, `search`) a través de los helpers JSON correspondientes.

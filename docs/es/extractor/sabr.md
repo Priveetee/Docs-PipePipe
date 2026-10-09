@@ -8,11 +8,17 @@ decodificación y ensamblaje de medios.
 
 ## Dónde encaja
 
-Cuando la respuesta del player MWEB contiene formatos SABR,
-`YoutubeStreamExtractor.buildSabrStreams()` los expone con
-`DeliveryMethod.SABR`. No hay una URL de medios por formato. El flujo lleva
-`serverAbrStreamingUrl` como referencia común, mientras el cliente selecciona
-formatos y conduce la sesión con `YoutubeSabrRequest`.
+Los flujos SABR solo se construyen en la ruta **MWEB**.
+`ensureStreamsAreCached()` llama a `buildSabrStreams()` cuando el endpoint
+seleccionado es `mweb`, el elemento no es un directo ni un post-live, y la
+respuesta del player trae una URL de streaming SABR. Cualquier otra combinación
+extrae formatos directos, y por eso pasar a VisionOS no evita un problema SABR:
+abandona la ruta SABR y vuelve a la entrega antigua, que YouTube está retirando.
+
+Cuando se cumplen esas condiciones, `YoutubeStreamExtractor.buildSabrStreams()`
+expone los formatos con `DeliveryMethod.SABR`. No hay una URL de medios por
+formato. El flujo lleva `serverAbrStreamingUrl` como referencia común, mientras
+el cliente selecciona formatos y conduce la sesión con `YoutubeSabrRequest`.
 
 La división actual es:
 

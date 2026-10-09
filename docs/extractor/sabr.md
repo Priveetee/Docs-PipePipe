@@ -8,11 +8,18 @@ between extraction, requests, decoding and media assembly.
 
 ## Where it sits
 
-When the MWEB player response contains SABR formats,
-`YoutubeStreamExtractor.buildSabrStreams()` exposes them as
-`DeliveryMethod.SABR`. There is no per-format media URL. The stream carries the
-common `serverAbrStreamingUrl` as reference, while the client chooses formats
-and drives the session with `YoutubeSabrRequest`.
+SABR streams are only built on the **MWEB** path.
+`ensureStreamsAreCached()` calls `buildSabrStreams()` when the selected endpoint
+is `mweb`, the item is neither a live nor a post-live stream, and the player
+response carries a SABR streaming URL. Every other combination extracts direct
+formats instead, which is why switching the endpoint to VisionOS does not work
+around a SABR problem: it leaves the SABR path and takes the older delivery
+route YouTube is winding down.
+
+When those conditions hold, `YoutubeStreamExtractor.buildSabrStreams()` exposes
+the formats as `DeliveryMethod.SABR`. There is no per-format media URL. The
+stream carries the common `serverAbrStreamingUrl` as reference, while the client
+chooses formats and drives the session with `YoutubeSabrRequest`.
 
 The current division of labour is:
 

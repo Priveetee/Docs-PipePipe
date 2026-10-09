@@ -49,6 +49,10 @@ enum DeliveryMethod { PROGRESSIVE_HTTP, DASH, HLS, SS, TORRENT, SABR }
 
 Para todos los métodos de delivery excepto SABR, el reproductor acaba con una URL o un manifest, y ExoPlayer se encarga del resto. SABR es la excepción. Un flujo SABR no es algo que descargas una vez; es una conversación que mantienes: petición, respuesta UMP, segmentos, petición de seguimiento, con la atestación regulando el acceso al medio protegido.
 
+`SABR` solo aparece en el endpoint MWEB, y solo para vídeos normales, así que el
+endpoint elegido en los ajustes avanzados decide si este método de entrega es
+alcanzable. La condición exacta está en [SABR en el extractor](./sabr).
+
 El extractor expone los metadatos del flujo `SABR` y también proporciona el
 driver `YoutubeSabrSession`, que convierte peticiones en segmentos completados.
 La aplicación mantiene el puente Media3, la política de buffer y el proveedor de

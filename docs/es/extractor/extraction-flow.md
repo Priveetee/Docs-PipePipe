@@ -29,6 +29,12 @@ Toma `YoutubeStreamExtractor.onFetchPage` como caso concreto. Lee el `videoId` d
 
 El endpoint seleccionado no está codificado directamente en este método. `NewPipe.getYoutubePlayerClient()` acepta `visionos`, `mweb` o el valor interno `tv_downgraded`. El cliente Android expone actualmente VisionOS y MWEB en los ajustes avanzados; el antiguo endpoint Android-VR ya no es una opción actual.
 
+El endpoint por defecto en modo anónimo es **VisionOS**, un cliente que YouTube
+está retirando; el fallo que produce y por qué MWEB es la ruta mantenida se
+describen en [Dentro del servicio de
+YouTube](./youtube-service#la-retirada-de-visionos) y en la [guía de
+reproducción](/es/issues/youtube-playback#la-reproduccion-se-detiene-hacia-el-minuto-1-con-un-403).
+
 ```java
 public void onFetchPage(@Nonnull final Downloader downloader) {
     final String videoId = getId();

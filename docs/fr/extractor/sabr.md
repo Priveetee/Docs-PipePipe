@@ -8,11 +8,18 @@ frontière entre extraction, requêtes, décodage et assemblage média.
 
 ## Où il se situe
 
-Quand la réponse player MWEB contient des formats SABR,
-`YoutubeStreamExtractor.buildSabrStreams()` les expose avec
-`DeliveryMethod.SABR`. Il n'y a pas d'URL média par format. Le flux porte
-`serverAbrStreamingUrl` comme référence commune, tandis que le client choisit
-les formats et pilote la session avec `YoutubeSabrRequest`.
+Les flux SABR ne sont construits que sur le chemin **MWEB**.
+`ensureStreamsAreCached()` appelle `buildSabrStreams()` quand l'endpoint
+sélectionné est `mweb`, que l'élément n'est ni un direct ni un post-live, et que
+la réponse player porte une URL de streaming SABR. Toutes les autres
+combinaisons extraient des formats directs, ce qui explique pourquoi passer sur
+VisionOS ne contourne pas un problème SABR : cela quitte le chemin SABR et
+reprend l'ancienne livraison, que YouTube est en train de retirer.
+
+Quand ces conditions sont réunies, `YoutubeStreamExtractor.buildSabrStreams()`
+expose les formats avec `DeliveryMethod.SABR`. Il n'y a pas d'URL média par
+format. Le flux porte `serverAbrStreamingUrl` comme référence commune, tandis
+que le client choisit les formats et pilote la session avec `YoutubeSabrRequest`.
 
 La répartition actuelle est la suivante :
 

@@ -27,6 +27,36 @@ L'ancien choix Android VR ne fait plus partie du client actuel. `web`,
 pas des choix visibles ; le chemin TV downgraded possède aussi un traitement
 spécifique des directs/HLS.
 
+### L'extinction de VisionOS
+
+**VisionOS** est l'endpoint par défaut en mode anonyme. Le client Android le
+choisit quand aucun cookie n'est stocké, et **MWEB (SABR)** dès qu'une session
+existe (`App.reconcileYoutubePlayerClient` dans PipePipeClient). Pendant
+longtemps, c'était le chemin qui fonctionnait sans compte ; YouTube est en train
+de le retirer.
+
+Ce sont les requêtes média qui échouent, pas l'extraction. La réponse player est
+toujours lue et liste toujours des formats ; c'est un chunk média plus tard dans
+la lecture qui revient en HTTP 403. Dans les rapports utilisateurs, cela donne un
+**Source error**, `ERROR_CODE_IO_BAD_HTTP_STATUS`, et le plus souvent un arrêt
+vers 0:59.
+
+Les réponses des mainteneurs depuis septembre 2026 donnent toutes la même marche
+à suivre : passer **Paramètres → Avancé → Point de terminaison d'extraction
+YouTube** sur **MWEB (SABR)**
+([#2931](https://github.com/InfinityLoop1308/PipePipe/issues/2931),
+[#2935](https://github.com/InfinityLoop1308/PipePipe/issues/2935),
+[#2992](https://github.com/InfinityLoop1308/PipePipe/issues/2992)). MWEB est
+aussi le seul chemin qui construit des flux SABR, donc celui qui continue de
+recevoir du travail. Ce n'est pas une solution gratuite : MWEB a besoin que
+`googleapis.com` et `google.com` soient joignables pour le jeton proof-of-origin,
+donc un filtrage DNS le casse autrement.
+
+Un détail utile à la lecture du code : `NewPipe.setYoutubePlayerClient()`
+n'accepte que `mweb`, `visionos` et la valeur interne `tv_downgraded`. Toute
+autre valeur, y compris une préférence laissée par une ancienne version,
+retombe sur `visionos`.
+
 Les ids et versions de client vivent dans `ClientsConstants` et les helpers de
 requêtes. Les requêtes POST vers `youtubei/v1/<endpoint>` (`player`, `next`,
 `browse`, `search`) passent par les helpers JSON correspondants. Des clients

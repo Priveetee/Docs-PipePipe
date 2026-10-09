@@ -30,6 +30,10 @@ Take `YoutubeStreamExtractor.onFetchPage` as the concrete case. It reads the `vi
 The selected endpoint is not hard-coded in this method. `NewPipe.getYoutubePlayerClient()` accepts
 `visionos`, `mweb`, or the internal `tv_downgraded` value. The Android client currently exposes
 VisionOS and MWEB in Advanced settings; the old Android-VR endpoint is not a current option.
+The anonymous default is **VisionOS**, a client YouTube is retiring, so the
+advice for a 0:59 `403` is covered in
+[Inside the YouTube service](./youtube-service#the-visionos-wind-down) and in the
+[playback guide](/issues/youtube-playback#playback-stops-around-1-minute-with-a-403).
 
 ```java
 public void onFetchPage(@Nonnull final Downloader downloader) {
