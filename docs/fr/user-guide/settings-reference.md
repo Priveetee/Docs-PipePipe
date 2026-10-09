@@ -60,9 +60,43 @@ et retestez la même vidéo. Pour les contournements décodeur/surface, consulte
 
 ![Réglages Avancé sur Android 16](/screenshots/pipepipe-advanced-5.3.1-beta-api36.png)
 
+### Point de terminaison d'extraction YouTube
+
+C'est le réglage Avancé qui décide quel client YouTube PipePipe interroge pour
+une vidéo. Ouvrez **Paramètres → Avancé → Point de terminaison d'extraction
+YouTube** :
+
+<div class="screenshot-callout" role="img" aria-label="Sélecteur Point de terminaison d'extraction YouTube avec les choix VisionOS et MWEB (SABR) surlignés">
+  <img src="/screenshots/pipepipe-endpoint-picker-5.4.0-api36.png" alt="Sélecteur Point de terminaison d'extraction YouTube sur Android 16">
+  <svg viewBox="0 0 1080 2340" aria-hidden="true">
+    <rect class="callout-box" x="55" y="1050" width="790" height="280" rx="24" />
+    <circle class="callout-number" cx="800" cy="1190" r="42" /><text x="800" y="1190">1</text>
+  </svg>
+</div>
+
+*Capture de référence : Android 16/API 36 sur une installation anonyme. **1**
+montre le sélecteur et ses deux choix. Une installation connectée n'affiche que
+MWEB.*
+
+| Valeur | Ce que c'est | Quand cela casse |
+| --- | --- | --- |
+| **MWEB (SABR)** | Le chemin actuel basé sur des sessions, et le seul qui lit les formats SABR. Une session connectée y est limitée. | Nécessite `googleapis.com` et `google.com` joignables pour le jeton proof-of-origin, donc un filtrage DNS le casse. |
+| **VisionOS** | L'endpoint par défaut en mode anonyme, conservé pour les installations sans session. | YouTube retire ce client : la lecture peut s'arrêter vers 0:59 avec `Response code: 403`. |
+
+Si un rapport affiche `Endpoint: visionos` et que la lecture s'arrête vers 0:59,
+passez sur **MWEB (SABR)**. Le symptôme et les vérifications associées sont dans
+[Lecture YouTube, réseau et connexion](/fr/issues/youtube-playback#la-lecture-s-arrete-vers-1-minute-avec-un-403).
+
+![Ligne Point de terminaison d'extraction YouTube réglée sur MWEB (SABR) dans les réglages Avancé sur Android 16](/screenshots/pipepipe-advanced-endpoint-5.4.0-api36.png)
+
+*Capture de référence : la même ligne dans la liste Avancé, ici réglée sur
+MWEB (SABR). Votre valeur peut différer ; c'est celle à noter dans un rapport.*
+
 ## Écrans liés à une tâche
 
 - [Téléchargements](/fr/issues/downloads) : destination et tentatives.
 - [Comptes et services](/fr/issues/accounts-and-services) : services et cookies WebView.
 - [Configuration, mises à jour et sauvegardes](/fr/issues/setup) : préversions et contrôle manuel.
 - [Sauvegarde et restauration](./backup-and-restore) : export avant import.
+- [Lecture YouTube, réseau et connexion](/fr/issues/youtube-playback#l-endpoint-est-une-information-pas-un-bouton-magique)
+  : le choix d'endpoint et le cas du 403 à 0:59.

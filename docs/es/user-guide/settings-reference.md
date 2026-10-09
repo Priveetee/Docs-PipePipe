@@ -59,9 +59,43 @@ mismo vídeo. Para workarounds de decodificador/superficie, consulta
 
 ![Ajustes avanzados en Android 16](/screenshots/pipepipe-advanced-5.3.1-beta-api36.png)
 
+### Endpoint de extracción de YouTube
+
+Es el ajuste de Avanzado que decide qué cliente de YouTube consulta PipePipe para
+un vídeo. Abre **Ajustes → Avanzado → Endpoint de extracción de YouTube**:
+
+<div class="screenshot-callout" role="img" aria-label="Selector Endpoint de extracción de YouTube con las opciones VisionOS y MWEB (SABR) resaltadas">
+  <img src="/screenshots/pipepipe-endpoint-picker-5.4.0-api36.png" alt="Selector Endpoint de extracción de YouTube en Android 16">
+  <svg viewBox="0 0 1080 2340" aria-hidden="true">
+    <rect class="callout-box" x="55" y="1050" width="790" height="280" rx="24" />
+    <circle class="callout-number" cx="800" cy="1190" r="42" /><text x="800" y="1190">1</text>
+  </svg>
+</div>
+
+*Captura de referencia: Android 16/API 36 en una instalación anónima. **1** es
+el selector con sus dos opciones. Una instalación con sesión iniciada solo
+muestra MWEB.*
+
+| Valor | Qué es | Cuándo falla |
+| --- | --- | --- |
+| **MWEB (SABR)** | La ruta actual basada en sesiones, y la única que reproduce formatos SABR. Una sesión iniciada está limitada a ella. | Necesita `googleapis.com` y `google.com` accesibles para el token proof-of-origin, así que un filtrado DNS la rompe. |
+| **VisionOS** | El endpoint por defecto en modo anónimo, mantenido para instalaciones sin sesión. | YouTube está retirando ese cliente: la reproducción puede pararse hacia 0:59 con `Response code: 403`. |
+
+Si un informe muestra `Endpoint: visionos` y la reproducción se detiene hacia
+0:59, cambia a **MWEB (SABR)**. El síntoma y las comprobaciones asociadas están
+en [Reproducción, red e inicio de sesión](/es/issues/youtube-playback#la-reproduccion-se-detiene-hacia-el-minuto-1-con-un-403).
+
+![Fila Endpoint de extracción de YouTube ajustada a MWEB (SABR) en los ajustes Avanzado en Android 16](/screenshots/pipepipe-advanced-endpoint-5.4.0-api36.png)
+
+*Captura de referencia: la misma fila en la lista Avanzado, aquí ajustada a
+MWEB (SABR). Tu valor puede ser distinto; ese es el que hay que anotar en un
+informe.*
+
 ## Pantallas relacionadas con tareas
 
 - [Descargas](/es/issues/downloads): destino y reintentos.
 - [Cuentas y servicios](/es/issues/accounts-and-services): servicios y cookies WebView.
 - [Configuración, actualizaciones y copias](/es/issues/setup): preliminares y comprobación manual.
 - [Copia de seguridad y restauración](./backup-and-restore): exportar antes de importar.
+- [Reproducción, red e inicio de sesión](/es/issues/youtube-playback#el-endpoint-es-evidencia-no-un-boton-magico):
+  la elección de endpoint y el caso del 403 a 0:59.

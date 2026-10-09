@@ -58,6 +58,36 @@ retest the same video. For decoder and surface workarounds, see
 
 ![Advanced settings on Android 16](/screenshots/pipepipe-advanced-5.3.1-beta-api36.png)
 
+### YouTube extraction endpoint
+
+This is the Advanced setting that decides which YouTube client PipePipe asks for
+a video. Open **Settings → Advanced → YouTube extraction endpoint**:
+
+<div class="screenshot-callout" role="img" aria-label="YouTube extraction endpoint picker with the VisionOS and MWEB (SABR) choices highlighted">
+  <img src="/screenshots/pipepipe-endpoint-picker-5.4.0-api36.png" alt="YouTube extraction endpoint picker on Android 16">
+  <svg viewBox="0 0 1080 2340" aria-hidden="true">
+    <rect class="callout-box" x="55" y="1050" width="790" height="280" rx="24" />
+    <circle class="callout-number" cx="800" cy="1190" r="42" /><text x="800" y="1190">1</text>
+  </svg>
+</div>
+
+*Reference capture: Android 16/API 36 on an anonymous installation. **1** is the
+picker with both choices. A signed-in installation lists MWEB only.*
+
+| Value | What it is | When it fails |
+| --- | --- | --- |
+| **MWEB (SABR)** | The current session-based path, and the only one that can play SABR formats. A signed-in session is locked to it. | Needs `googleapis.com` and `google.com` reachable for the proof-of-origin token, so a DNS filter breaks it. |
+| **VisionOS** | The anonymous default, kept for installations without a session. | YouTube is retiring that client: playback can stop around 0:59 with `Response code: 403`. |
+
+If a report shows `Endpoint: visionos` and playback stops around 0:59, switch to
+**MWEB (SABR)**. The symptom and the checks around it are in [YouTube playback,
+network, and sign-in](/issues/youtube-playback#playback-stops-around-1-minute-with-a-403).
+
+![YouTube extraction endpoint entry set to MWEB (SABR) in Advanced settings on Android 16](/screenshots/pipepipe-advanced-endpoint-5.4.0-api36.png)
+
+*Reference capture: the same entry in the Advanced list, here set to MWEB (SABR).
+Your value may differ; that is the value to note in a report.*
+
 ## More task-specific screens
 
 - [Downloads](/issues/downloads) shows destination and retry controls.
@@ -66,3 +96,5 @@ retest the same video. For decoder and surface workarounds, see
 - [Setup, updates, and backups](/issues/setup) highlights prereleases and the
   manual update check.
 - [Backup and restore](./backup-and-restore) highlights export before import.
+- [Playback, network, and sign-in](/issues/youtube-playback#endpoint-is-evidence-not-a-magic-switch)
+  covers the endpoint choice and the 0:59 `403` case.
