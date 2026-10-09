@@ -26,6 +26,7 @@ ver los cambios recientes y empieza por el síntoma de abajo.
 | **WebView unavailable** | [WebView y reproducción protegida](./webview) | Que cambiar endpoint evita la comprobación WebView. |
 | Fallan todos los vídeos de YouTube; un host de Google resuelve a `0.0.0.0` o `127.0.0.1` | [Filtrado DNS y reproducción](./youtube-playback#fallan-todos-los-videos-de-youtube-comprueba-el-filtrado-dns) | Que cambiar endpoint, reinstalar o actualizar WebView evita el filtrado DNS. |
 | Solo falla uno o unos pocos vídeos de YouTube mientras los demás se reproducen | [Reproducción, red e inicio de sesión](./youtube-playback#falla-un-video-o-unos-pocos-mientras-los-demas-funcionan) | Que WebView, el DNS o toda la instalación están rotos. |
+| La reproducción se detiene hacia 0:59 con `Response code: 403` y `Endpoint: visionos` | [Reproducción, red e inicio de sesión](./youtube-playback#la-reproduccion-se-detiene-hacia-el-minuto-1-con-un-403) | Que es un problema de códec, WebView o DNS, o que reinstalar ayuda. |
 | Un vídeo muy largo falla con `Invalid exact SABR segment count` | [Reproducción, red e inicio de sesión](./youtube-playback) | Que no es compatible solo por su duración, o que cambiar WebView/códec corrige este error de recuento. |
 | `AntiBotException`, `Source error`, búfer, seek en directo | [Reproducción, red e inicio de sesión](./youtube-playback) | Que WebView actual o sesión demuestra la causa. |
 | Búsqueda vacía/incorrecta | [Búsqueda y descubrimiento](./search) | Que una corrección del reproductor arregla búsqueda. |

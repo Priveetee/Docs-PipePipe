@@ -183,6 +183,41 @@ cambiando el DNS.
 5. Adjunta el informe generado y di si los demás vídeos públicos siguen
    funcionando.
 
+### La reproducción se detiene hacia el minuto 1 con un 403
+
+Este caso tiene una firma reconocible: el vídeo arranca con normalidad, se
+detiene hacia el segundo 59 con un **Source error**, y el informe contiene
+`ERROR_CODE_IO_BAD_HTTP_STATUS` con `Response code: 403`.
+
+Mira la línea `__Endpoint:__` de ese informe. Si dice `visionos`, ese endpoint
+es la causa. YouTube está retirando el cliente VisionOS: la respuesta del player
+se sigue extrayendo y sigue listando formatos, pero las peticiones de medios
+empiezan a ser rechazadas una vez que la reproducción está en marcha. No es un
+fallo de códec, WebView ni DNS.
+
+Abre **Ajustes → Avanzado → Endpoint de extracción de YouTube** y selecciona
+**MWEB (SABR)**. Una instalación anónima usa VisionOS por defecto, y una sesión
+iniciada ya está limitada a MWEB: por eso el síntoma llega sobre todo a quienes
+no han iniciado sesión.
+
+![Selector de endpoint YouTube con MWEB (SABR) seleccionado](/screenshots/pipepipe-endpoint-picker-mweb-5.4.0-api36.png)
+
+*El estado al que hay que llegar: **MWEB (SABR)** seleccionado. Este cambio
+reinicia la app, así que vuelve a abrir el vídeo después.*
+
+MWEB necesita que `googleapis.com` y `google.com` sean accesibles, porque el
+flujo del token proof-of-origin los usa. Si la reproducción sigue fallando tras
+el cambio, revisa la [sección sobre filtrado
+DNS](#fallan-todos-los-videos-de-youtube-comprueba-el-filtrado-dns) antes que
+cualquier otra cosa, y adjunta un informe nuevo que muestre el nuevo endpoint.
+
+Las respuestas del mantenedor detrás de este diagnóstico están en
+[#2931](https://github.com/InfinityLoop1308/PipePipe/issues/2931),
+[#2935](https://github.com/InfinityLoop1308/PipePipe/issues/2935) y
+[#2992](https://github.com/InfinityLoop1308/PipePipe/issues/2992).
+[#3007](https://github.com/InfinityLoop1308/PipePipe/issues/3007) es un informe
+reciente con la misma firma a 0:59 y dos logs `visionos`.
+
 ### Vídeos muy largos y cantidad de segmentos SABR
 
 Un vídeo no deja de ser compatible solo por durar mucho. En la
@@ -236,30 +271,27 @@ No publiques cookies, tokens, correo de cuenta ni grabación del flujo de inicio
 
 Un endpoint elige ruta de petición/extracción. Puede hacer aparecer o desaparecer un síntoma y debe anotarse, pero un endpoint que funciona una vez no prueba que los demás estén rotos. Indica endpoint por defecto, los probados y resultado para la misma URL. No mezcles pruebas de endpoint con una issue WebView salvo que aparezca el mensaje WebView exacto.
 
-<div class="screenshot-callout" role="img" aria-label="Antiguo selector de endpoint YouTube con MWEB y Android VR resaltados">
-  <img src="/screenshots/pipepipe-endpoint-picker-5.2.3-api36.png" alt="Selector de endpoint de extracción YouTube">
+Un endpoint también puede dejar de funcionar porque YouTube retire el cliente
+que hay detrás. Cuando eso pasa, cambiar de endpoint es la solución, no solo un
+paso de diagnóstico. VisionOS está retirándose: un informe `visionos` que se
+detiene hacia 0:59 con un 403 corresponde a **MWEB (SABR)**.
+
+<div class="screenshot-callout" role="img" aria-label="Selector de endpoint YouTube con las opciones VisionOS y MWEB (SABR) resaltadas">
+  <img src="/screenshots/pipepipe-endpoint-picker-5.4.0-api36.png" alt="Selector de endpoint de extracción YouTube en Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
-    <rect class="callout-box" x="70" y="995" width="940" height="125" rx="24" />
-    <circle class="callout-number" cx="965" cy="1025" r="42" /><text x="965" y="1025">1</text>
-    <rect class="callout-box" x="70" y="1260" width="940" height="125" rx="24" />
-    <circle class="callout-number" cx="965" cy="1290" r="42" /><text x="965" y="1290">2</text>
+    <rect class="callout-box" x="55" y="1050" width="790" height="280" rx="24" />
+    <circle class="callout-number" cx="800" cy="1190" r="42" /><text x="800" y="1190">1</text>
   </svg>
 </div>
 
-*Captura histórica en Android 16. Muestra un endpoint antiguo que puede no
-aparecer ya en el selector; fíate de las opciones de tu app.*
-
-![Ejemplo del selector de endpoint YouTube en Android 16](/screenshots/pipepipe-endpoint-picker-5.3.1-beta-api36.png)
-
-*Captura de referencia: Android 16/API 36. Muestra dónde encontrar el selector;
-las opciones pueden ser distintas en tu app.*
+*Captura de referencia: Android 16/API 36 en una instalación anónima. **1** es
+el selector; las opciones disponibles en tu build pueden ser distintas.*
 
 La [issue #2686](https://github.com/InfinityLoop1308/PipePipe/issues/2686) es
 un ejemplo histórico de comparación de endpoints: el mantenedor preguntó si
 estaba seleccionado **Android VR (DASH)** y aconsejó probar **MWEB (SABR)**. En
-la captura, **1** es MWEB y **2** Android VR. Trátalo como evidencia histórica,
-no como una instrucción actual ni como la promesa de que MWEB arregle cualquier
-fallo de red o cuenta.
+el selector actual esa opción ya no existe. Trátalo como evidencia histórica,
+no como la promesa de que MWEB arregle cualquier fallo de red o cuenta.
 
 El historial de issues muestra por qué importa indicar la fase exacta. En
 [#2901](https://github.com/InfinityLoop1308/PipePipe/issues/2901), la reproducción

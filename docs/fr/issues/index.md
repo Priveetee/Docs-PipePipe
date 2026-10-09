@@ -28,6 +28,7 @@ les changements récents, puis partez du symptôme ci-dessous.
 | **WebView unavailable** | [WebView et lecture protégée](./webview) | Qu'un changement d'endpoint contourne WebView. |
 | Toutes les vidéos YouTube échouent ; un domaine Google pointe vers `0.0.0.0` ou `127.0.0.1` | [Filtrage DNS et lecture](./youtube-playback#toutes-les-videos-youtube-echouent-verifiez-le-filtrage-dns) | Qu'un changement d'endpoint, une réinstallation ou une mise à jour WebView contourne le filtrage DNS. |
 | Une seule vidéo YouTube (ou quelques-unes) échoue alors que les autres fonctionnent | [Lecture, réseau et connexion](./youtube-playback#une-seule-video-ou-quelques-unes-echoue-alors-que-les-autres-fonctionnent) | Que WebView, le DNS ou toute l'installation est cassé. |
+| La lecture s'arrête vers 0:59 avec `Response code: 403` et `Endpoint: visionos` | [Lecture, réseau et connexion](./youtube-playback#la-lecture-s-arrete-vers-1-minute-avec-un-403) | Qu'il s'agit d'un problème de décodeur, de WebView ou de DNS, ou qu'une réinstallation aide. |
 | Une vidéo très longue échoue avec `Invalid exact SABR segment count` | [Lecture, réseau et connexion](./youtube-playback) | Qu'elle est incompatible juste à cause de sa durée, ou qu'un changement de WebView/codec corrige cette erreur de comptage. |
 | `AntiBotException`, `Source error`, tampon, seek live | [Lecture, réseau et connexion](./youtube-playback) | Qu'un WebView à jour ou une connexion prouve la cause. |
 | Recherche vide/incorrecte | [Recherche et découverte](./search) | Qu'un correctif lecteur corrige la recherche. |

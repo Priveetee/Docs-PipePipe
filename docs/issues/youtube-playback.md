@@ -188,6 +188,39 @@ by reinstalling WebView or changing DNS when the rest of YouTube still plays.
    switches.
 5. Attach the generated report and say whether other public videos still work.
 
+### Playback stops around 1 minute with a 403
+
+This one has a recognisable signature: the video starts normally, then stops
+around the 59-second mark with a **Source error**, and the report contains
+`ERROR_CODE_IO_BAD_HTTP_STATUS` with `Response code: 403`.
+
+Look at the `__Endpoint:__` line of that report. If it says `visionos`, that
+endpoint is the cause. YouTube is retiring the VisionOS client, so the player
+response still extracts and lists formats, but the media requests start being
+refused once playback is running. It is not a decoder, WebView or DNS failure.
+
+Open **Settings → Advanced → YouTube extraction endpoint** and select
+**MWEB (SABR)**. Anonymous installations default to VisionOS and signed-in
+sessions are already restricted to MWEB, which is why this mostly reaches users
+who are not logged in.
+
+![YouTube extraction endpoint picker with MWEB (SABR) selected](/screenshots/pipepipe-endpoint-picker-mweb-5.4.0-api36.png)
+
+*The state to reach: **MWEB (SABR)** selected. Changing this restarts the app,
+so reopen the video afterwards.*
+
+MWEB needs `googleapis.com` and `google.com` reachable, because the
+proof-of-origin token flow uses them. If playback still fails after switching,
+check the [DNS filtering section](#every-youtube-video-fails-check-dns-filtering)
+before anything else, and attach a new report showing the new endpoint.
+
+The maintainer answers behind this diagnosis are in
+[#2931](https://github.com/InfinityLoop1308/PipePipe/issues/2931),
+[#2935](https://github.com/InfinityLoop1308/PipePipe/issues/2935) and
+[#2992](https://github.com/InfinityLoop1308/PipePipe/issues/2992).
+[#3007](https://github.com/InfinityLoop1308/PipePipe/issues/3007) is a recent
+report with the same 0:59 signature and two `visionos` logs.
+
 ### Very long videos and SABR segment counts
 
 A video is not unsupported just because it is long. In
@@ -251,30 +284,27 @@ prove that all other endpoints are broken. Report the default endpoint, each
 endpoint tested, and the result for the same URL. Keep endpoint experiments out
 of an unrelated WebView report unless the exact WebView message is also present.
 
-<div class="screenshot-callout" role="img" aria-label="Historical YouTube extraction endpoint picker with MWEB and Android VR highlighted">
-  <img src="/screenshots/pipepipe-endpoint-picker-5.2.3-api36.png" alt="YouTube extraction endpoint picker">
+An endpoint can also stop working because YouTube retires the client behind it.
+When that happens, switching endpoint is the fix and not only a diagnostic step.
+VisionOS is currently being removed, so a `visionos` report that stops around
+0:59 with a 403 belongs on **MWEB (SABR)**.
+
+<div class="screenshot-callout" role="img" aria-label="YouTube extraction endpoint picker with the VisionOS and MWEB (SABR) choices highlighted">
+  <img src="/screenshots/pipepipe-endpoint-picker-5.4.0-api36.png" alt="YouTube extraction endpoint picker on Android 16">
   <svg viewBox="0 0 1080 2340" aria-hidden="true">
-    <rect class="callout-box" x="70" y="995" width="940" height="125" rx="24" />
-    <circle class="callout-number" cx="965" cy="1025" r="42" /><text x="965" y="1025">1</text>
-    <rect class="callout-box" x="70" y="1260" width="940" height="125" rx="24" />
-    <circle class="callout-number" cx="965" cy="1290" r="42" /><text x="965" y="1290">2</text>
+    <rect class="callout-box" x="55" y="1050" width="790" height="280" rx="24" />
+    <circle class="callout-number" cx="800" cy="1190" r="42" /><text x="800" y="1190">1</text>
   </svg>
 </div>
 
-*Historical capture from Android 16. It includes a legacy endpoint that may no
-longer appear in the picker; use the options in your own installation.*
-
-![Reference YouTube extraction endpoint picker on Android 16](/screenshots/pipepipe-endpoint-picker-5.3.1-beta-api36.png)
-
-*Reference capture: Android 16/API 36. It shows where to find the picker; the
-available choices can differ in your installation.*
+*Reference capture: Android 16/API 36 on an anonymous installation. **1** is the
+picker; the choices available in your own build can differ.*
 
 [#2686](https://github.com/InfinityLoop1308/PipePipe/issues/2686) is a concrete
 example of an older endpoint comparison: the maintainer asked
 whether **Android VR (DASH)** was selected and advised testing **MWEB (SABR)**.
-In the capture, **1** is MWEB and **2** is Android VR. Treat that as historical
-evidence, not as a current instruction or a promise that MWEB fixes every
-network or account failure.
+That picker entry no longer exists. Treat the old comparison as historical
+evidence, not as a promise that MWEB fixes every network or account failure.
 
 The issue history shows why the exact stage matters. In [#2901](https://github.com/InfinityLoop1308/PipePipe/issues/2901), playback stopped after the
 phone went to sleep and the report included an `UnknownHost` destination. In

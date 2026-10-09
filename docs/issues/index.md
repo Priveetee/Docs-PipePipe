@@ -28,6 +28,7 @@ for current changes, and use the exact symptom below to find the right guide.
 | **WebView unavailable** | [WebView and protected playback](./webview) | That changing the YouTube endpoint bypasses the WebView check. |
 | Every YouTube video fails; a Google host resolves to `0.0.0.0` or `127.0.0.1` | [DNS filtering and playback](./youtube-playback#every-youtube-video-fails-check-dns-filtering) | That changing endpoint, reinstalling, or updating WebView bypasses DNS filtering. |
 | Only one or a few YouTube videos fail while others play | [Playback, network, and sign-in](./youtube-playback#one-video-or-a-few-fail-while-other-videos-play) | That WebView, DNS, or the whole installation is broken. |
+| Playback stops around 0:59 with `Response code: 403` and `Endpoint: visionos` | [Playback, network, and sign-in](./youtube-playback#playback-stops-around-1-minute-with-a-403) | That it is a decoder, WebView, or DNS problem, or that reinstalling helps. |
 | A very long video fails with `Invalid exact SABR segment count` | [Playback, network, and sign-in](./youtube-playback) | That it is unsupported just because of its duration, or that WebView/codec changes fix this count error. |
 | `AntiBotException`, `Source error`, buffering, live seek failure | [Playback, network, and sign-in](./youtube-playback) | That a current WebView or a login proves the cause. |
 | No/incorrect search results | [Search and discovery](./search) | That a player fix will fix search. |
